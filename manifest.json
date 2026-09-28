@@ -1,0 +1,15 @@
+{
+  "name": "おちつきポーチ(仮)",
+  "short_name": "おちつきポーチ",
+  "description": "落ち着くもの・はぐれたときの写真と手順・食べられる市販品・しぐさの意味を、家族のスマホ1台に。端末内のみ・オフライン・登録なし。",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f2f7f3",
+  "theme_color": "#2b8fb5",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
