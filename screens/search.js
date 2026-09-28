@@ -8,9 +8,13 @@
   var KEY = 'person.v1';
   var P = function(){ return window.POUCH_PARTS; };
 
-  function loadPerson(api){ var d = api.load(KEY, null); return Object.assign({ feat:'', appr:'', contact:'' }, d || {}); }
+  function loadPerson(api){ return P().cleanData(KEY, api.load(KEY, null)); }
+  /* 連絡先の文から電話番号を取り出す。日本語入力の全角数字・長音符などのハイフンも読めるよう、先に半角へそろえる */
   function extractPhone(text){
-    var m = String(text || '').match(/\+?\d[\d\-().\s]{5,}\d/);
+    var s = String(text || '');
+    try{ s = s.normalize('NFKC'); }catch(_){}
+    s = s.replace(/[ー‐‑‒–―−]/g, '-');
+    var m = s.match(/\+?\d[\d\-().\s]{5,}\d/);
     return m ? m[0].replace(/[^\d+]/g, '') : null;
   }
 
@@ -19,7 +23,8 @@
     var T = api.T;
     var p = loadPerson(api), today = P().loadToday(api);
     var blocks = [];
-    if(today) blocks.push({ label: T('screen.search.showToday') + ' ' + today.date, img: today.img });
+    /* 前の日に撮った写真は「今日の服装」と書かず、撮った日を出す */
+    if(today) blocks.push({ label: P().isTodayFresh(today) ? (T('screen.search.showToday') + ' ' + today.date) : P().fmt(T('screen.search.showTodayOld'), { d: today.date }), img: today.img });
     else blocks.push({ label: T('screen.search.showToday'), value: T('screen.search.showTodayNone') });
     if(p.feat) blocks.push({ label: T('screen.search.showFeat'), value: p.feat });
     if(p.appr) blocks.push({ label: T('screen.search.showAppr'), value: p.appr });
@@ -30,15 +35,20 @@
     P().openShow(api, { title: T('screen.search.showTitle'), blocks: blocks, note: T('common.parts.showHint') });
   }
 
+  /* 手順の文が「この画面の写真を見せます」と言う段(昼1枚目・夜4枚目)には、見せる画面を重ねて開くボタンを出す */
   function openStepsDay(api){
     var T = api.T;
     P().openSteps(api, { title: T('screen.search.stepsDayTitle'), steps: T('screen.search.stepsDay'),
-      tel: { 3:'110' }, telLabel: '📞 ' + T('screen.search.call110'), note: T('screen.search.stepsNote') });
+      tel: { 3:'110' }, telLabel: '📞 ' + T('screen.search.call110'),
+      show: { 0:true }, showLabel: '📣 ' + T('screen.search.show'), onShow: function(){ openShow(api); },
+      note: T('screen.search.stepsNote') });
   }
   function openStepsNight(api){
     var T = api.T;
     P().openSteps(api, { title: T('screen.search.stepsNightTitle'), steps: T('screen.search.stepsNight'),
-      tel: { 2:'110', 3:'110' }, telLabel: '📞 ' + T('screen.search.call110'), note: T('screen.search.stepsNote') });
+      tel: { 2:'110', 3:'110' }, telLabel: '📞 ' + T('screen.search.call110'),
+      show: { 3:true }, showLabel: '📣 ' + T('screen.search.show'), onShow: function(){ openShow(api); },
+      note: T('screen.search.stepsNote') });
   }
 
   window.SCREENS.register('search', {
@@ -68,8 +78,10 @@
         var im = api.el('img', 'today-img'); im.src = today.img; im.alt = '';
         card.appendChild(im);
         card.appendChild(api.el('p', 'today-date', today.date));
+        if(!P().isTodayFresh(today)) card.appendChild(api.el('p', 'note today-old', T('common.parts.todayOld')));
+        /* 探している最中の押し間違いで いちばん大事な写真を失わないよう、ほかの「けす」と同じく はい/いいえ を挟む */
         var hb = P().btn(api, 'btn wide', '🏠 ' + T('screen.search.home'), function(){
-          P().clearToday(api); api.toast(T('screen.search.homeDone')); api.go('search');
+          P().confirmDel(api, function(){ P().clearToday(api); api.toast(T('screen.search.homeDone')); api.go('search'); });
         });
         hb.setAttribute('id', 'search-home');
         card.appendChild(hb);
@@ -81,7 +93,12 @@
       }
       c.appendChild(card);
 
-      /* ふだんの特徴・接し方・連絡先 */
+      /* ふだんの特徴・接し方・連絡先
+         ・書いたそばから静かに自動保存(ほぞんするの押し忘れで、見せる画面に出ない・画面を移ると消える、を防ぐ)。
+           「ほぞんする」は保存できた実感のため残す(もしもカードと同じ) */
+      var fe, ap, ct;
+      function collect(){ return { feat: String(fe.value || '').trim(), appr: String(ap.value || '').trim(), contact: String(ct.value || '').trim() }; }
+      function autoSave(){ if(fe && ap && ct) api.save(KEY, collect()); }
       function field(key, label, ph, hint, textarea){
         var fl = api.el('div', 'field');
         fl.appendChild(api.el('label', null, label));
@@ -91,16 +108,16 @@
         inp.className = 'fld'; inp.setAttribute('data-key', key); inp.setAttribute('id', 'search-' + key);
         inp.setAttribute('dir', 'auto');   // RTL(ar)でも日本語の入力は左→右のまま
         inp.placeholder = ph; inp.value = p[key] || '';
+        inp.addEventListener('input', autoSave);   // 文字入力の通知(タップ操作ではない)
         fl.appendChild(inp);
         c.appendChild(fl);
         return inp;
       }
-      var fe = field('feat', T('screen.search.featH'), T('screen.search.featPh'), T('screen.search.featHint'), true);
-      var ap = field('appr', T('screen.search.apprH'), T('screen.search.apprPh'), '', true);
-      var ct = field('contact', T('screen.search.contactH'), T('screen.search.contactPh'), '', false);
+      fe = field('feat', T('screen.search.featH'), T('screen.search.featPh'), T('screen.search.featHint'), true);
+      ap = field('appr', T('screen.search.apprH'), T('screen.search.apprPh'), '', true);
+      ct = field('contact', T('screen.search.contactH'), T('screen.search.contactPh'), '', false);
       var sv = P().btn(api, 'btn primary wide', '✓ ' + T('screen.search.save'), function(){
-        var next = { feat: String(fe.value || '').trim(), appr: String(ap.value || '').trim(), contact: String(ct.value || '').trim() };
-        if(P().saveOrWarn(api, KEY, next)) api.toast(T('common.saved'));
+        if(P().saveOrWarn(api, KEY, collect())) api.toast(T('common.saved'));
       });
       sv.setAttribute('id', 'search-save');
       c.appendChild(sv);

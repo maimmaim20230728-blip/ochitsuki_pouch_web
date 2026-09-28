@@ -30,7 +30,8 @@ var ja = {
     parts: {
       photoNone:'しゃしん なし', photoDel:'しゃしんを けす',
       needOne:'なにか ひとつは 入れてください', step:'{n} / {m}',
-      showHint:'この画面を そのまま 相手に 見せます。'
+      showHint:'この画面を そのまま 相手に 見せます。',
+      todayOld:'きょう とった しゃしんでは ありません。出かける 前に とりなおして ください。'
     }
   },
   set: {
@@ -56,7 +57,8 @@ var ja = {
       todayH:'きょうの1枚', todayTake:'きょうの1枚を とる', todayRetake:'とりなおす',
       todayHint:'出かける前に 全身を 1枚。はぐれたとき「さがす」で そのまま 見せられます。',
       todayHas:'{d} の1枚',
-      note:'このアプリは 医療や 捜索の 代わりでは ありません。危ないときは 110番・119番へ。'
+      note:'このアプリは 医療や 捜索の 代わりでは ありません。危ないときは 110番・119番へ。',
+      staffNote:'付き添いの支援者が使うときは、事業所の端末で使ってください(私物のスマホに写真を残さないため)。'
     },
     calm: {
       title:'おちつく',
@@ -85,6 +87,7 @@ var ja = {
       show:'見せる(全画面)',
       stepsDayBtn:'手順: 昼・店や 施設で', stepsNightBtn:'手順: 夜・家から 出たとき',
       showTitle:'家族を探しています', showToday:'今日の服装(写真)', showTodayNone:'今日の写真は登録されていません',
+      showTodayOld:'服装(写真) {d} 撮影',
       showFeat:'特徴', showAppr:'見つけたときの接し方', showContact:'連絡先',
       call:'電話をかける', call110:'110番に電話する',
       stepsDayTitle:'昼・店や施設ではぐれたとき',
@@ -151,7 +154,8 @@ var en = {
     parts: {
       photoNone:'No photo', photoDel:'Remove photo',
       needOne:'Please fill in at least one item', step:'{n} / {m}',
-      showHint:'Show this screen to the other person as it is.'
+      showHint:'Show this screen to the other person as it is.',
+      todayOld:'This photo was not taken today. Please take it again before going out.'
     }
   },
   set: {
@@ -177,7 +181,8 @@ var en = {
       todayH:'Photo of today', todayTake:'Take the photo of today', todayRetake:'Retake',
       todayHint:'Before going out, take one full-body photo. If you get separated, "Search" shows it right away.',
       todayHas:'Taken on {d}',
-      note:'This app does not replace medical care or a police search. In danger, call 110 (police) or 119 (ambulance).'
+      note:'This app does not replace medical care or a police search. In danger, call 110 (police) or 119 (ambulance) in Japan.',
+      staffNote:'If you are a support worker accompanying the person, please use a device from your organization, so that photos are not left on a personal phone.'
     },
     calm: {
       title:'Calm',
@@ -206,6 +211,7 @@ var en = {
       show:'Show (full screen)',
       stepsDayBtn:'Steps: daytime, in a store or facility', stepsNightBtn:'Steps: night, left the house',
       showTitle:'Looking for a family member', showToday:'Clothes today (photo)', showTodayNone:'No photo of today is registered',
+      showTodayOld:'Clothes (photo taken on {d})',
       showFeat:'Description', showAppr:'How to approach when found', showContact:'Contact',
       call:'Call', call110:'Call 110 (police)',
       stepsDayTitle:'Daytime: separated in a store or facility',
@@ -227,7 +233,7 @@ var en = {
     food: {
       title:'Food',
       hint:'Keep the store-bought foods they can surely eat, with photos. At a shelter or care place, tap "Show" and hand over the screen.',
-      allergy:'Write allergies in "Moshimo Card", not here.',
+      allergy:'Write allergies in "MOSHIMO Card", not here.',
       add:'Add',
       empty:'Nothing yet. Tap "Add" to put something in.',
       formTitle:'Food they can eat',
@@ -311,7 +317,8 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "photoDel": "Foto entfernen",
       "needOne": "Bitte tragen Sie mindestens eine Angabe ein",
       "step": "{n} / {m}",
-      "showHint": "Zeigen Sie diesen Bildschirm der anderen Person so, wie er ist."
+      "showHint": "Zeigen Sie diesen Bildschirm der anderen Person so, wie er ist.",
+      "todayOld": "Dieses Foto ist nicht von heute. Bitte nehmen Sie es vor dem Hinausgehen neu auf."
     }
   },
   "set": {
@@ -366,7 +373,8 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayRetake": "Neu aufnehmen",
       "todayHint": "Vor dem Hinausgehen ein Ganzkörperfoto aufnehmen. Wenn Sie getrennt werden, können Sie es unter „Suchen“ direkt zeigen.",
       "todayHas": "Foto vom {d}",
-      "note": "Diese App ersetzt keine medizinische Hilfe und keine Suche durch die Polizei. In Gefahr rufen Sie 110 (Polizei) oder 119 (Rettungsdienst) an. Das sind die Notrufnummern in Japan."
+      "note": "Diese App ersetzt keine medizinische Hilfe und keine Suche durch die Polizei. In Gefahr rufen Sie 110 (Polizei) oder 119 (Rettungsdienst) an. Das sind die Notrufnummern in Japan.",
+      "staffNote": "Wenn Sie die Person als Fachkraft begleiten, nutzen Sie bitte ein Gerät Ihrer Einrichtung, damit keine Fotos auf einem privaten Smartphone bleiben."
     },
     "calm": {
       "title": "Ruhe",
@@ -411,6 +419,7 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showTitle": "Ich suche ein Familienmitglied",
       "showToday": "Kleidung heute (Foto)",
       "showTodayNone": "Kein Foto von heute hinterlegt",
+      "showTodayOld": "Kleidung (Foto vom {d})",
       "showFeat": "Merkmale",
       "showAppr": "Umgang beim Finden",
       "showContact": "Kontakt",
@@ -435,7 +444,7 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "food": {
       "title": "Essen",
       "hint": "Legen Sie hier gekaufte Produkte mit Foto ab, die die Person sicher isst. An einem Betreuungsort oder in einer Notunterkunft tippen Sie auf „Zeigen“ und zeigen den Bildschirm so, wie er ist.",
-      "allergy": "Allergien tragen Sie bitte in „Moshimo Card“ ein. Hier werden sie nicht eingetragen.",
+      "allergy": "Allergien tragen Sie bitte in „MOSHIMO Card“ ein. Hier werden sie nicht eingetragen.",
       "add": "Hinzufügen",
       "empty": "Noch nichts vorhanden. Fügen Sie über „Hinzufügen“ etwas ein.",
       "formTitle": "Was gegessen werden kann",
@@ -529,7 +538,8 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "photoDel": "Retirer la photo",
       "needOne": "Veuillez remplir au moins un champ",
       "step": "{n} / {m}",
-      "showHint": "Montrez cet écran tel quel à la personne en face de vous."
+      "showHint": "Montrez cet écran tel quel à la personne en face de vous.",
+      "todayOld": "Cette photo n'a pas été prise aujourd'hui. Reprenez-la avant de sortir."
     }
   },
   "set": {
@@ -584,7 +594,8 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayRetake": "Reprendre",
       "todayHint": "Avant de sortir, prenez une photo en pied. En cas de séparation, \"Chercher\" la montre tout de suite.",
       "todayHas": "Prise le {d}",
-      "note": "Cette application ne remplace ni les soins médicaux ni une recherche par la police. En cas de danger, appelez le 110 (police, Japon) ou le 119 (secours, Japon)."
+      "note": "Cette application ne remplace ni les soins médicaux ni une recherche par la police. En cas de danger, appelez le 110 (police, Japon) ou le 119 (secours, Japon).",
+      "staffNote": "Si vous accompagnez la personne en tant que professionnel, utilisez un appareil de votre structure, pour ne pas laisser de photos sur un téléphone personnel."
     },
     "calm": {
       "title": "Calme",
@@ -629,6 +640,7 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showTitle": "Je cherche un membre de ma famille",
       "showToday": "Tenue d'aujourd'hui (photo)",
       "showTodayNone": "Aucune photo du jour enregistrée",
+      "showTodayOld": "Tenue (photo du {d})",
       "showFeat": "Description",
       "showAppr": "Comment aborder la personne une fois retrouvée",
       "showContact": "Contact",
@@ -653,7 +665,7 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "food": {
       "title": "Aliments",
       "hint": "Gardez ici, avec une photo, les produits du commerce que la personne peut manger à coup sûr. Dans un lieu d'accueil ou un abri d'urgence, appuyez sur \"Montrer\" pour présenter l'écran tel quel.",
-      "allergy": "Notez les allergies dans \"Moshimo Card\", pas ici.",
+      "allergy": "Notez les allergies dans \"MOSHIMO Card\", pas ici.",
       "add": "Ajouter",
       "empty": "Rien pour le moment. Appuyez sur \"Ajouter\" pour en mettre.",
       "formTitle": "Aliment accepté",
@@ -747,7 +759,8 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "photoDel": "Quitar la foto",
       "needOne": "Hace falta al menos un dato",
       "step": "{n} / {m}",
-      "showHint": "Mostrar esta pantalla tal cual a la otra persona."
+      "showHint": "Mostrar esta pantalla tal cual a la otra persona.",
+      "todayOld": "Esta foto no es de hoy. Volver a tomarla antes de salir."
     }
   },
   "set": {
@@ -802,7 +815,8 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayRetake": "Volver a tomar",
       "todayHint": "Antes de salir, tomar una foto de cuerpo entero. Si se separan, \"Buscar\" la muestra tal cual.",
       "todayHas": "Foto del {d}",
-      "note": "Esta app no sustituye la atención médica ni una búsqueda policial. En caso de peligro, llamar al 110 (policía) o al 119 (ambulancia) en Japón."
+      "note": "Esta app no sustituye la atención médica ni una búsqueda policial. En caso de peligro, llamar al 110 (policía) o al 119 (ambulancia) en Japón.",
+      "staffNote": "Si acompaña a la persona como profesional de apoyo, usar un dispositivo de la organización, para no dejar fotos en un teléfono personal."
     },
     "calm": {
       "title": "Calma",
@@ -847,6 +861,7 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showTitle": "Buscando a un familiar",
       "showToday": "Ropa de hoy (foto)",
       "showTodayNone": "No hay foto de hoy registrada",
+      "showTodayOld": "Ropa (foto del {d})",
       "showFeat": "Características",
       "showAppr": "Cómo acercarse al encontrar a la persona",
       "showContact": "Contacto",
@@ -871,7 +886,7 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "food": {
       "title": "Comida",
       "hint": "Guardar aquí, con foto, los productos comerciales que sí puede comer. En el lugar donde se le cuide o en un refugio, tocar \"Mostrar\" para enseñar la pantalla tal cual.",
-      "allergy": "Escribir las alergias en \"Moshimo Card\", no aquí.",
+      "allergy": "Escribir las alergias en \"MOSHIMO Card\", no aquí.",
       "add": "Añadir",
       "empty": "Todavía no hay nada. Tocar \"Añadir\" para poner algo.",
       "formTitle": "Alimento que puede comer",
@@ -965,7 +980,8 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "photoDel": "Rimuovi foto",
       "needOne": "Inserisca almeno una voce",
       "step": "{n} / {m}",
-      "showHint": "Mostri questa schermata così com'è all'altra persona."
+      "showHint": "Mostri questa schermata così com'è all'altra persona.",
+      "todayOld": "Questa foto non è di oggi. La scatti di nuovo prima di uscire."
     }
   },
   "set": {
@@ -1020,7 +1036,8 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayRetake": "Scatta di nuovo",
       "todayHint": "Prima di uscire, scatti una foto a figura intera. In caso di smarrimento, potrà mostrarla subito da \"Cerca\".",
       "todayHas": "Foto del {d}",
-      "note": "Questa app non sostituisce l'assistenza medica né una ricerca ufficiale. In caso di pericolo, chiami il 110 (polizia) o il 119 (ambulanza), numeri di emergenza in Giappone."
+      "note": "Questa app non sostituisce l'assistenza medica né una ricerca ufficiale. In caso di pericolo, chiami il 110 (polizia) o il 119 (ambulanza), numeri di emergenza in Giappone.",
+      "staffNote": "Se accompagna la persona come operatore di supporto, usi un dispositivo della sua struttura, per non lasciare foto su un telefono personale."
     },
     "calm": {
       "title": "Calma",
@@ -1065,6 +1082,7 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showTitle": "Sto cercando un familiare",
       "showToday": "Abbigliamento di oggi (foto)",
       "showTodayNone": "Nessuna foto di oggi registrata",
+      "showTodayOld": "Abbigliamento (foto del {d})",
       "showFeat": "Caratteristiche",
       "showAppr": "Come comportarsi al ritrovamento",
       "showContact": "Contatto",
@@ -1089,7 +1107,7 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "food": {
       "title": "Cibo",
       "hint": "Tenga qui, con le foto, i prodotti in commercio che può mangiare con sicurezza. Presso chi se ne prende cura o in un rifugio di emergenza, tocchi \"Mostra\" per far vedere direttamente la schermata.",
-      "allergy": "Le allergie vanno scritte nella \"Moshimo Card\", non qui.",
+      "allergy": "Le allergie vanno scritte nella \"MOSHIMO Card\", non qui.",
       "add": "Aggiungi",
       "empty": "Non c'è ancora nulla. Tocchi \"Aggiungi\" per inserire qualcosa.",
       "formTitle": "Alimento che può mangiare",
@@ -1183,7 +1201,8 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "photoDel": "Apagar a foto",
       "needOne": "É preciso preencher pelo menos um item",
       "step": "{n} / {m}",
-      "showHint": "Mostrar esta tela à outra pessoa, tal como está."
+      "showHint": "Mostrar esta tela à outra pessoa, tal como está.",
+      "todayOld": "Esta foto não é de hoje. Tirar de novo antes de sair."
     }
   },
   "set": {
@@ -1238,7 +1257,8 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayRetake": "Tirar de novo",
       "todayHint": "Antes de sair, tirar uma foto de corpo inteiro. Em caso de separação, a foto aparece logo em \"Procurar\".",
       "todayHas": "Foto de {d}",
-      "note": "Esta aplicação não substitui os cuidados médicos nem uma busca oficial. Em caso de perigo, ligar para o 110 (polícia) ou o 119 (ambulância), no Japão."
+      "note": "Esta aplicação não substitui os cuidados médicos nem uma busca oficial. Em caso de perigo, ligar para o 110 (polícia) ou o 119 (ambulância), no Japão.",
+      "staffNote": "Se acompanhar a pessoa como profissional de apoio, usar um dispositivo da organização, para não deixar fotos num telefone pessoal."
     },
     "calm": {
       "title": "Calma",
@@ -1283,6 +1303,7 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showTitle": "Procuro um familiar",
       "showToday": "Roupa de hoje (foto)",
       "showTodayNone": "Não há foto de hoje guardada",
+      "showTodayOld": "Roupa (foto de {d})",
       "showFeat": "Características",
       "showAppr": "Como abordar ao encontrar",
       "showContact": "Telefone",
@@ -1307,7 +1328,7 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "food": {
       "title": "Comida",
       "hint": "Guardar aqui, com foto, os produtos comprados em loja que come sem problema. No local onde fica aos cuidados de outros, ou num abrigo, tocar em \"Mostrar\" e mostrar diretamente à outra pessoa.",
-      "allergy": "Escrever as alergias no \"Moshimo Card\", não aqui.",
+      "allergy": "Escrever as alergias no \"MOSHIMO Card\", não aqui.",
       "add": "Adicionar",
       "empty": "Ainda não há nada. Tocar em \"Adicionar\" para incluir algo.",
       "formTitle": "Comida que pode comer",
@@ -1401,7 +1422,8 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "photoDel": "Foto wissen",
       "needOne": "Vul minstens één onderdeel in",
       "step": "{n} / {m}",
-      "showHint": "Laat dit scherm zo aan de ander zien."
+      "showHint": "Laat dit scherm zo aan de ander zien.",
+      "todayOld": "Deze foto is niet van vandaag. Maak een nieuwe voordat u weggaat."
     }
   },
   "set": {
@@ -1456,7 +1478,8 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayRetake": "Opnieuw maken",
       "todayHint": "Maak voor het weggaan één foto van het hele lichaam. Raakt u elkaar kwijt, dan kunt u die meteen laten zien via \"Zoeken\".",
       "todayHas": "Gemaakt op {d}",
-      "note": "Deze app vervangt geen medische zorg en geen zoekactie. Bel bij gevaar 110 (politie) of 119 (ambulance); dit zijn de nummers in Japan."
+      "note": "Deze app vervangt geen medische zorg en geen zoekactie. Bel bij gevaar 110 (politie) of 119 (ambulance); dit zijn de nummers in Japan.",
+      "staffNote": "Begeleidt u de persoon als hulpverlener? Gebruik dan een apparaat van uw organisatie, zodat er geen foto's op een privételefoon achterblijven."
     },
     "calm": {
       "title": "Rust",
@@ -1501,6 +1524,7 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showTitle": "Ik zoek een familielid",
       "showToday": "Kleding van vandaag (foto)",
       "showTodayNone": "Er is geen foto van vandaag opgeslagen",
+      "showTodayOld": "Kleding (foto van {d})",
       "showFeat": "Kenmerken",
       "showAppr": "Zo benadert u de persoon als u hem of haar vindt",
       "showContact": "Contact",
@@ -1525,7 +1549,7 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "food": {
       "title": "Eten",
       "hint": "Bewaar hier, met foto, kant-en-klare producten uit de winkel die uw naaste zeker kan eten. Waar u uw naaste onderbrengt of in een evacuatiecentrum tikt u op \"Tonen\" en laat u het scherm zo zien.",
-      "allergy": "Schrijf allergieën in \"Moshimo Card\", niet hier.",
+      "allergy": "Schrijf allergieën in \"MOSHIMO Card\", niet hier.",
       "add": "Toevoegen",
       "empty": "Er is nog niets. Tik op \"Toevoegen\" om iets toe te voegen.",
       "formTitle": "Wat uw naaste kan eten",
@@ -1619,7 +1643,8 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "photoDel": "Ta bort foto",
       "needOne": "Fyll i minst en sak",
       "step": "{n} / {m}",
-      "showHint": "Visa den här skärmen som den är för den andra personen."
+      "showHint": "Visa den här skärmen som den är för den andra personen.",
+      "todayOld": "Det här fotot är inte från idag. Ta om det innan ni går ut."
     }
   },
   "set": {
@@ -1674,7 +1699,8 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayRetake": "Ta om",
       "todayHint": "Ta ett helkroppsfoto innan ni går ut. Om ni kommer ifrån varandra kan du visa det direkt under \"Leta\".",
       "todayHas": "Foto från {d}",
-      "note": "Den här appen ersätter inte vård eller polisens sökande. Vid fara: ring 110 (polis, Japan) eller 119 (ambulans, Japan)."
+      "note": "Den här appen ersätter inte vård eller polisens sökande. Vid fara: ring 110 (polis, Japan) eller 119 (ambulans, Japan).",
+      "staffNote": "Om du följer med personen som stödpersonal, använd en enhet från din arbetsplats, så att inga foton blir kvar på en privat telefon."
     },
     "calm": {
       "title": "Lugn",
@@ -1719,6 +1745,7 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showTitle": "Vi letar efter en familjemedlem",
       "showToday": "Dagens kläder (foto)",
       "showTodayNone": "Inget foto från idag är registrerat",
+      "showTodayOld": "Kläder (foto från {d})",
       "showFeat": "Kännetecken",
       "showAppr": "Bemötande när hen hittas",
       "showContact": "Kontakt",
@@ -1743,7 +1770,7 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "food": {
       "title": "Mat",
       "hint": "Lägg in färdigköpt mat som hen säkert kan äta, med foton. Hos den som tar hand om hen, eller på en evakueringsplats, trycker du på \"Visa\" och visar skärmen som den är.",
-      "allergy": "Skriv allergier i \"Moshimo Card\", inte här.",
+      "allergy": "Skriv allergier i \"MOSHIMO Card\", inte här.",
       "add": "Lägg till",
       "empty": "Inget ännu. Tryck på \"Lägg till\" för att lägga in något.",
       "formTitle": "Mat som går att äta",
@@ -1837,7 +1864,8 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "photoDel": "사진 삭제",
       "needOne": "무엇이든 하나는 넣어 주세요",
       "step": "{n} / {m}",
-      "showHint": "이 화면을 그대로 상대방에게 보여 주면 돼요."
+      "showHint": "이 화면을 그대로 상대방에게 보여 주면 돼요.",
+      "todayOld": "오늘 찍은 사진이 아니에요. 나가기 전에 다시 찍어 주세요."
     }
   },
   "set": {
@@ -1892,7 +1920,8 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayRetake": "다시 찍기",
       "todayHint": "외출 전에 전신을 한 장 찍어요. 서로 놓쳤을 때 ‘찾기’에서 그대로 보여 줄 수 있어요.",
       "todayHas": "{d}에 찍은 한 장",
-      "note": "이 앱은 의료나 수색을 대신하지 않아요. 위험할 때는 110번(경찰·일본)이나 119번(구급·일본)으로 전화해 주세요."
+      "note": "이 앱은 의료나 수색을 대신하지 않아요. 위험할 때는 110번(경찰·일본)이나 119번(구급·일본)으로 전화해 주세요.",
+      "staffNote": "동행하는 지원 담당자가 쓸 때는 소속 기관의 기기를 써 주세요(개인 휴대전화에 사진을 남기지 않기 위해서예요)."
     },
     "calm": {
       "title": "차분해지기",
@@ -1937,6 +1966,7 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showTitle": "가족을 찾고 있어요",
       "showToday": "오늘 옷차림(사진)",
       "showTodayNone": "오늘 사진이 등록되어 있지 않아요",
+      "showTodayOld": "옷차림(사진) {d} 촬영",
       "showFeat": "특징",
       "showAppr": "발견했을 때 대하는 법",
       "showContact": "연락처",
@@ -1961,7 +1991,7 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "food": {
       "title": "음식",
       "hint": "확실히 먹을 수 있는 시판 제품을 사진과 함께 넣어 둬요. 맡기는 곳이나 대피소에서 ‘보여 주기’를 누르면 그대로 상대방에게 보여 줄 수 있어요.",
-      "allergy": "알레르기는 ‘모시모 카드’에 적어 주세요. 여기에는 적지 않아요.",
+      "allergy": "알레르기는 ‘MOSHIMO Card’에 적어 주세요. 여기에는 적지 않아요.",
       "add": "추가하기",
       "empty": "아직 없어요. ‘추가하기’에서 넣어 주세요.",
       "formTitle": "먹을 수 있는 것",
@@ -2055,7 +2085,8 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "photoDel": "删除照片",
       "needOne": "请至少填写一项",
       "step": "{n} / {m}",
-      "showHint": "把这个画面直接给对方看。"
+      "showHint": "把这个画面直接给对方看。",
+      "todayOld": "这不是今天拍的照片。出门前请重新拍一张。"
     }
   },
   "set": {
@@ -2110,7 +2141,8 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayRetake": "重拍",
       "todayHint": "出门前拍一张全身照。走散时在“寻找”里可以直接给人看。",
       "todayHas": "{d} 的一张",
-      "note": "这个应用不能代替医疗或搜救。危险时请拨打日本的110（警察）或119（急救）。"
+      "note": "这个应用不能代替医疗或搜救。危险时请拨打日本的110（警察）或119（急救）。",
+      "staffNote": "陪同的支援人员使用时，请使用所在机构的设备（以免在私人手机上留下照片）。"
     },
     "calm": {
       "title": "安心",
@@ -2155,6 +2187,7 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showTitle": "正在寻找家人",
       "showToday": "今天的衣着（照片）",
       "showTodayNone": "没有登记今天的照片",
+      "showTodayOld": "衣着（照片）{d} 拍摄",
       "showFeat": "特征",
       "showAppr": "找到时的接触方式",
       "showContact": "联系方式",
@@ -2179,7 +2212,7 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "food": {
       "title": "食物",
       "hint": "把确定能吃的市售食品连同照片存在这里。在托付照看的地方或避难所点“展示”，就能直接给对方看。",
-      "allergy": "过敏信息请写在“Moshimo Card”里，这里不写。",
+      "allergy": "过敏信息请写在“MOSHIMO Card”里，这里不写。",
       "add": "添加",
       "empty": "还没有内容。请从“添加”放入。",
       "formTitle": "能吃的东西",
@@ -2273,7 +2306,8 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "photoDel": "حذف الصورة",
       "needOne": "يرجى إدخال شيء واحد على الأقل",
       "step": "{n} / {m}",
-      "showHint": "اعرض هذه الشاشة كما هي على الشخص الآخر."
+      "showHint": "اعرض هذه الشاشة كما هي على الشخص الآخر.",
+      "todayOld": "هذه الصورة ليست من اليوم. أعد التقاطها قبل الخروج."
     }
   },
   "set": {
@@ -2328,7 +2362,8 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayRetake": "إعادة الالتقاط",
       "todayHint": "قبل الخروج، التقط صورة واحدة للجسم كاملًا. عند الافتراق، يمكنك عرضها مباشرة من «البحث».",
       "todayHas": "صورة يوم {d}",
-      "note": "هذا التطبيق ليس بديلًا عن الرعاية الطبية أو البحث الرسمي. عند الخطر، اتصل بالرقم 110 (الشرطة) أو 119 (الإسعاف) في اليابان."
+      "note": "هذا التطبيق ليس بديلًا عن الرعاية الطبية أو البحث الرسمي. عند الخطر، اتصل بالرقم 110 (الشرطة) أو 119 (الإسعاف) في اليابان.",
+      "staffNote": "إذا كنت من العاملين في الدعم وترافق الشخص، فاستخدم جهازًا تابعًا لجهة عملك، حتى لا تبقى الصور على هاتف شخصي."
     },
     "calm": {
       "title": "الهدوء",
@@ -2373,6 +2408,7 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showTitle": "نبحث عن فرد من العائلة",
       "showToday": "ملابس اليوم (صورة)",
       "showTodayNone": "لم تُسجَّل صورة لليوم",
+      "showTodayOld": "الملابس (صورة يوم {d})",
       "showFeat": "الصفات",
       "showAppr": "طريقة التعامل عند العثور عليه",
       "showContact": "جهة الاتصال",
@@ -2397,7 +2433,7 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "food": {
       "title": "الطعام",
       "hint": "احفظ هنا، مع الصور، المنتجات التجارية التي يمكنه أكلها بالتأكيد. في مكان الرعاية أو مركز الإيواء، اضغط «عرض» لتعرضها على الشخص الآخر كما هي.",
-      "allergy": "اكتب الحساسية في تطبيق «Moshimo Card»، وليس هنا.",
+      "allergy": "اكتب الحساسية في تطبيق «MOSHIMO Card»، وليس هنا.",
       "add": "إضافة",
       "empty": "لا يوجد شيء بعد. أضف شيئًا من «إضافة».",
       "formTitle": "ما يمكن أكله",

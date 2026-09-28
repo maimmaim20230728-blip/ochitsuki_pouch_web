@@ -135,7 +135,9 @@
     return ov;
   }
 
-  /* 1画面1ステップの手順。o = { title, steps:[text], tel:{ index→番号 }, telLabel, note } */
+  /* 1画面1ステップの手順。o = { title, steps:[text], tel:{ index→番号 }, telLabel, show:{ index→true }, showLabel, onShow(), note }
+     ・発信と「見せる」は段数のすぐ下(本文より上)に出す。まえ/つぎ は とじるの上に固定(style.css)
+       =文字が大きい・訳が長いときも、押すボタンがスクロールの下に隠れない */
   function openSteps(api, o){
     var ov = overlay(api, 'show-white steps-ov');
     var steps = o.steps || [];
@@ -156,12 +158,16 @@
       callWrap.textContent = '';
       var tel = o.tel && o.tel[idx];
       if(tel){ var a = api.el('a', 'call-btn', o.telLabel || tel); a.href = 'tel:' + tel; callWrap.appendChild(a); }
+      /* 「この画面の写真を見せます」の段: 見せる画面を手順の上に重ねて開く(とじると手順に戻る) */
+      var canShow = !!(o.show && o.show[idx] && o.onShow);
+      if(canShow) callWrap.appendChild(btn(api, 'btn wide step-show', o.showLabel || '', function(){ o.onShow(); }));
+      callWrap.classList.toggle('hidden', !tel && !canShow);
       prev.disabled = idx === 0;
       next.disabled = idx >= steps.length - 1;
       prev.classList.toggle('dim', idx === 0);
       next.classList.toggle('dim', idx >= steps.length - 1);
     }
-    ov.appendChild(count); ov.appendChild(text); ov.appendChild(callWrap); ov.appendChild(nav);
+    ov.appendChild(count); ov.appendChild(callWrap); ov.appendChild(text); ov.appendChild(nav);
     if(o.note) ov.appendChild(api.el('p', 'hint show-note', o.note));
     draw();
     closeBtn(api, ov);
@@ -202,7 +208,9 @@
   /* 今日の1枚(ホームと さがす で共用)。保存キー today.v1 = { img, date:'YYYY/MM/DD', ts } */
   var TODAY_KEY = 'today.v1';
   function dateStr(d){ return d.getFullYear() + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + String(d.getDate()).padStart(2, '0'); }
-  function loadToday(api){ var t = api.load(TODAY_KEY, null); return (t && t.img) ? t : null; }
+  function loadToday(api){ return cleanData(TODAY_KEY, api.load(TODAY_KEY, null)) || null; }
+  /* 撮った日が今日か(前の日の写真を「今日の服装」として見せないため) */
+  function isTodayFresh(t){ return !!(t && t.date === dateStr(new Date())); }
   function takeToday(api, onDone){
     pickPlainPhoto(api, { camera:true, maxSide:640, onDone:function(data){
       var now = new Date();
@@ -211,10 +219,42 @@
   }
   function clearToday(api){ api.remove(TODAY_KEY); }
 
+  /* 保存データの形チェック(読み出しと バックアップの よみこむ で共用)
+     ・壊れた形(null・数字・文字の混ざった items など)でも画面が壊れないよう、決まった形に整える
+     ・写真は 'data:image/'、音は 'data:' で始まるものだけ残す(端末内のデータだけ。http などの外部URLは空にする=外へ取りに行かない) */
+  var FIELDS = { 'calm.v1':['name', 'audioName'], 'food.v1':['name', 'maker', 'shop', 'cond'], 'gesture.v1':['sign', 'meaning', 'worked'] };
+  function isObj(v){ return !!v && typeof v === 'object' && !Array.isArray(v); }
+  function str(v){ return (typeof v === 'string') ? v : ((typeof v === 'number' && isFinite(v)) ? String(v) : ''); }
+  function imgUrl(v){ return (typeof v === 'string' && v.indexOf('data:image/') === 0) ? v : ''; }
+  function audioUrl(v){ return (typeof v === 'string' && v.indexOf('data:') === 0) ? v : ''; }
+  function cleanData(key, d){
+    if(FIELDS[key]){
+      var src = (isObj(d) && Array.isArray(d.items)) ? d.items : [];
+      return { items: src.filter(isObj).map(function(x){
+        var o = { id: str(x.id) || newId(), img: imgUrl(x.img) };
+        FIELDS[key].forEach(function(f){ o[f] = str(x[f]); });
+        if(key === 'calm.v1') o.audio = audioUrl(x.audio);
+        return o;
+      }) };
+    }
+    if(key === 'person.v1'){ var p = isObj(d) ? d : {}; return { feat: str(p.feat), appr: str(p.appr), contact: str(p.contact) }; }
+    if(key === TODAY_KEY){ return (isObj(d) && imgUrl(d.img)) ? { img: d.img, date: str(d.date), ts: (typeof d.ts === 'number') ? d.ts : 0 } : null; }
+    return null;   // このアプリが使わないキー
+  }
+  /* よみこむ: 知らないキーは捨て、知っているキーは形を整えてから入れる(app.js の importBackup が呼ぶ) */
+  function importFilter(data){
+    var out = {};
+    if(!isObj(data)) return out;
+    Object.keys(data).forEach(function(k){ var v = cleanData(k, data[k]); if(v) out[k] = v; });
+    return out;
+  }
+  window.APP_IMPORT_FILTER = importFilter;
+
   window.POUCH_PARTS = {
     newId: newId, fmt: fmt, btn: btn, remove: remove, saveOrWarn: saveOrWarn, thumb: thumb,
     overlay: overlay, closeBtn: closeBtn, confirmDel: confirmDel, photoField: photoField,
     openForm: openForm, openShow: openShow, openSteps: openSteps,
-    pickPlainPhoto: pickPlainPhoto, loadToday: loadToday, takeToday: takeToday, clearToday: clearToday, TODAY_KEY: TODAY_KEY
+    pickPlainPhoto: pickPlainPhoto, loadToday: loadToday, isTodayFresh: isTodayFresh, takeToday: takeToday, clearToday: clearToday, TODAY_KEY: TODAY_KEY,
+    cleanData: cleanData, importFilter: importFilter
   };
 })();

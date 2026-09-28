@@ -5,7 +5,7 @@
 (function(){
   var KEY = 'food.v1';
   var P = function(){ return window.POUCH_PARTS; };
-  function loadItems(api){ var d = api.load(KEY, null); return (d && Array.isArray(d.items)) ? d.items : []; }
+  function loadItems(api){ return P().cleanData(KEY, api.load(KEY, null)).items; }   // 壊れた形でも画面が壊れない(parts.js)
 
   function openEditor(api, items, item){
     var T = api.T;

@@ -267,10 +267,30 @@ input[type="file"].hidden{ display:none; }
 .show-ov .show-block + .show-block{ margin-top:28px; }
 .show-ov .show-img{ width:100%; max-height:55vh; max-height:55dvh; object-fit:contain; border-radius:12px; display:block; margin:8px auto; background:#f2f2f2; }
 .show-note{ margin-top:24px; text-align:center; }
-.steps-ov .step-text{ white-space:pre-wrap; font-size:1.7em; margin:6vh 0 20px; }
+/* 手順: 本文の大きさは上限つき(文字特大・狭い幅でも1段が収まりやすい)。上の余白は小さく */
+.steps-ov .step-text{ white-space:pre-wrap; font-size:clamp(1.3em, 8.5vw, 1.7em); margin:2vh 0 16px; }
 .step-count{ text-align:center; font-weight:700; color:#555; margin:14px 0 0; }
 .step-call{ text-align:center; margin:0 0 12px; }
 .step-nav .btn{ min-height:64px; }
+/* まえ/つぎ は とじるの上に固定(とじる=下から16px+高さ64px の上)。本文はその下に潜るので下余白をふやす */
+.ov.steps-ov{ padding-bottom:calc(180px + env(safe-area-inset-bottom)); }
+.steps-ov .step-nav{
+  position:fixed; z-index:301; margin:0; padding:8px 0 10px; background:#fff; flex-wrap:nowrap;
+  left:max(16px, env(safe-area-inset-left)); right:max(16px, env(safe-area-inset-right));
+  bottom:calc(80px + env(safe-area-inset-bottom));
+}
+.steps-ov .step-show{ margin-top:10px; min-height:64px; border-color:var(--brand); line-height:1.3; }
+/* 手順の見出しは狭い幅で小さめに・発信ボタンは2行に折れても行の高さ64pxにしない(ボタンが本文を押し出さない) */
+.steps-ov .show-head{ font-size:clamp(1em, 5.5vw, 1.3em); padding:8px 10px; }
+.ov .call-btn{ display:flex; align-items:center; justify-content:center; line-height:1.3; padding:8px 12px; }
+.steps-ov .call-btn{ font-size:1.15em; }
 .show-white .btn{ color:#1a1a1a; background:#fff; }
 .show-white .btn.primary{ color:#fff; background:var(--brand); }
-.steps-row .btn{ min-height:64px; flex-direction:column; gap:2px; font-size:.95em; }
+/* 手順ボタンは語の途中で折らない: ja/ko は空白で折る(keep-all)。欧文の長い語はボタンの幅を広げて1語のまま
+   (overflow-wrap:anywhere は最小幅を0にするので「Einrichtun/g」「établissemen/t」と折れる=使わない)。入りきらないときだけ break-word で折る */
+.steps-row .btn{ min-height:64px; flex-direction:column; gap:2px; font-size:.95em; overflow-wrap:break-word; }
+html[lang="ja"] .steps-row .btn, html[lang="ko"] .steps-row .btn{ word-break:keep-all; }
+/* 相手に見せる白地の画面(見せる・手順)は、どのテーマでも同じ見た目(くろテーマでも白地に濃い文字) */
+.ov.show-white{ --bg:#fff; --card:#f2f2f2; --ink:#1a1a1a; --sub:#555; --line:#d7e5da; }
+.today-old{ font-weight:700; text-align:center; }
+.staff-note{ margin:6px 0 0; }

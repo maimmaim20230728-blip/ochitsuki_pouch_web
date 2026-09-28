@@ -37,6 +37,8 @@
         var im = api.el('img', 'today-img'); im.src = today.img; im.alt = '';
         card.appendChild(im);
         card.appendChild(api.el('p', 'today-date', P().fmt(T('screen.home.todayHas'), { d: today.date })));
+        /* 「かえってきた」を押し忘れた前の日の写真: 出かける前に撮り直すよう知らせる */
+        if(!P().isTodayFresh(today)) card.appendChild(api.el('p', 'note today-old', T('common.parts.todayOld')));
         var row = api.el('div', 'btn-row');
         row.appendChild(P().btn(api, 'btn', '📷 ' + T('screen.home.todayRetake'), function(){ P().takeToday(api, function(){ api.go('home'); }); }));
         row.appendChild(P().btn(api, 'btn primary', '🔍 ' + T('screen.home.search'), function(){ api.go('search'); }));
@@ -52,6 +54,8 @@
       c.appendChild(card);
 
       c.appendChild(api.el('p', 'note', T('screen.home.note')));
+      /* SPEC: 付き添いの支援者は事業所の端末で(私物に利用者の写真を残さない)。支援者が読む文なので漢字 */
+      c.appendChild(api.el('p', 'hint staff-note', T('screen.home.staffNote')));
     }
   });
 })();

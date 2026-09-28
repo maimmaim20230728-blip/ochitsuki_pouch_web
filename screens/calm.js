@@ -6,10 +6,11 @@
 (function(){
   var KEY = 'calm.v1';
   var MAX_AUDIO = 2 * 1024 * 1024;
+  var MIN_LOOP = 0.2;   // これより短い音はくりかえさない(0秒の音をループすると画面が固まる)
   var P = function(){ return window.POUCH_PARTS; };
   var cur = null;   // 再生中の Audio(全画面を閉じたら止める)
 
-  function loadItems(api){ var d = api.load(KEY, null); return (d && Array.isArray(d.items)) ? d.items : []; }
+  function loadItems(api){ return P().cleanData(KEY, api.load(KEY, null)).items; }
   function stopAudio(){ if(cur){ try{ cur.pause(); cur.src = ''; }catch(_){} cur = null; } }
 
   /* 音の欄(フォームの extra): えらぶ / けす / いまの名前 */
@@ -72,7 +73,8 @@
     });
   }
 
-  /* 全画面: 写真は大きく・音はループ */
+  /* 全画面: 写真は大きく・音はループ
+     ・登録した音を鳴らす間は BGM を止めて重ねない(とじるで戻す。もしもカードの「緊急音優先」と同じ型) */
   function openView(api, item){
     var T = api.T;
     stopAudio();
@@ -82,10 +84,31 @@
     if(item.audio){
       var st = api.el('p', 'calm-sound-state');
       var row = api.el('div', 'btn-row');
+      function fail(a){ if(cur !== a) return; stopAudio(); st.textContent = ''; api.toast(T('screen.calm.soundFail')); }
       function play(){
         if(typeof Audio === 'undefined') return;
         try{
-          if(!cur){ cur = new Audio(); cur.src = item.audio; cur.loop = true; }
+          if(!cur){
+            var a = cur = new Audio();
+            /* 長さが分かってから くりかえしにする(Chrome は 0秒の音でも最初は長さ Infinity と言い、あとで 0 に直す)
+               ・長さ0は鳴らせない音として止める。ごく短い音は1回だけ。長さ不明(Infinity)のままの音は ended で頭から鳴らし直す */
+            var judge = function(){
+              if(cur !== a) return;
+              var d = a.duration;
+              if(!isFinite(d)) return;
+              a.loop = d >= MIN_LOOP;
+              if(!(d > 0)) fail(a);
+            };
+            a.addEventListener('loadedmetadata', judge);
+            a.addEventListener('durationchange', judge);
+            a.addEventListener('ended', function(){
+              if(cur !== a) return;
+              if(a.currentTime >= MIN_LOOP){ try{ a.currentTime = 0; var p2 = a.play(); if(p2 && p2.catch) p2.catch(function(){}); }catch(_){} return; }
+              st.textContent = '';
+            });
+            a.addEventListener('error', function(){ fail(a); });
+            a.src = item.audio;
+          }
           var pr = cur.play(); if(pr && pr.catch) pr.catch(function(){});
           st.textContent = '🎵 ' + T('screen.calm.looping');
         }catch(_){ api.toast(T('screen.calm.soundFail')); }
@@ -94,9 +117,13 @@
       row.appendChild(P().btn(api, 'btn primary', T('screen.calm.play'), play));
       row.appendChild(P().btn(api, 'btn', T('screen.calm.stop'), stop));
       ov.appendChild(st); ov.appendChild(row);
+      if(window.Sound) window.Sound.pauseBgm();
       play();
     }
-    P().closeBtn(api, ov, T('common.close'), stopAudio);
+    P().closeBtn(api, ov, T('common.close'), function(){
+      stopAudio();
+      if(item.audio && window.Sound) window.Sound.resumeBgm();
+    });
     return ov;
   }
 
@@ -120,7 +147,9 @@
         open.appendChild(g);
         api.Tap.bind(open, function(){ openView(api, it); });
         li.appendChild(open);
-        li.appendChild(P().btn(api, 'btn small', '✎', function(){ openEditor(api, items, it); }));
+        var eb = P().btn(api, 'btn small', '✎', function(){ openEditor(api, items, it); });
+        eb.setAttribute('aria-label', T('common.edit'));   // 記号だけのボタンに読み上げ名(TalkBack)
+        li.appendChild(eb);
         ul.appendChild(li);
       });
       c.appendChild(ul);

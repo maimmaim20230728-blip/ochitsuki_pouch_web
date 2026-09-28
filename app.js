@@ -9,7 +9,7 @@
      変えたら README の「シェルの変更点」に書く */
 (function(){
 
-var VER = '0.4.0';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
+var VER = '0.4.1';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
 var APP_KEY = 'ochitsuki_pouch';        // バックアップの識別(別アプリのファイルを読まない)
 var LS = 'pouch.';
 var LS_PREF = LS + 'pref.v1';
@@ -261,7 +261,12 @@ function importBackup(e){
     try{
       var d = JSON.parse(r.result);
       if(d.app !== APP_KEY) throw new Error('different app');
-      if(d.data && typeof d.data === 'object'){ for(var k in d.data){ saveJSON(LS + k, d.data[k]); } }
+      if(d.data && typeof d.data === 'object'){
+        var data = d.data;
+        /* アプリ固有の形チェック(screens 側が window.APP_IMPORT_FILTER を置けば、知らないキー・壊れた形・外部URLをここで落とす) */
+        if(typeof window.APP_IMPORT_FILTER === 'function') data = window.APP_IMPORT_FILTER(data) || {};
+        for(var k in data){ saveJSON(LS + k, data[k]); }
+      }
       pref = sanitizePref(d.pref);
       savePref();
       applyAll(true);

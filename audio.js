@@ -12,6 +12,7 @@ var Sound = (function(){
   var bgmEnabled = false;    // app.js の pref.bgm と同期
   var mode = 'green';
   var playing = false;
+  var held = false;          // pauseBgm〜resumeBgm の間(画面側の音を優先中)は、タップしても BGM を始めない
   var master = null, filter = null;
   var timer = 0, nextBar = 0, chordIdx = 0;
   var live = [];
@@ -136,7 +137,7 @@ var Sound = (function(){
     live = [];
     master = null; filter = null;
   }
-  function maybeStartBgm(){ if(bgmEnabled && !playing) startBgm(); }
+  function maybeStartBgm(){ if(bgmEnabled && !held && !playing) startBgm(); }
 
   /* 画面を離れている間は鳴らさない */
   function suspendNow(){ if(!ctx) return; try{ ctx.suspend(); }catch(_){} }
@@ -170,8 +171,9 @@ var Sound = (function(){
       if(!bgmEnabled){ stopBgm(); return; }
       if(startNow !== false){ ensure(); maybeStartBgm(); }
     },
-    pauseBgm: function(){ stopBgm(); },
-    resumeBgm: function(){ maybeStartBgm(); },
+    /* 画面側の音(おちつくの登録音など)を鳴らす間は BGM を止めて重ねない。tap() でも再開しない */
+    pauseBgm: function(){ held = true; stopBgm(); },
+    resumeBgm: function(){ held = false; maybeStartBgm(); },
     get enabled(){ return enabled; },
     get bgmEnabled(){ return bgmEnabled; },
     get bgmPlaying(){ return playing; }
