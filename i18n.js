@@ -1,4 +1,4 @@
-/* おちつきポーチ(仮) 多言語テーブル(そよぎアプリ・キット v1・12言語)
+/* おちつきポーチ・そよぎ 多言語テーブル(そよぎアプリ・キット v1・12言語)
    ・window.POUCH_I18N = { ja, en, de, fr, es, it, pt, nl, sv, ko, zh, ar }
    ・キー構造は全言語で完全一致(_check.js が ja を正として構造・配列要素数を機械照合)
    ・🔴 BUILDER: 文言は ja と en の両方に同じキーで足す。画面固有は screen.<画面id>.* に置く。
@@ -13,7 +13,7 @@
 
 /* ============ ja(正) ============ */
 var ja = {
-  app: { name:'おちつきポーチ(仮)', tagline:'考える余裕のない瞬間に、10秒で出せる家族のポーチ。' },
+  app: { name:'おちつきポーチ・そよぎ', short:'おちつきポーチ', tagline:'考える余裕のない瞬間に、10秒で出せる家族のポーチ。' },
   nav: { home:'ホーム', calm:'おちつく', search:'さがす', food:'たべもの', gesture:'しぐさ', set:'せってい' },
   common: {
     ok:'OK', cancel:'やめる', save:'ほぞんする', del:'けす', back:'もどる', close:'とじる',
@@ -50,7 +50,7 @@ var ja = {
   },
   screen: {
     home: {
-      title:'おちつきポーチ(仮)',
+      title:'おちつきポーチ',
       calm:'おちつく', search:'さがす', food:'たべもの', gesture:'しぐさ',
       calmSub:'しゃしんと おと', searchSub:'はぐれたとき', foodSub:'たべられる物', gestureSub:'いみと かかわり',
       todayH:'きょうの1枚', todayTake:'きょうの1枚を とる', todayRetake:'とりなおす',
@@ -134,7 +134,7 @@ var ja = {
 
 /* ============ en ============ */
 var en = {
-  app: { name:'Calm Pouch - SOYOGI (draft)', tagline:'A family pouch you can open in ten seconds, when there is no time to think.' },
+  app: { name:'Steady Pouch - SOYOGI', short:'Steady Pouch', tagline:'A family pouch you can open in ten seconds, when there is no time to think.' },
   nav: { home:'Home', calm:'Calm', search:'Search', food:'Food', gesture:'Signs', set:'Settings' },
   common: {
     ok:'OK', cancel:'Cancel', save:'Save', del:'Delete', back:'Back', close:'Close',
@@ -171,7 +171,7 @@ var en = {
   },
   screen: {
     home: {
-      title:'Calm Pouch - SOYOGI (draft)',
+      title:'Steady Pouch',
       calm:'Calm', search:'Search', food:'Food', gesture:'Signs',
       calmSub:'photo and sound', searchSub:'when separated', foodSub:'what they can eat', gestureSub:'meaning and response',
       todayH:'Photo of today', todayTake:'Take the photo of today', todayRetake:'Retake',
@@ -259,7 +259,8 @@ function mergeDeep(t, s){ for(var k in s){ if(s[k] && typeof s[k] === 'object' &
 /* ---- de: 翻訳 ---- */
 TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "Ruhe-Tasche - SOYOGI (Entwurf)",
+    "name": "Verlässliche Tasche - SOYOGI",
+    "short": "Verlässliche Tasche",
     "tagline": "Eine Tasche für die Familie, die Sie in zehn Sekunden öffnen können, wenn keine Zeit zum Nachdenken bleibt."
   },
   "nav": {
@@ -351,7 +352,7 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "Ruhe-Tasche - SOYOGI (Entwurf)",
+      "title": "Verlässliche Tasche",
       "calm": "Ruhe",
       "search": "Suchen",
       "food": "Essen",
@@ -476,7 +477,8 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- fr: 翻訳 ---- */
 TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "Pochette Calme - SOYOGI (brouillon)",
+    "name": "Pochette fidèle - SOYOGI",
+    "short": "Pochette fidèle",
     "tagline": "La pochette de la famille, à sortir en dix secondes quand on n'a pas le temps de réfléchir."
   },
   "nav": {
@@ -568,7 +570,7 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "Pochette Calme - SOYOGI (brouillon)",
+      "title": "Pochette fidèle",
       "calm": "Calme",
       "search": "Chercher",
       "food": "Aliments",
@@ -693,7 +695,8 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- es: 翻訳 ---- */
 TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "Bolsa de Calma - SOYOGI (borrador)",
+    "name": "Bolsa de confianza - SOYOGI",
+    "short": "Bolsa de confianza",
     "tagline": "La bolsa de la familia que se abre en diez segundos, cuando no hay tiempo para pensar."
   },
   "nav": {
@@ -785,7 +788,7 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "Bolsa de Calma - SOYOGI (borrador)",
+      "title": "Bolsa de confianza",
       "calm": "Calma",
       "search": "Buscar",
       "food": "Comida",
@@ -910,7 +913,8 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- it: 翻訳 ---- */
 TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "Astuccio della calma - SOYOGI (bozza)",
+    "name": "Astuccio fidato - SOYOGI",
+    "short": "Astuccio fidato",
     "tagline": "L'astuccio di famiglia da aprire in dieci secondi, nei momenti in cui non c'è tempo per pensare."
   },
   "nav": {
@@ -1002,7 +1006,7 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "Astuccio della calma - SOYOGI (bozza)",
+      "title": "Astuccio fidato",
       "calm": "Calma",
       "search": "Cerca",
       "food": "Cibo",
@@ -1127,7 +1131,8 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- pt: 翻訳 ---- */
 TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "Bolsa da Calma - SOYOGI (rascunho)",
+    "name": "Bolsa de confiança - SOYOGI",
+    "short": "Bolsa de confiança",
     "tagline": "A bolsa da família que se abre em 10 segundos, quando não há tempo para pensar."
   },
   "nav": {
@@ -1219,7 +1224,7 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "Bolsa da Calma - SOYOGI (rascunho)",
+      "title": "Bolsa de confiança",
       "calm": "Calma",
       "search": "Procurar",
       "food": "Comida",
@@ -1344,7 +1349,8 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- nl: 翻訳 ---- */
 TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "Rusttasje - SOYOGI (concept)",
+    "name": "Betrouwbaar tasje - SOYOGI",
+    "short": "Betrouwbaar tasje",
     "tagline": "Een tasje voor uw familie dat u in tien seconden tevoorschijn haalt, als er geen tijd is om na te denken."
   },
   "nav": {
@@ -1436,7 +1442,7 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "Rusttasje - SOYOGI (concept)",
+      "title": "Betrouwbaar tasje",
       "calm": "Rust",
       "search": "Zoeken",
       "food": "Eten",
@@ -1561,7 +1567,8 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- sv: 翻訳 ---- */
 TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "Lugnpåsen - SOYOGI (utkast)",
+    "name": "Stadiga påsen - SOYOGI",
+    "short": "Stadiga påsen",
     "tagline": "Familjens påse som du kan ta fram på tio sekunder, i stunder när det inte finns tid att tänka."
   },
   "nav": {
@@ -1653,7 +1660,7 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "Lugnpåsen - SOYOGI (utkast)",
+      "title": "Stadiga påsen",
       "calm": "Lugn",
       "search": "Leta",
       "food": "Mat",
@@ -1778,7 +1785,8 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- ko: 翻訳 ---- */
 TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "차분 파우치 - SOYOGI (초안)",
+    "name": "든든한 파우치 - SOYOGI",
+    "short": "든든한 파우치",
     "tagline": "생각할 여유가 없는 순간에, 10초 만에 꺼낼 수 있는 가족의 파우치."
   },
   "nav": {
@@ -1870,7 +1878,7 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "차분 파우치 - SOYOGI (초안)",
+      "title": "든든한 파우치",
       "calm": "차분해지기",
       "search": "찾기",
       "food": "음식",
@@ -1995,7 +2003,8 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- zh: 翻訳 ---- */
 TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "安心随身包 - SOYOGI (暂定)",
+    "name": "稳稳随身包 - SOYOGI",
+    "short": "稳稳随身包",
     "tagline": "在来不及思考的时刻，10秒就能拿出来的家人随身包。"
   },
   "nav": {
@@ -2087,7 +2096,7 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "安心随身包 - SOYOGI (暂定)",
+      "title": "稳稳随身包",
       "calm": "安心",
       "search": "寻找",
       "food": "食物",
@@ -2212,7 +2221,8 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
 /* ---- ar: 翻訳 ---- */
 TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
   "app": {
-    "name": "حقيبة الهدوء - SOYOGI (مسودة)",
+    "name": "حقيبة موثوقة - SOYOGI",
+    "short": "حقيبة موثوقة",
     "tagline": "حقيبة للعائلة تُخرجها خلال 10 ثوانٍ، في اللحظات التي لا وقت فيها للتفكير."
   },
   "nav": {
@@ -2304,7 +2314,7 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
   },
   "screen": {
     "home": {
-      "title": "حقيبة الهدوء - SOYOGI (مسودة)",
+      "title": "حقيبة موثوقة",
       "calm": "الهدوء",
       "search": "البحث",
       "food": "الطعام",

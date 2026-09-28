@@ -1,5 +1,5 @@
 'use strict';
-/* おちつきポーチ(仮) 本体シェル(そよぎアプリ・キット v1)
+/* おちつきポーチ・そよぎ 本体シェル(そよぎアプリ・キット v1)
    ・端末内だけに保存(localStorage・キーは「pouch.」で始まる)・完全オフライン・匿名・広告なし
    ・click禁止: 操作は全て Tap.bind(tap.js)。select / file input だけはネイティブイベント
    ・画面は screens/<id>.js が window.SCREENS.register('<id>', { render(container, api) }) で登録する
@@ -9,7 +9,7 @@
      変えたら README の「シェルの変更点」に書く */
 (function(){
 
-var VER = '0.3.1';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
+var VER = '0.4.0';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
 var APP_KEY = 'ochitsuki_pouch';        // バックアップの識別(別アプリのファイルを読まない)
 var LS = 'pouch.';
 var LS_PREF = LS + 'pref.v1';
@@ -81,10 +81,19 @@ function applyI18n(){
   if($('btn-sound')) $('btn-sound').textContent = pref.sound ? T('set.on') : T('set.off');
   if($('about-ver')) $('about-ver').textContent = 'v' + VER;
   document.title = T('app.name');
+  fitTitle();
   if(current !== 'set') renderScreen(current);   // 表示中の画面も訳し直す
   applyBarSpace();
 }
 
+/* ヘッダーの名前: 正式名(そよぎ付き)が入りきらないときだけ、そよぎを抜いた短い名前にする(ヒロさん指示 2026-09-28) */
+function fitTitle(){
+  var e = $('hd-title'); if(!e) return;
+  var full = T('app.name'), s = T('app.short');
+  e.textContent = full;
+  if(s !== 'app.short' && s !== full && e.scrollWidth > e.clientWidth + 1) e.textContent = s;
+}
+if(typeof window !== 'undefined' && window.addEventListener) window.addEventListener('resize', function(){ fitTitle(); });
 /* ---- 見た目/音 ---- */
 function applyTheme(){ document.body.setAttribute('data-theme', pref.theme); }
 function applyBodyClass(){ document.body.className = 'fs' + pref.fs; }
