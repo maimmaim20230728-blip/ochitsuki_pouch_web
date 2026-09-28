@@ -45,6 +45,7 @@ var ja = {
     bkHint:'あたらしい スマホに うつるときは、「かきだす」で ファイルを ほぞんして、あたらしい スマホで「よみこむ」を おしてください。',
     bkExport:'かきだす', bkImport:'よみこむ',
     exported:'かきだしました ✓', imported:'よみこみました ✓', importFail:'よみこめませんでした',
+    importConfirm:'いまの ないようは、ファイルの ないように おきかわります。よみこみますか?',
     note:'書いたことは すべて この端末の中だけに ほぞんされます。どこにも 送られません。',
     privacy:'プライバシーポリシー',
     credit:'アプリ開発：介護と支援の相談どころ そよぎ'
@@ -104,7 +105,12 @@ var ja = {
         '110番します。\n「家族がいなくなりました」と伝えます。',
         '最後に見た場所と時刻、今日の服装を伝えます。\nこの画面の写真と特徴を見せます。'
       ],
-      stepsNote:'この案内は一般的な目安です。判断はその場の状況に合わせてください。'
+      stepsNote:'この案内は一般的な目安です。判断はその場の状況に合わせてください。',
+      /* 行方不明者届の案内(手順の注記の下・pouch-11)。URL は screens/search.js。手続きの細部(必要書類など)は書かない */
+      missingText:'行方不明者届は、警察に出します。受け付ける警察署や手続きは、各都道府県警察の案内を確かめてください。',
+      missingLaw:'全国の決まり: 行方不明者発見活動に関する規則(e-Gov 法令検索)',
+      missingPref:'各都道府県警察のホームページ(警察庁の一覧)',
+      missingSrc:'出典: 外部サイト(確認日 2026-09-29)。そよぎは政府機関・警察を代表するものではありません。'
     },
     food: {
       title:'たべもの',
@@ -169,6 +175,7 @@ var en = {
     bkHint:'When you move to a new phone, tap "Export" to save a file, then tap "Import" on the new phone.',
     bkExport:'Export', bkImport:'Import',
     exported:'Exported ✓', imported:'Imported ✓', importFail:'Could not import',
+    importConfirm:'Your current entries will be replaced with the file\'s contents. Import it?',
     note:'Everything you write is stored only on this device. Nothing is sent anywhere.',
     privacy:'Privacy policy',
     credit:'Developed by SOYOGI, a care and support consultation service'
@@ -228,7 +235,11 @@ var en = {
         'Call 110.\nSay "my family member is missing".',
         'Tell the last place and time you saw them, and the clothes today.\nShow the photo and description on this screen.'
       ],
-      stepsNote:'These steps are a general guide. Decide according to the situation on the spot.'
+      stepsNote:'These steps are a general guide. Decide according to the situation on the spot.',
+      missingText:'In Japan, a missing person report is made to the police. For which police station accepts it and how, check the guidance of each prefectural police.',
+      missingLaw:'National rules: Rules on Activities to Find Missing Persons (e-Gov Law Search, in Japanese)',
+      missingPref:'Websites of each prefectural police (list by the National Police Agency, in Japanese)',
+      missingSrc:'Source: external websites (checked on 2026-09-29). SOYOGI does not represent any government agency or the police.'
     },
     food: {
       title:'Food',
@@ -353,6 +364,7 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "Exportiert ✓",
     "imported": "Importiert ✓",
     "importFail": "Import nicht möglich",
+    "importConfirm": "Ihre aktuellen Einträge werden durch den Inhalt der Datei ersetzt. Importieren?",
     "note": "Alles, was Sie schreiben, wird nur auf diesem Gerät gespeichert. Nichts wird irgendwohin gesendet.",
     "privacy": "Datenschutzerklärung",
     "credit": "App-Entwicklung: SOYOGI, Beratungsstelle für Pflege und Unterstützung"
@@ -439,7 +451,11 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "Rufen Sie die 110 an.\nSagen Sie „Mein Familienmitglied ist verschwunden“.",
         "Nennen Sie den zuletzt gesehenen Ort, die Uhrzeit und die heutige Kleidung.\nZeigen Sie das Foto und die Merkmale auf diesem Bildschirm."
       ],
-      "stepsNote": "Diese Hinweise sind eine allgemeine Orientierung. Entscheiden Sie nach der Situation vor Ort."
+      "stepsNote": "Diese Hinweise sind eine allgemeine Orientierung. Entscheiden Sie nach der Situation vor Ort.",
+      "missingText": "In Japan wird eine Vermisstenanzeige bei der Polizei erstattet. Welche Polizeiwache sie annimmt und wie das Verfahren ist, entnehmen Sie bitte den Hinweisen der Polizei der jeweiligen Präfektur.",
+      "missingLaw": "Landesweite Regeln: Vorschriften über die Suche nach vermissten Personen (e-Gov Gesetzessuche, auf Japanisch)",
+      "missingPref": "Websites der Polizei der einzelnen Präfekturen (Liste der Nationalen Polizeibehörde, auf Japanisch)",
+      "missingSrc": "Quelle: externe Websites (geprüft am 2026-09-29). SOYOGI vertritt keine Behörde und nicht die Polizei."
     },
     "food": {
       "title": "Essen",
@@ -574,6 +590,7 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "Exporté ✓",
     "imported": "Importé ✓",
     "importFail": "Importation impossible",
+    "importConfirm": "Vos données actuelles seront remplacées par le contenu du fichier. Importer ?",
     "note": "Tout ce que vous écrivez reste uniquement sur cet appareil. Rien n'est envoyé nulle part.",
     "privacy": "Politique de confidentialité",
     "credit": "Application développée par SOYOGI, service de conseil en soins et accompagnement"
@@ -660,7 +677,11 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "Appelez le 110 (Japon).\nDites \"un membre de ma famille a disparu\".",
         "Indiquez le dernier lieu et la dernière heure où la personne a été vue, et la tenue d'aujourd'hui.\nMontrez la photo et la description de cet écran."
       ],
-      "stepsNote": "Ces indications sont un repère général. Adaptez-vous à la situation sur place."
+      "stepsNote": "Ces indications sont un repère général. Adaptez-vous à la situation sur place.",
+      "missingText": "Au Japon, la déclaration de disparition se fait auprès de la police. Pour savoir quel commissariat la reçoit et comment procéder, consultez les informations de la police de chaque préfecture.",
+      "missingLaw": "Règles nationales : règlement sur les activités de recherche des personnes disparues (e-Gov, recherche de lois, en japonais)",
+      "missingPref": "Sites de la police de chaque préfecture (liste de l'Agence nationale de la police, en japonais)",
+      "missingSrc": "Source : sites externes (vérifiés le 2026-09-29). SOYOGI ne représente aucun organisme public ni la police."
     },
     "food": {
       "title": "Aliments",
@@ -795,6 +816,7 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "Exportado ✓",
     "imported": "Importado ✓",
     "importFail": "No se pudo importar",
+    "importConfirm": "El contenido actual se reemplazará por el contenido del archivo. ¿Importar?",
     "note": "Todo lo que se escribe se guarda solo en este dispositivo. No se envía a ningún lugar.",
     "privacy": "Política de privacidad",
     "credit": "Desarrollado por SOYOGI, servicio de consulta sobre cuidados y apoyo"
@@ -881,7 +903,11 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "Llamar al 110.\nDecir \"un familiar está desaparecido\".",
         "Decir el último lugar y hora en que se le vio, y la ropa de hoy.\nMostrar la foto y las características de esta pantalla."
       ],
-      "stepsNote": "Esta guía es una orientación general. Decidir según la situación del momento."
+      "stepsNote": "Esta guía es una orientación general. Decidir según la situación del momento.",
+      "missingText": "En Japón, la denuncia de persona desaparecida se presenta ante la policía. Para saber qué comisaría la recibe y cómo hacerla, consultar la información de la policía de cada prefectura.",
+      "missingLaw": "Normas nacionales: Reglamento sobre las actividades de búsqueda de personas desaparecidas (e-Gov, búsqueda de leyes, en japonés)",
+      "missingPref": "Sitios web de la policía de cada prefectura (lista de la Agencia Nacional de Policía, en japonés)",
+      "missingSrc": "Fuente: sitios externos (consultados el 2026-09-29). SOYOGI no representa a ningún organismo público ni a la policía."
     },
     "food": {
       "title": "Comida",
@@ -1016,6 +1042,7 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "Esportato ✓",
     "imported": "Importato ✓",
     "importFail": "Non è stato possibile importare",
+    "importConfirm": "I contenuti attuali verranno sostituiti con quelli del file. Importare?",
     "note": "Tutto ciò che scrive resta solo in questo dispositivo. Non viene inviato da nessuna parte.",
     "privacy": "Informativa sulla privacy",
     "credit": "App sviluppata da SOYOGI, sportello di consulenza per l'assistenza e il sostegno"
@@ -1102,7 +1129,11 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "Chiami il 110.\nDica \"un mio familiare è scomparso\".",
         "Comunichi luogo e ora dell'ultimo avvistamento e l'abbigliamento di oggi.\nMostri la foto e le caratteristiche in questa schermata."
       ],
-      "stepsNote": "Queste indicazioni sono un riferimento generale. Decida in base alla situazione del momento."
+      "stepsNote": "Queste indicazioni sono un riferimento generale. Decida in base alla situazione del momento.",
+      "missingText": "In Giappone la denuncia di scomparsa si presenta alla polizia. Per sapere quale stazione di polizia la riceve e come procedere, consulti le indicazioni della polizia di ciascuna prefettura.",
+      "missingLaw": "Regole nazionali: Regolamento sulle attività di ricerca delle persone scomparse (e-Gov, ricerca di leggi, in giapponese)",
+      "missingPref": "Siti della polizia di ciascuna prefettura (elenco dell'Agenzia nazionale di polizia, in giapponese)",
+      "missingSrc": "Fonte: siti esterni (verificati il 2026-09-29). SOYOGI non rappresenta alcun ente pubblico né la polizia."
     },
     "food": {
       "title": "Cibo",
@@ -1237,6 +1268,7 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "Exportado ✓",
     "imported": "Importado ✓",
     "importFail": "Não foi possível importar",
+    "importConfirm": "O conteúdo atual será substituído pelo conteúdo da cópia. Importar?",
     "note": "Tudo o que for escrito fica guardado só neste aparelho. Nada é enviado a ninguém.",
     "privacy": "Política de privacidade",
     "credit": "Desenvolvido por SOYOGI, serviço de aconselhamento sobre cuidados e apoio"
@@ -1323,7 +1355,11 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "Ligar para o 110.\nDizer \"um familiar meu desapareceu\".",
         "Dizer o último lugar e a hora em que a pessoa foi vista, e a roupa de hoje.\nMostrar a foto e as características nesta tela."
       ],
-      "stepsNote": "Estas indicações são uma orientação geral. Decidir conforme a situação no momento."
+      "stepsNote": "Estas indicações são uma orientação geral. Decidir conforme a situação no momento.",
+      "missingText": "No Japão, a participação de pessoa desaparecida é feita à polícia. Para saber que esquadra a recebe e como proceder, consultar as informações da polícia de cada prefeitura.",
+      "missingLaw": "Regras nacionais: Regulamento sobre as atividades de procura de pessoas desaparecidas (e-Gov, pesquisa de leis, em japonês)",
+      "missingPref": "Sites da polícia de cada prefeitura (lista da Agência Nacional de Polícia, em japonês)",
+      "missingSrc": "Fonte: sites externos (verificados em 2026-09-29). A SOYOGI não representa nenhum organismo público nem a polícia."
     },
     "food": {
       "title": "Comida",
@@ -1458,6 +1494,7 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "Geëxporteerd ✓",
     "imported": "Geïmporteerd ✓",
     "importFail": "Importeren is niet gelukt",
+    "importConfirm": "Uw huidige gegevens worden vervangen door de inhoud van het bestand. Importeren?",
     "note": "Alles wat u schrijft, wordt alleen op dit apparaat bewaard. Er wordt niets verzonden.",
     "privacy": "Privacybeleid",
     "credit": "App ontwikkeld door SOYOGI, een adviespunt voor zorg en ondersteuning"
@@ -1544,7 +1581,11 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "Bel 110.\nZeg \"Mijn familielid is vermist\".",
         "Geef de laatste plek en tijd door waarop u uw naaste zag, en de kleding van vandaag.\nToon de foto en de kenmerken op dit scherm."
       ],
-      "stepsNote": "Deze aanwijzingen zijn een algemene richtlijn. Beslis naar de situatie ter plaatse."
+      "stepsNote": "Deze aanwijzingen zijn een algemene richtlijn. Beslis naar de situatie ter plaatse.",
+      "missingText": "In Japan doet u aangifte van vermissing bij de politie. Welk politiebureau de aangifte aanneemt en hoe het werkt, leest u in de informatie van de politie van de prefectuur.",
+      "missingLaw": "Landelijke regels: Regeling over het zoeken naar vermiste personen (e-Gov wetten zoeken, in het Japans)",
+      "missingPref": "Websites van de politie per prefectuur (lijst van het Nationaal Politieagentschap, in het Japans)",
+      "missingSrc": "Bron: externe websites (gecontroleerd op 2026-09-29). SOYOGI vertegenwoordigt geen overheidsinstantie en niet de politie."
     },
     "food": {
       "title": "Eten",
@@ -1679,6 +1720,7 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "Exporterat ✓",
     "imported": "Importerat ✓",
     "importFail": "Kunde inte importera",
+    "importConfirm": "Det du har nu ersätts med innehållet i filen. Vill du importera?",
     "note": "Allt du skriver sparas bara på den här enheten. Inget skickas någonstans.",
     "privacy": "Integritetspolicy",
     "credit": "Appen är utvecklad av SOYOGI, rådgivning om omsorg och stöd"
@@ -1765,7 +1807,11 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "Ring 110.\nSäg \"En familjemedlem har försvunnit\".",
         "Berätta var och när du senast såg hen, och dagens kläder.\nVisa fotot och kännetecknen på den här skärmen."
       ],
-      "stepsNote": "Den här guiden är en allmän vägledning. Bedöm utifrån situationen på plats."
+      "stepsNote": "Den här guiden är en allmän vägledning. Bedöm utifrån situationen på plats.",
+      "missingText": "I Japan gör man en anmälan om försvunnen person hos polisen. Vilken polisstation som tar emot den och hur det går till står i informationen från polisen i respektive prefektur.",
+      "missingLaw": "Nationella regler: Föreskrifter om arbetet med att hitta försvunna personer (e-Gov lagsökning, på japanska)",
+      "missingPref": "Webbplatser för polisen i varje prefektur (lista från Nationella polisbyrån, på japanska)",
+      "missingSrc": "Källa: externa webbplatser (kontrollerade 2026-09-29). SOYOGI företräder inte någon myndighet eller polisen."
     },
     "food": {
       "title": "Mat",
@@ -1900,6 +1946,7 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "내보냈어요 ✓",
     "imported": "가져왔어요 ✓",
     "importFail": "가져오지 못했어요",
+    "importConfirm": "지금 내용이 파일의 내용으로 바뀌어요. 가져올까요?",
     "note": "적은 내용은 모두 이 기기 안에만 저장돼요. 어디에도 보내지 않아요.",
     "privacy": "개인정보 처리방침",
     "credit": "앱 개발: 돌봄과 지원 상담소 SOYOGI"
@@ -1986,7 +2033,11 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "110번에 전화해요.\n“가족이 없어졌어요”라고 전해요.",
         "마지막으로 본 장소와 시각, 오늘 옷차림을 전해요.\n이 화면의 사진과 특징을 보여 줘요."
       ],
-      "stepsNote": "이 안내는 일반적인 기준이에요. 판단은 그 자리의 상황에 맞춰 주세요."
+      "stepsNote": "이 안내는 일반적인 기준이에요. 판단은 그 자리의 상황에 맞춰 주세요.",
+      "missingText": "행방불명자 신고는 경찰에 해요. 어느 경찰서에서 받는지, 절차는 어떤지는 각 도도부현 경찰의 안내를 확인해 주세요.",
+      "missingLaw": "전국 공통 규칙: 행방불명자 발견 활동에 관한 규칙(e-Gov 법령 검색, 일본어 페이지)",
+      "missingPref": "각 도도부현 경찰 홈페이지(경찰청 목록, 일본어 페이지)",
+      "missingSrc": "출처: 외부 사이트(확인일 2026-09-29). SOYOGI는 정부 기관이나 경찰을 대표하지 않아요."
     },
     "food": {
       "title": "음식",
@@ -2121,6 +2172,7 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "已导出 ✓",
     "imported": "已导入 ✓",
     "importFail": "无法导入",
+    "importConfirm": "当前内容将被文件中的内容替换。要导入吗？",
     "note": "写下的内容全部只保存在这台设备里，不会发送到任何地方。",
     "privacy": "隐私政策",
     "credit": "应用开发：照护与支援咨询处 SOYOGI"
@@ -2207,7 +2259,11 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "拨打110。\n告诉对方“家人不见了”。",
         "告诉对方最后看到的地点和时间，以及今天的衣着。\n出示这个画面上的照片和特征。"
       ],
-      "stepsNote": "这些说明只是一般性的参考。请根据当时的情况来判断。"
+      "stepsNote": "这些说明只是一般性的参考。请根据当时的情况来判断。",
+      "missingText": "失踪人员的报告（行方不明者届）向警察提交。受理的警察署和手续，请查看各都道府县警察的说明。",
+      "missingLaw": "全国规定：关于寻找失踪人员活动的规则（e-Gov 法令检索，日文页面）",
+      "missingPref": "各都道府县警察的网站（日本警察厅的列表，日文页面）",
+      "missingSrc": "出处：外部网站（确认日期 2026-09-29）。SOYOGI 不代表任何政府机构或警察。"
     },
     "food": {
       "title": "食物",
@@ -2342,6 +2398,7 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "exported": "تم التصدير ✓",
     "imported": "تم الاستيراد ✓",
     "importFail": "تعذّر الاستيراد",
+    "importConfirm": "سيُستبدل المحتوى الحالي بمحتوى الملف. هل تريد الاستيراد؟",
     "note": "كل ما تكتبه يُحفظ داخل هذا الجهاز فقط. لا يُرسل إلى أي مكان.",
     "privacy": "سياسة الخصوصية",
     "credit": "تطوير التطبيق: SOYOGI، مكان استشارات الرعاية والدعم"
@@ -2428,7 +2485,11 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "اتصل بالرقم 110.\nقل «فرد من عائلتي مفقود».",
         "أبلغ عن آخر مكان ووقت رأيته فيه، وعن ملابس اليوم.\nاعرض الصورة والصفات في هذه الشاشة."
       ],
-      "stepsNote": "هذا الدليل إرشادات عامة. اتخذ القرار بحسب الوضع في المكان."
+      "stepsNote": "هذا الدليل إرشادات عامة. اتخذ القرار بحسب الوضع في المكان.",
+      "missingText": "في اليابان يُقدَّم بلاغ الشخص المفقود إلى الشرطة. لمعرفة مركز الشرطة الذي يستقبله والإجراءات، راجع إرشادات شرطة كل محافظة.",
+      "missingLaw": "القواعد على مستوى البلاد: لائحة أنشطة العثور على الأشخاص المفقودين (بحث القوانين e-Gov، صفحة باليابانية)",
+      "missingPref": "مواقع شرطة كل محافظة (قائمة وكالة الشرطة الوطنية، صفحة باليابانية)",
+      "missingSrc": "المصدر: مواقع خارجية (تاريخ التحقق 2026-09-29). لا تمثّل SOYOGI أي جهة حكومية أو الشرطة."
     },
     "food": {
       "title": "الطعام",

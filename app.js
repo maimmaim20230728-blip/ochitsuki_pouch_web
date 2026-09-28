@@ -9,7 +9,7 @@
      変えたら README の「シェルの変更点」に書く */
 (function(){
 
-var VER = '0.4.1';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
+var VER = '0.4.2';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
 var APP_KEY = 'ochitsuki_pouch';        // バックアップの識別(別アプリのファイルを読まない)
 var LS = 'pouch.';
 var LS_PREF = LS + 'pref.v1';
@@ -137,8 +137,11 @@ function el(tag, cls, txt){
 var NATIVE_TTS = (function(){
   try{
     var c = window.Capacitor;
-    if(c && typeof c.isNativePlatform === 'function' && c.isNativePlatform() && typeof c.registerPlugin === 'function'){
-      return c.registerPlugin('TextToSpeech');
+    if(c && typeof c.isNativePlatform === 'function' && c.isNativePlatform()){
+      /* 🔴 取得は Capacitor.Plugins.TextToSpeech(ネイティブが注入する)。registerPlugin は @capacitor/core の関数で WebView には無い(2026-09-29) */
+      var p = c.Plugins && c.Plugins.TextToSpeech;
+      if(p && typeof p.speak === 'function') return p;
+      if(typeof c.registerPlugin === 'function') return c.registerPlugin('TextToSpeech');
     }
   }catch(_){}
   return null;
@@ -253,25 +256,53 @@ function exportBackup(){
   setTimeout(function(){ URL.revokeObjectURL(a.href); }, 3000);
   toast(T('set.exported'));
 }
+/* よみこむ(点検 pouch-21・8本共通 D 2026-09-29)
+   ・このアプリのファイルか・形を確かめてから、置き換える前に window.confirm で確かめる(やめる=何も変えない)。
+     Capacitor の WebView はネイティブのダイアログで出す。confirm の無い環境(疑似DOMスモーク)は そのまま進む
+   ・はい=丸ごと入れ替え: いまの「pouch.」のデータを消してから、ファイルの中身を書く(ファイルに無いものは残さない=混ざらない)。
+     ほかのアプリのキー(pouch. で始まらない)は触らない。書けなかったら(容量など)元に戻して「よみこめませんでした」 */
+function ownDataKeys(){
+  var ks = [];
+  try{
+    for(var i = 0; i < localStorage.length; i++){
+      var k = localStorage.key(i);
+      if(k && k.indexOf(LS) === 0 && k !== LS_PREF) ks.push(k);
+    }
+  }catch(_){}
+  return ks;
+}
+function replaceAllData(data){
+  var old = {}, keys = ownDataKeys(), k, ok = true;
+  try{ keys.forEach(function(x){ old[x] = localStorage.getItem(x); }); }catch(_){ return false; }
+  keys.forEach(removeKey);
+  for(k in data){ if(!saveJSON(LS + k, data[k])){ ok = false; break; } }
+  if(ok) return true;
+  /* 元に戻す */
+  ownDataKeys().forEach(removeKey);
+  for(k in old){ try{ if(old[k] !== null) localStorage.setItem(k, old[k]); }catch(_){} }
+  return false;
+}
 function importBackup(e){
   var f = e.target.files && e.target.files[0];
   if(!f) return;
   var r = new FileReader();
   r.onload = function(){
+    var d, data = {};
     try{
-      var d = JSON.parse(r.result);
-      if(d.app !== APP_KEY) throw new Error('different app');
+      d = JSON.parse(r.result);
+      if(!d || d.app !== APP_KEY) throw new Error('different app');
       if(d.data && typeof d.data === 'object'){
-        var data = d.data;
+        data = d.data;
         /* アプリ固有の形チェック(screens 側が window.APP_IMPORT_FILTER を置けば、知らないキー・壊れた形・外部URLをここで落とす) */
         if(typeof window.APP_IMPORT_FILTER === 'function') data = window.APP_IMPORT_FILTER(data) || {};
-        for(var k in data){ saveJSON(LS + k, data[k]); }
       }
-      pref = sanitizePref(d.pref);
-      savePref();
-      applyAll(true);
-      toast(T('set.imported'));
-    }catch(err){ toast(T('set.importFail')); }
+    }catch(err){ toast(T('set.importFail')); return; }
+    if(typeof window.confirm === 'function' && !window.confirm(T('set.importConfirm'))) return;
+    if(!replaceAllData(data)){ toast(T('set.importFail')); return; }
+    pref = sanitizePref(d.pref);
+    savePref();
+    applyAll(true);
+    toast(T('set.imported'));
   };
   r.readAsText(f);
   e.target.value = '';

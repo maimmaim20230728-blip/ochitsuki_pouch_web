@@ -294,3 +294,30 @@ html[lang="ja"] .steps-row .btn, html[lang="ko"] .steps-row .btn{ word-break:kee
 .ov.show-white{ --bg:#fff; --card:#f2f2f2; --ink:#1a1a1a; --sub:#555; --line:#d7e5da; }
 .today-old{ font-weight:700; text-align:center; }
 .staff-note{ margin:6px 0 0; }
+/* 行方不明者届の案内(さがすの手順の注記の下・pouch-11)。白地の手順画面の中なので文字は --ink(どのテーマでも白地に濃い字) */
+.missing-info{ margin:10px 0 0; padding:10px 12px; border:1.5px solid var(--line); border-radius:10px; font-size:.92em; }
+.missing-text{ margin:0 0 4px; }
+.missing-info .ext-link{ display:flex; align-items:center; min-height:44px; padding:6px 0; color:var(--ink); text-decoration:underline; font-weight:700; overflow-wrap:anywhere; }
+.missing-src{ margin:6px 0 0; font-size:.9em; }
+
+/* ======== 文字の色のコントラスト(点検 pouch-13・8本共通 A/B 2026-09-29) ========
+   ・緑の上の文字色(--on-brand)と ヘッダーのボタンの地(--hd-btn-bg)は ひとつずつ・そよぎ と同じ変数名。
+     くろは緑が明るい(#43c08a)ので白い文字だと 2.3:1 しかない → 濃い緑の文字(7.2:1)
+   ・文字を載せる緑(ヘッダーの地・主ボタン・chip.on・とじる)と、緑を文字色に使う所(下ナビの選択中・リンク・✎)は
+     濃い「文字用の緑」--brand-ink(白い字と 5.3:1 以上)。枠・線・飾りは --brand のまま(4テーマの考え方は変えない)
+   ・発信ボタン(.call-btn)はテーマによらず緑なので、文字用の緑 #237a52 に固定
+   ・入力欄の例文(placeholder)は既定の灰色だと しろ 4.4・くろ 3.2 なので --sub に */
+:root{ --brand-ink:#237a52; --on-brand:#fff; --hd-btn-bg:rgba(0,0,0,.28); }
+body[data-theme="aqua"]{ --brand-ink:#1f6f8f; }
+body[data-theme="white"]{ --brand-ink:#237a52; }
+body[data-theme="dark"]{ --brand-ink:var(--brand); --on-brand:#10231a; --hd-btn-bg:rgba(255,255,255,.35); }
+header#hd{ background:var(--brand-ink); color:var(--on-brand); }
+.lang-label{ color:var(--on-brand); }
+.hd-btn{ background:var(--hd-btn-bg); color:var(--on-brand); }
+.big-btn.primary, .btn.primary, .chip.on, .show-white .btn.primary{ border-color:var(--brand-ink); background:var(--brand-ink); color:var(--on-brand); }
+.ov-close{ background:var(--brand-ink); color:var(--on-brand); }
+.home-grid .big-btn.primary .sub{ color:var(--on-brand); }
+.nav-btn.active{ color:var(--brand-ink); }
+.credit a, .edit-mark{ color:var(--brand-ink); }
+.call-btn{ background:#237a52; color:#fff; }
+.field input::placeholder, .field textarea::placeholder{ color:var(--sub); opacity:1; }

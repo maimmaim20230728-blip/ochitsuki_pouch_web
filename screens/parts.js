@@ -135,7 +135,7 @@
     return ov;
   }
 
-  /* 1画面1ステップの手順。o = { title, steps:[text], tel:{ index→番号 }, telLabel, show:{ index→true }, showLabel, onShow(), note }
+  /* 1画面1ステップの手順。o = { title, steps:[text], tel:{ index→番号 }, telLabel, show:{ index→true }, showLabel, onShow(), note, after()→要素(注記の下に足す) }
      ・発信と「見せる」は段数のすぐ下(本文より上)に出す。まえ/つぎ は とじるの上に固定(style.css)
        =文字が大きい・訳が長いときも、押すボタンがスクロールの下に隠れない */
   function openSteps(api, o){
@@ -169,6 +169,7 @@
     }
     ov.appendChild(count); ov.appendChild(callWrap); ov.appendChild(text); ov.appendChild(nav);
     if(o.note) ov.appendChild(api.el('p', 'hint show-note', o.note));
+    if(o.after) ov.appendChild(o.after());
     draw();
     closeBtn(api, ov);
     return ov;

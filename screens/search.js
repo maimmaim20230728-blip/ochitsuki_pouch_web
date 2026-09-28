@@ -35,20 +35,42 @@
     P().openShow(api, { title: T('screen.search.showTitle'), blocks: blocks, note: T('common.parts.showHint') });
   }
 
+  /* 行方不明者届の案内(手順の注記の下・pouch-11 案2 = 全国の規則 + 各都道府県警察の入口)
+     ・出典URLと確認日は README に記録(2026-09-29 に WebFetch で開けて中身が合うことを確認)。
+       規則 第6条: 受理するのは行方不明となった時の住所・居所を管轄する警察署長(遠隔地などは行方不明となった場所・届け出る人の住所の警察署長も)
+     ・手続きの細部(必要書類など)は書かない。そよぎは政府機関・警察を代表しない(免責)
+     ・リンクは別タブ(target=_blank rel=noopener)。操作ではなく外部ページへの移動なので Tap ではなく素の <a>(tel: と同じ) */
+  var MISSING_LINKS = [
+    { key:'screen.search.missingLaw',  url:'https://laws.e-gov.go.jp/law/421M60400000013' },
+    { key:'screen.search.missingPref', url:'https://www.npa.go.jp/link/prefectural.html' }
+  ];
+  function missingInfo(api){
+    var T = api.T;
+    var box = api.el('div', 'missing-info');
+    box.appendChild(api.el('p', 'missing-text', T('screen.search.missingText')));
+    MISSING_LINKS.forEach(function(l){
+      var a = api.el('a', 'ext-link', '🔗 ' + T(l.key));
+      a.href = l.url; a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener');
+      box.appendChild(a);
+    });
+    box.appendChild(api.el('p', 'hint missing-src', T('screen.search.missingSrc')));
+    return box;
+  }
+
   /* 手順の文が「この画面の写真を見せます」と言う段(昼1枚目・夜4枚目)には、見せる画面を重ねて開くボタンを出す */
   function openStepsDay(api){
     var T = api.T;
     P().openSteps(api, { title: T('screen.search.stepsDayTitle'), steps: T('screen.search.stepsDay'),
       tel: { 3:'110' }, telLabel: '📞 ' + T('screen.search.call110'),
       show: { 0:true }, showLabel: '📣 ' + T('screen.search.show'), onShow: function(){ openShow(api); },
-      note: T('screen.search.stepsNote') });
+      note: T('screen.search.stepsNote'), after: function(){ return missingInfo(api); } });
   }
   function openStepsNight(api){
     var T = api.T;
     P().openSteps(api, { title: T('screen.search.stepsNightTitle'), steps: T('screen.search.stepsNight'),
       tel: { 2:'110', 3:'110' }, telLabel: '📞 ' + T('screen.search.call110'),
       show: { 3:true }, showLabel: '📣 ' + T('screen.search.show'), onShow: function(){ openShow(api); },
-      note: T('screen.search.stepsNote') });
+      note: T('screen.search.stepsNote'), after: function(){ return missingInfo(api); } });
   }
 
   window.SCREENS.register('search', {
