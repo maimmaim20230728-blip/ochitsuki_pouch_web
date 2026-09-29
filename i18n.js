@@ -20,6 +20,7 @@ var ja = {
     yes:'はい', no:'いいえ', add:'ついか', edit:'なおす', next:'つぎ', prev:'まえ', done:'できた',
     saved:'ほぞんしました ✓', saveFail:'ほぞんできませんでした', storageFull:'いっぱいで ほぞんできません',
     deleted:'けしました', delConfirm:'ほんとうに けしますか?', empty:'まだ なにも ありません',
+    backConfirm:'入れたものは まだ ほぞんしていません。すてて もどりますか?',
     optional:'ぜんぶ 書かなくても だいじょうぶです。', today:'きょう',
     photo: {
       camera:'カメラで とる', roll:'しゃしんから えらぶ',
@@ -150,6 +151,7 @@ var en = {
     yes:'Yes', no:'No', add:'Add', edit:'Edit', next:'Next', prev:'Previous', done:'Done',
     saved:'Saved ✓', saveFail:'Could not save', storageFull:'Storage is full, could not save',
     deleted:'Deleted', delConfirm:'Really delete this?', empty:'Nothing here yet',
+    backConfirm:'What you entered is not saved yet. Discard it and go back?',
     optional:'You do not have to fill in everything.', today:'Today',
     photo: {
       camera:'Take a photo', roll:'Choose from photos',
@@ -308,6 +310,7 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "deleted": "Gelöscht",
     "delConfirm": "Wirklich löschen?",
     "empty": "Noch nichts vorhanden",
+    "backConfirm": "Ihre Eingaben sind noch nicht gespeichert. Verwerfen und zurückgehen?",
     "optional": "Sie müssen nicht alles ausfüllen.",
     "today": "Heute",
     "photo": {
@@ -534,6 +537,7 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "deleted": "Supprimé",
     "delConfirm": "Voulez-vous vraiment supprimer ?",
     "empty": "Rien pour le moment",
+    "backConfirm": "Ce que vous avez saisi n'est pas encore enregistré. L'abandonner et revenir en arrière ?",
     "optional": "Il n'est pas nécessaire de tout remplir.",
     "today": "Aujourd'hui",
     "photo": {
@@ -760,6 +764,7 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "deleted": "Borrado",
     "delConfirm": "¿Borrar de verdad?",
     "empty": "Todavía no hay nada",
+    "backConfirm": "Lo que ha introducido aún no se ha guardado. ¿Descartarlo y volver?",
     "optional": "No hace falta completar todo.",
     "today": "Hoy",
     "photo": {
@@ -986,6 +991,7 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "deleted": "Eliminato",
     "delConfirm": "Eliminare davvero?",
     "empty": "Non c'è ancora nulla",
+    "backConfirm": "Quanto inserito non è ancora stato salvato. Scartarlo e tornare indietro?",
     "optional": "Non è necessario compilare tutto.",
     "today": "Oggi",
     "photo": {
@@ -1212,6 +1218,7 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "deleted": "Apagado",
     "delConfirm": "Apagar mesmo?",
     "empty": "Ainda não há nada",
+    "backConfirm": "O que introduziu ainda não foi guardado. Descartar e voltar?",
     "optional": "Não é preciso preencher tudo.",
     "today": "Hoje",
     "photo": {
@@ -1438,6 +1445,7 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "deleted": "Gewist",
     "delConfirm": "Wilt u dit echt wissen?",
     "empty": "Er is nog niets",
+    "backConfirm": "Wat u hebt ingevoerd, is nog niet opgeslagen. Weggooien en teruggaan?",
     "optional": "U hoeft niet alles in te vullen.",
     "today": "Vandaag",
     "photo": {
@@ -1664,6 +1672,7 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "deleted": "Borttaget",
     "delConfirm": "Vill du verkligen ta bort det här?",
     "empty": "Inget här ännu",
+    "backConfirm": "Det du har fyllt i är inte sparat än. Vill du slänga det och gå tillbaka?",
     "optional": "Du behöver inte fylla i allt.",
     "today": "Idag",
     "photo": {
@@ -1890,6 +1899,7 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "deleted": "삭제했어요",
     "delConfirm": "정말 삭제할까요?",
     "empty": "아직 아무것도 없어요",
+    "backConfirm": "입력한 내용이 아직 저장되지 않았어요. 버리고 돌아갈까요?",
     "optional": "전부 쓰지 않아도 괜찮아요.",
     "today": "오늘",
     "photo": {
@@ -2116,6 +2126,7 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "deleted": "已删除",
     "delConfirm": "真的要删除吗？",
     "empty": "还没有内容",
+    "backConfirm": "输入的内容还没有保存。要放弃并返回吗？",
     "optional": "不必全部填写也没关系。",
     "today": "今天",
     "photo": {
@@ -2342,6 +2353,7 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "deleted": "تم الحذف",
     "delConfirm": "هل تريد الحذف فعلًا؟",
     "empty": "لا يوجد شيء بعد",
+    "backConfirm": "ما أدخلته لم يُحفظ بعد. هل تريد الرجوع دون حفظه؟",
     "optional": "لا داعي لملء كل الخانات.",
     "today": "اليوم",
     "photo": {

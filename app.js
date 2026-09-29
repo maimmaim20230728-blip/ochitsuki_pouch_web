@@ -9,7 +9,7 @@
      変えたら README の「シェルの変更点」に書く */
 (function(){
 
-var VER = '0.4.3';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
+var VER = '0.4.4';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
 var APP_KEY = 'ochitsuki_pouch';        // バックアップの識別(別アプリのファイルを読まない)
 var LS = 'pouch.';
 var LS_PREF = LS + 'pref.v1';
@@ -208,11 +208,15 @@ function screenApi(){
     speak: speak, stopSpeak: stopSpeak, canSpeak: canSpeak, vibrate: vibrate,
     lang: pref.lang,
     rtl: RTL_LANGS.indexOf(pref.lang) >= 0,
+    markSaved: markSaved,               // 保存したら呼ぶ(戻るボタンの書きかけの確かめを出さない・2026-09-29)
+    ask: askBox,                        // 確かめの窓(Play版はアプリの中・Web版は confirm)。ask(文, function(はい){...}, confirmが無いときの答え)
+    backDefault: backDefault,           // 画面の back() が確かめのあとで「来た画面へ」を続けるとき
     ver: VER,
     appKey: APP_KEY
   };
 }
 function renderScreen(id){
+  if(dirtyIn && dirtyIn.classList && dirtyIn.classList.contains('screen')) dirtyIn = null;   // 描き直し=書きかけは消えた(戻るボタン)
   if(id === 'set') return;
   var c = $('scr-' + id);
   if(!c) return;
@@ -225,7 +229,8 @@ function renderScreen(id){
     c.appendChild(el('p', 'hint', '(未登録の画面: ' + id + ')'));
   }
 }
-function showScreen(id){
+function showScreen(id, how){
+  noteBack(current, id, how);   // 戻るボタンの来た道(2026-09-29)
   current = id;
   var secs = document.querySelectorAll('.screen');
   for(var i = 0; i < secs.length; i++){
@@ -279,6 +284,120 @@ function nativeSaveFile(name, data, utf8, label, done){
   }, function(){ done('fail'); });
 }
 
+/* ---- Android の戻るボタン(Play版だけ・2026-09-29) ----
+   @capacitor/app が無いと、戻るを押すとアプリごと後ろに下がっていた(Android 11 以前は閉じる)。
+   押したときの順: ①いちばん上に重ねた画面(.ov / .photo-ov)を、その画面の「とじる」と同じ動きで閉じる
+                  ②画面のモジュールが back(api) を持ち true を返したら、それで終わり(画面の中の段を1つ戻る など)
+                  ③ホーム以外なら、来た画面へ(来た道 backStack。無ければホーム)
+                  ④ホームなら、アプリを後ろに下げる(minimizeApp。中身はそのまま)
+   書きかけ: 文字を入れた(input イベント)まま保存していない層を閉じるときだけ、確かめの窓(askBox・common.backConfirm)を出す。
+     やめる=何もしない。保存したら api.markSaved()。画面を描き直すと、その画面の書きかけは無い扱い。
+     さがす欄(type=search)と data-nodirty の中の入力は数えない(入れたらすぐ保存される欄にも付ける)。
+   重ねた画面の閉じ方: ov._back(関数) → [data-back] の要素 → .ov-close を click()(Tap は click も拾う)。
+     data-noback の層(同意の窓など)は閉じずに④と同じ。
+   Web版(ブラウザ)は何も変えない(戻るはブラウザのまま) */
+var backStack = [];          // 来た道(画面id)。ホームに着いたら空
+var dirtyIn = null;          // 書きかけのある層(.ov か .screen)
+function noteBack(from, to, how){
+  if(how === 'tab'){ backStack = (to === 'home') ? [] : ['home']; return; }   // 下ナビ=ホームの1つ下
+  if(to === from) return;
+  if(to === 'home'){ backStack = []; return; }
+  var i = backStack.indexOf(to);
+  if(i >= 0){ backStack = backStack.slice(0, i); return; }   // 前にいた画面へ行く=そこまで戻ったのと同じ
+  if(from) backStack.push(from);
+  if(backStack.length > 20) backStack.shift();
+}
+function markSaved(){ dirtyIn = null; }
+function isWriting(t){
+  if(!t || !t.tagName) return false;
+  if(t.closest && t.closest('[data-nodirty]')) return false;
+  if(t.tagName === 'TEXTAREA' || t.isContentEditable) return true;
+  if(t.tagName !== 'INPUT') return false;
+  return /^(text|tel|email|url|number|date|time|datetime-local|month|week|)$/.test(String(t.type || 'text').toLowerCase());
+}
+function topLayer(){
+  var ls = document.querySelectorAll('.ov, .photo-ov');
+  for(var i = ls.length - 1; i >= 0; i--){ if(ls[i].getClientRects && ls[i].getClientRects().length) return ls[i]; }
+  return null;
+}
+function minimizeApp(){
+  var ap = nativePlugin('App', 'minimizeApp');
+  try{ if(ap){ var p = ap.minimizeApp(); if(p && p.catch) p.catch(function(){}); } }catch(_){}
+}
+/* ---- アプリの中の確かめの窓(2026-09-29) ----
+   Play版の window.confirm は、Capacitor(BridgeWebChromeClient)がボタンを英語の OK / Cancel に決め打ちしている。
+   Play版だけ、アプリの中に「いいえ / はい」(common.no / common.yes・12言語・文字の大きさの設定どおり)の窓を出す。
+   Web版は今までどおり window.confirm(ブラウザの言葉で出る)。confirm の無い環境(疑似DOMのスモーク)は dflt。
+   done(true=はい / false=いいえ)。Web版では done をその場で呼ぶ。戻るボタン=いいえ(data-back) */
+function askBox(msg, done, dflt){
+  if(!isNativeApp()){
+    var r = !!dflt;
+    try{ if(typeof window.confirm === 'function') r = !!window.confirm(msg); }catch(_){ r = false; }
+    done(r);
+    return;
+  }
+  var ov = el('div', 'ov ask-ov');
+  ov.setAttribute('role', 'alertdialog');
+  ov.setAttribute('aria-modal', 'true');
+  var box = el('div', 'ask-box');
+  var p = el('p', 'ask-msg', msg);
+  var row = el('div', 'ask-row');
+  var no = el('button', 'btn ask-no', T('common.no'));
+  var yes = el('button', 'btn ask-yes', T('common.yes'));
+  no.type = 'button'; yes.type = 'button';
+  no.setAttribute('data-back', '1');
+  var closed = false;
+  function close(v){ if(closed) return; closed = true; if(ov.parentNode) ov.parentNode.removeChild(ov); done(v); }
+  Tap.bind(no, function(){ close(false); });
+  Tap.bind(yes, function(){ close(true); });
+  row.appendChild(no); row.appendChild(yes);
+  box.appendChild(p); box.appendChild(row); ov.appendChild(box);
+  document.body.appendChild(ov);
+  try{ no.focus(); }catch(_){}
+}
+function closeLayer(ov){
+  if(typeof ov._back === 'function'){ try{ ov._back(); }catch(err){ console.error('back error:', err); } return; }
+  var b = ov.querySelector('[data-back]') || ov.querySelector('.ov-close');
+  if(b){ b.click(); return; }
+  if(ov.parentNode) ov.parentNode.removeChild(ov);
+}
+function onBack(){
+  var ov = topLayer();
+  if(ov && ov.hasAttribute('data-noback')){ minimizeApp(); return; }
+  var mod = window.SCREENS && window.SCREENS.get(current);
+  var hasBack = !!(mod && typeof mod.back === 'function');
+  if(!ov && current === 'home' && !hasBack){ minimizeApp(); return; }   // 後ろに下げるだけ(書きかけも消えない)
+  var layer = ov || $('scr-' + current);
+  if(dirtyIn && !document.body.contains(dirtyIn)) dirtyIn = null;
+  function go(){
+    if(ov){ closeLayer(ov); return; }
+    if(hasBack){
+      try{ if(mod.back(screenApi()) === true) return; }catch(err){ console.error('back error:', current, err); }
+    }
+    backDefault();
+  }
+  if(layer && dirtyIn === layer){
+    askBox(T('common.backConfirm'), function(ok){ if(!ok) return; dirtyIn = null; go(); });
+    return;
+  }
+  go();
+}
+/* 来た画面へ(無ければホーム)・ホームなら後ろに下げる。画面の back() が確かめの窓のあとで続けるときにも使う(api.backDefault) */
+function backDefault(){
+  if(current !== 'home'){ showScreen(backStack.length ? backStack[backStack.length - 1] : 'home'); return; }
+  minimizeApp();
+}
+function watchBack(){
+  if(!isNativeApp()) return;
+  var ap = nativePlugin('App', 'addListener');
+  if(!ap) return;
+  try{ ap.addListener('backButton', function(){ onBack(); }); }catch(_){ return; }
+  if(document.addEventListener) document.addEventListener('input', function(e){
+    var t = e.target;
+    if(isWriting(t)) dirtyIn = (t.closest && (t.closest('.ov, .photo-ov') || t.closest('.screen'))) || null;
+  }, true);
+}
+
 /* ---- 機種変更(バックアップ): このアプリの保存キー全部を1ファイルに ---- */
 function exportBackup(){
   var data = { app: APP_KEY, ver: 1, exported: Date.now(), pref: pref, data: {} };
@@ -307,8 +426,8 @@ function exportBackup(){
   toast(T('set.exported'));
 }
 /* よみこむ(点検 pouch-21・8本共通 D 2026-09-29)
-   ・このアプリのファイルか・形を確かめてから、置き換える前に window.confirm で確かめる(やめる=何も変えない)。
-     Capacitor の WebView はネイティブのダイアログで出す。confirm の無い環境(疑似DOMスモーク)は そのまま進む
+   ・このアプリのファイルか・形を確かめてから、置き換える前に askBox で確かめる(やめる=何も変えない)。
+     Play版はアプリの中の はい/いいえ の窓・Web版は window.confirm。confirm の無い環境(疑似DOMスモーク)は そのまま進む
    ・はい=丸ごと入れ替え: いまの「pouch.」のデータを消してから、ファイルの中身を書く(ファイルに無いものは残さない=混ざらない)。
      ほかのアプリのキー(pouch. で始まらない)は触らない。書けなかったら(容量など)元に戻して「よみこめませんでした」 */
 function ownDataKeys(){
@@ -347,12 +466,14 @@ function importBackup(e){
         if(typeof window.APP_IMPORT_FILTER === 'function') data = window.APP_IMPORT_FILTER(data) || {};
       }
     }catch(err){ toast(T('set.importFail')); return; }
-    if(typeof window.confirm === 'function' && !window.confirm(T('set.importConfirm'))) return;
-    if(!replaceAllData(data)){ toast(T('set.importFail')); return; }
-    pref = sanitizePref(d.pref);
-    savePref();
-    applyAll(true);
-    toast(T('set.imported'));
+    askBox(T('set.importConfirm'), function(ok){   // Play版はアプリの中の窓(はい/いいえ)・Web版は window.confirm
+      if(!ok) return;
+      if(!replaceAllData(data)){ toast(T('set.importFail')); return; }
+      pref = sanitizePref(d.pref);
+      savePref();
+      applyAll(true);
+      toast(T('set.imported'));
+    }, true);
   };
   r.readAsText(f);
   e.target.value = '';
@@ -373,7 +494,7 @@ function toast(msg){
 function init(){
   var navs = document.querySelectorAll('.nav-btn');
   for(var i = 0; i < navs.length; i++){
-    (function(b){ Tap.bind(b, function(){ showScreen(b.getAttribute('data-scr')); }); })(navs[i]);
+    (function(b){ Tap.bind(b, function(){ showScreen(b.getAttribute('data-scr'), 'tab'); }); })(navs[i]);
   }
   Tap.bind($('hd-title'), function(){ showScreen('home'); });   // 名前タップ=いつでもホームへ
 
@@ -389,6 +510,7 @@ function init(){
   applyAll(false);
   showScreen('home');
 
+  watchBack();                        // Android の戻るボタン(Play版だけ)
   applyBarSpace();
   watchBarSpace();
   if(typeof window !== 'undefined' && window.addEventListener){

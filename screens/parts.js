@@ -36,13 +36,25 @@
     return b;
   }
 
-  /* けす確認(window.confirm は使わない=Tap方式・見た目を揃える) */
+  /* 戻るボタン(Play版)の書きかけ: 写真・おとを えらんだ/けした ときも、文字を入れたときと同じ扱いにする。
+     フォームの最初の文字欄に input を知らせるだけ(値は変えない。Web版は受け取る所が無いので何も起きない・2026-09-29) */
+  function touchForm(node){
+    try{
+      var ov = node && node.closest && node.closest('.ov');
+      var f = ov && ov.querySelector('input.fld, textarea.fld');
+      if(f && typeof Event === 'function') f.dispatchEvent(new Event('input', { bubbles:true }));
+    }catch(_){}
+  }
+
+  /* けす確認(window.confirm は使わない=Tap方式・見た目を揃える)。戻るボタン=いいえ(けさない) */
   function confirmDel(api, onYes){
     var ov = overlay(api, 'confirm-ov');
     var box = api.el('div', 'confirm-box');
     box.appendChild(api.el('p', 'confirm-text', api.T('common.delConfirm')));
     var row = api.el('div', 'btn-row');
-    row.appendChild(btn(api, 'btn', api.T('common.no'), function(){ remove(ov); }));
+    var no = btn(api, 'btn', api.T('common.no'), function(){ remove(ov); });
+    no.setAttribute('data-back', '1');
+    row.appendChild(no);
     row.appendChild(btn(api, 'btn danger', api.T('common.yes'), function(){ remove(ov); onYes(); }));
     box.appendChild(row);
     ov.appendChild(box);
@@ -64,11 +76,11 @@
     var row = api.el('div', 'btn-row');
     function pick(camera){
       if(!api.Photo) return;
-      api.Photo.pick({ camera:camera, T:api.T, toast:api.toast, out:o.out || 256, onDone:function(d){ state.img = d; draw(); } });
+      api.Photo.pick({ camera:camera, T:api.T, toast:api.toast, out:o.out || 256, onDone:function(d){ state.img = d; draw(); touchForm(wrap); } });
     }
     row.appendChild(btn(api, 'btn', '📷 ' + api.T('common.photo.camera'), function(){ pick(true); }));
     row.appendChild(btn(api, 'btn', '🖼️ ' + api.T('common.photo.roll'), function(){ pick(false); }));   // VS16 付き(文字化け防止)
-    var del = btn(api, 'btn wide', api.T('common.parts.photoDel'), function(){ state.img = ''; draw(); });
+    var del = btn(api, 'btn wide', api.T('common.parts.photoDel'), function(){ state.img = ''; draw(); touchForm(wrap); });
     wrap.appendChild(prev); wrap.appendChild(row); wrap.appendChild(del);
     draw();
     return wrap;
@@ -101,7 +113,9 @@
     });
     if(o.extra) ov.appendChild(o.extra(state));
     var row = api.el('div', 'btn-row form-actions');
-    row.appendChild(btn(api, 'btn', '✕ ' + api.T('common.cancel'), function(){ remove(ov); }));
+    var cancel = btn(api, 'btn', '✕ ' + api.T('common.cancel'), function(){ remove(ov); });
+    cancel.setAttribute('data-back', '1');   // 戻るボタン=やめる(書きかけがあれば app.js が先に確かめる)
+    row.appendChild(cancel);
     row.appendChild(btn(api, 'btn primary', '✓ ' + api.T('common.save'), function(){
       for(var k in inputs){ state[k] = String(inputs[k].value || '').trim(); }
       if(o.onSave(state)) remove(ov);
@@ -172,6 +186,8 @@
     if(o.after) ov.appendChild(o.after());
     draw();
     closeBtn(api, ov);
+    /* 戻るボタン(Play版): 2段目より先なら「まえ」と同じ(1段もどる)。1段目なら とじる と同じ */
+    ov._back = function(){ if(idx > 0){ idx--; draw(); } else remove(ov); };
     return ov;
   }
 
@@ -253,7 +269,7 @@
 
   window.POUCH_PARTS = {
     newId: newId, fmt: fmt, btn: btn, remove: remove, saveOrWarn: saveOrWarn, thumb: thumb,
-    overlay: overlay, closeBtn: closeBtn, confirmDel: confirmDel, photoField: photoField,
+    overlay: overlay, closeBtn: closeBtn, confirmDel: confirmDel, photoField: photoField, touchForm: touchForm,
     openForm: openForm, openShow: openShow, openSteps: openSteps,
     pickPlainPhoto: pickPlainPhoto, loadToday: loadToday, isTodayFresh: isTodayFresh, takeToday: takeToday, clearToday: clearToday, TODAY_KEY: TODAY_KEY,
     cleanData: cleanData, importFilter: importFilter

@@ -97,7 +97,7 @@ var Photo = (function(){
       }catch(_){ close(); if(o.toast) o.toast(T('common.photo.fail')); }
     }
     var row = elc('div', 'photo-row');
-    var bc = elc('button', 'btn', '✕ ' + T('common.cancel')); bc.type = 'button'; tapBind(bc, close);
+    var bc = elc('button', 'btn', '✕ ' + T('common.cancel')); bc.type = 'button'; tapBind(bc, close); bc.setAttribute('data-back', '1');   // 戻るボタン=やめる
     var bo = elc('button', 'btn primary', '✓ ' + T('common.photo.make')); bo.type = 'button'; tapBind(bo, confirm);
     row.appendChild(bc); row.appendChild(bo);
     ov.appendChild(row);

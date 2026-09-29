@@ -120,7 +120,8 @@
            「ほぞんする」は保存できた実感のため残す(もしもカードと同じ) */
       var fe, ap, ct;
       function collect(){ return { feat: String(fe.value || '').trim(), appr: String(ap.value || '').trim(), contact: String(ct.value || '').trim() }; }
-      function autoSave(){ if(fe && ap && ct) api.save(KEY, collect()); }
+      /* 戻るボタン(Play版): 保存できたら書きかけなし(確かめを出さない)。いっぱいで保存できなかったときだけ、戻るで確かめが出る */
+      function autoSave(){ if(fe && ap && ct && api.save(KEY, collect()) && api.markSaved) api.markSaved(); }
       function field(key, label, ph, hint, textarea){
         var fl = api.el('div', 'field');
         fl.appendChild(api.el('label', null, label));
@@ -139,7 +140,7 @@
       ap = field('appr', T('screen.search.apprH'), T('screen.search.apprPh'), '', true);
       ct = field('contact', T('screen.search.contactH'), T('screen.search.contactPh'), '', false);
       var sv = P().btn(api, 'btn primary wide', '✓ ' + T('screen.search.save'), function(){
-        if(P().saveOrWarn(api, KEY, collect())) api.toast(T('common.saved'));
+        if(P().saveOrWarn(api, KEY, collect())){ if(api.markSaved) api.markSaved(); api.toast(T('common.saved')); }
       });
       sv.setAttribute('id', 'search-save');
       c.appendChild(sv);

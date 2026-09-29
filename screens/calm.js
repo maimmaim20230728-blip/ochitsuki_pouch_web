@@ -34,7 +34,7 @@
         if(f.size > MAX_AUDIO){ api.toast(T('screen.calm.soundTooBig')); return; }
         try{
           var r = new FileReader();
-          r.onload = function(){ state.audio = String(r.result || ''); state.audioName = f.name || ''; draw(); };
+          r.onload = function(){ state.audio = String(r.result || ''); state.audioName = f.name || ''; draw(); P().touchForm(wrap); };   // 戻るボタンの書きかけ
           r.onerror = function(){ api.toast(T('screen.calm.soundFail')); };
           r.readAsDataURL(f);
         }catch(_){ api.toast(T('screen.calm.soundFail')); }
@@ -43,7 +43,7 @@
       inp.click();
     });
     row.appendChild(pickBtn);
-    var del = P().btn(api, 'btn', T('screen.calm.soundDel'), function(){ state.audio = ''; state.audioName = ''; draw(); });
+    var del = P().btn(api, 'btn', T('screen.calm.soundDel'), function(){ state.audio = ''; state.audioName = ''; draw(); P().touchForm(wrap); });
     row.appendChild(del);
     wrap.appendChild(name); wrap.appendChild(row);
     draw();
