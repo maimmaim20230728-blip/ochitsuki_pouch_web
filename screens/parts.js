@@ -258,11 +258,17 @@
     if(key === TODAY_KEY){ return (isObj(d) && imgUrl(d.img)) ? { img: d.img, date: str(d.date), ts: (typeof d.ts === 'number') ? d.ts : 0 } : null; }
     return null;   // このアプリが使わないキー
   }
+  /* はじめての つかいかた(app.js・guide.v1)を読み終えたかどうかは、この端末のこと(2026-09-30)。
+     よみこむ は「pouch.」のデータを丸ごと入れ替えるので、知らないキーとして捨てると、よみこんだあと案内がもう一度出てしまう。
+     ファイルか この端末のどちらかで読み終えていれば残す(値は true だけ) */
+  var GUIDE_KEY = 'guide.v1';
+  function guideReadHere(){ try{ return localStorage.getItem('pouch.' + GUIDE_KEY) === 'true'; }catch(_){ return false; } }
   /* よみこむ: 知らないキーは捨て、知っているキーは形を整えてから入れる(app.js の importBackup が呼ぶ) */
   function importFilter(data){
     var out = {};
     if(!isObj(data)) return out;
     Object.keys(data).forEach(function(k){ var v = cleanData(k, data[k]); if(v) out[k] = v; });
+    if(data[GUIDE_KEY] === true || guideReadHere()) out[GUIDE_KEY] = true;
     return out;
   }
   window.APP_IMPORT_FILTER = importFilter;

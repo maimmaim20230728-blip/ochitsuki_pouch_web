@@ -139,6 +139,31 @@ var ja = {
       show:'見せる(全画面)',
       showTitle:'しぐさと意味', showSign:'しぐさ・持ってくる物・声', showMeaning:'意味', showWorked:'効いた関わり'
     }
+  },
+  /* はじめての つかいかた(app.js openGuide・初回に必ず・2026-09-30)。隠れた入口は無いので せっていの「つかいかた」から もう一度 見られる(GUIDE_AGAIN=true)。
+     ボタンの名前は画面の文字と同じ(絵文字の飾りは書かない)。heads と bodies は同じ数 */
+  guide: {
+    title:'つかいかた', step:'{n} / {m}', start:'はじめる', again:'もういちど 見る',
+    heads:[
+      'おちつきポーチ・そよぎ へ ようこそ',
+      'さいしょに すること',
+      'おちつく',
+      'はぐれたときは「さがす」',
+      'たべもの',
+      'しぐさ',
+      '書いたことは この端末の中だけ',
+      '見やすく する'
+    ],
+    bodies:[
+      'このアプリは、言葉の 少ない 家族と 出かける ときに、家族の スマホに 入れておく ポーチです。\n考える 余裕が ない ときも、ホームの 大きな ボタン 4つ(おちつく・さがす・たべもの・しぐさ)から 1タップで 出せます。\n医療や 捜索の 代わりでは ありません。危ないときは 110番・119番へ。',
+      'ふだんの うちに、「さがす」の「ふだんの 特徴」「見つけたときの 接し方」「緊急の 連絡先(電話番号)」を 書いておきます。書いた そばから ほぞんされます。\n出かける 前には、ホームの「きょうの1枚を とる」で 全身の しゃしんを 1枚 とります。\nぜんぶ 書かなくても だいじょうぶです。入れておけるのは 1人分です。',
+      '「おちつく」には、落ちつく しゃしんと おとを 入れておきます。\n「＋ ついか する」を 押し、「カメラで とる」「しゃしんから えらぶ」で しゃしんを、「おとを えらぶ」で 端末の おとを 入れて、「ほぞんする」を 押します。\n一覧を タップすると 大きく 出て、おとは くりかえし なります。「とじる」で とまります。\nなおしたり けしたり するときは、✎ を 押します。',
+      'はぐれたときは、「さがす」の「見せる(全画面)」を 押します。きょうの しゃしんと 特徴・接し方・連絡先が 1画面に なり、そのまま 相手に 見せられます。\n「手順: 昼・店や 施設で」「手順: 夜・家から 出たとき」は、することを 1画面に ひとつずつ 出します。とちゅうに「110番に電話する」の ボタンも あります。\n家に かえったら、「かえってきた(きょうの しゃしんを けす)」を 押します。',
+      '「たべもの」には、たしかに 食べられる 市販品を しゃしんつきで 入れておきます(商品名・メーカー・買える店・条件)。\n「＋ ついか する」で 入れ、一覧を タップすると なおしたり けしたり できます。\n預け先や 避難所では、「見せる(全画面)」を 押して そのまま 相手に 見せます。',
+      '「しぐさ」には、しぐさ・持ってくる物・声の 意味と、効いた 関わりを 入れておきます。\n「＋ ついか する」で 入れ、一覧を タップすると なおしたり けしたり できます。\nはじめて 関わる 人には、「見せる(全画面)」を 押して そのまま 見せます。',
+      '書いたことや しゃしん・おとは、すべて この端末の中だけに ほぞんされます。どこにも 送られません。\nスマホを かえるときは、「せってい」の「かきだす」で ファイルを ほぞんして、あたらしい スマホで「よみこむ」を おしてください。\n付き添いの 支援者が 使うときは、事業所の 端末で 使ってください。',
+      '「せってい」で、「もじの大きさ」(ふつう・大きい・とても大きい)と「いろ」(みどり・みずいろ・しろ・くろ)を かえられます。\n「BGM」と「タップ音」も ここで かえられます。ことばは、いちばん上の「Language」で えらべます。\nこの案内は、「せってい」の「つかいかた」の「もういちど 見る」で また 見られます。'
+    ]
   }
 };
 
@@ -269,6 +294,29 @@ var en = {
       show:'Show (full screen)',
       showTitle:'Signs and meanings', showSign:'Gesture, object, or sound', showMeaning:'Meaning', showWorked:'Response that worked'
     }
+  },
+  guide: {
+    title:'How to use', step:'{n} / {m}', start:'Start', again:'Show again',
+    heads:[
+      'Welcome to Steady Pouch - SOYOGI',
+      'What to do first',
+      'Calm',
+      'If you get separated: Search',
+      'Food',
+      'Signs',
+      'What you enter stays on this device',
+      'Making it easier to see'
+    ],
+    bodies:[
+      'This app is a pouch you keep on the family phone, for going out with a family member who speaks little.\nEven when there is no time to think, the four big buttons on Home (Calm, Search, Food, Signs) open what you need with one tap.\nIt does not replace medical care or a police search. In danger, call 110 (police) or 119 (ambulance) in Japan.',
+      'While things are calm, fill in "Usual description", "How to approach when found" and "Emergency contact (phone number)" under "Search". They are saved as you type.\nBefore going out, tap "Take the photo of today" on Home and take one full-body photo.\nYou do not have to fill in everything. The app holds one person.',
+      'Under "Calm", keep calming photos and sounds.\nTap "＋ Add", add a photo with "Take a photo" or "Choose from photos" and a sound from this device with "Choose a sound", then tap "Save".\nTap an item in the list to show it full-screen. The sound plays on repeat, and "Close" stops it.\nTo edit or delete one, tap ✎.',
+      'If you get separated, tap "Show (full screen)" under "Search". The photo of today, the description, how to approach and the contact become one screen that you can show as it is.\n"Steps: daytime, in a store or facility" and "Steps: night, left the house" show what to do, one step per screen. There is also a "Call 110 (police)" button along the way.\nWhen you are back home, tap "Back home (delete the photo of today)".',
+      'Under "Food", keep the store-bought foods they can surely eat, with photos (product name, maker, where to buy, conditions).\nAdd them with "＋ Add". Tap an item in the list to edit or delete it.\nAt a care place or a shelter, tap "Show (full screen)" and show the screen as it is.',
+      'Under "Signs", keep what a gesture, an object they bring, or a sound means, and what response has worked.\nAdd them with "＋ Add". Tap an item in the list to edit or delete it.\nFor someone meeting them for the first time, tap "Show (full screen)" and show the screen as it is.',
+      'Everything you enter, including photos and sounds, is stored only on this device. Nothing is sent anywhere.\nWhen you change phones, tap "Export" in "Settings" to save a file, then tap "Import" on the new phone.\nIf you are a support worker accompanying the person, please use a device from your organization.',
+      'In "Settings" you can change the "Text size" (Normal, Large, Very large) and the "Color" (Green, Light blue, White, Black).\nYou can also change "Music" and "Tap sound" there. Choose your language with "Language" at the top.\nTo see this guide again, tap "Show again" next to "How to use" in "Settings".'
+    ]
   }
 };
 
@@ -499,6 +547,32 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showMeaning": "Bedeutung",
       "showWorked": "Umgang, der geholfen hat"
     }
+  },
+  "guide": {
+    "title": "Anleitung",
+    "step": "{n} / {m}",
+    "start": "Starten",
+    "again": "Noch einmal ansehen",
+    "heads": [
+      "Willkommen bei Verlässliche Tasche - SOYOGI",
+      "Was Sie zuerst tun",
+      "Ruhe",
+      "Wenn Sie getrennt werden: Suchen",
+      "Essen",
+      "Zeichen",
+      "Was Sie eingeben, bleibt auf diesem Gerät",
+      "Besser lesbar machen"
+    ],
+    "bodies": [
+      "Diese App ist eine Tasche auf dem Smartphone der Familie, für unterwegs mit einem Familienmitglied, das wenig spricht.\nAuch wenn keine Zeit zum Nachdenken bleibt, öffnen die vier großen Tasten auf der Startseite (Ruhe, Suchen, Essen, Zeichen) mit einem Tipp, was Sie brauchen.\nSie ersetzt keine medizinische Hilfe und keine Suche durch die Polizei. In Gefahr rufen Sie 110 (Polizei) oder 119 (Rettungsdienst) an. Das sind die Notrufnummern in Japan.",
+      "Füllen Sie in ruhigen Zeiten unter „Suchen“ die Felder „Merkmale im Alltag“, „Umgang beim Finden“ und „Notfallkontakt (Telefonnummer)“ aus. Alles wird schon beim Schreiben gespeichert.\nVor dem Hinausgehen tippen Sie auf der Startseite auf „Foto von heute aufnehmen“ und machen ein Ganzkörperfoto.\nSie müssen nicht alles ausfüllen. Die App ist für eine Person gedacht.",
+      "Unter „Ruhe“ legen Sie beruhigende Fotos und Klänge ab.\nTippen Sie auf „＋ Hinzufügen“, fügen Sie mit „Foto aufnehmen“ oder „Aus den Fotos wählen“ ein Foto und mit „Klang wählen“ einen Klang von diesem Gerät hinzu und tippen Sie dann auf „Speichern“.\nWenn Sie in der Liste auf einen Eintrag tippen, erscheint er groß und der Klang wird wiederholt. „Schließen“ beendet ihn.\nZum Bearbeiten oder Löschen tippen Sie auf ✎.",
+      "Wenn Sie getrennt werden, tippen Sie unter „Suchen“ auf „Zeigen (Vollbild)“. Das Foto von heute, die Merkmale, der Umgang und der Kontakt erscheinen auf einem Bildschirm, den Sie direkt zeigen können.\n„Schritte: Tag, Geschäft oder Einrichtung“ und „Schritte: Nacht, aus dem Haus“ zeigen, was Sie tun können, einen Schritt pro Bildschirm. Unterwegs gibt es auch die Taste „110 anrufen (Polizei)“.\nWenn Sie wieder zu Hause sind, tippen Sie auf „Wieder zu Hause (Foto von heute löschen)“.",
+      "Unter „Essen“ legen Sie gekaufte Produkte mit Foto ab, die die Person sicher isst (Produktname, Hersteller, Erhältlich bei, Bedingungen).\nMit „＋ Hinzufügen“ kommen sie dazu. Wenn Sie in der Liste auf einen Eintrag tippen, können Sie ihn bearbeiten oder löschen.\nAn einem Betreuungsort oder in einer Notunterkunft tippen Sie auf „Zeigen (Vollbild)“ und zeigen den Bildschirm so, wie er ist.",
+      "Unter „Zeichen“ halten Sie fest, was Gesten, mitgebrachte Gegenstände oder Laute bedeuten und welcher Umgang geholfen hat.\nMit „＋ Hinzufügen“ kommen sie dazu. Wenn Sie in der Liste auf einen Eintrag tippen, können Sie ihn bearbeiten oder löschen.\nWer die Person zum ersten Mal begleitet, sieht es über „Zeigen (Vollbild)“ direkt.",
+      "Alles, was Sie eingeben, auch Fotos und Klänge, wird nur auf diesem Gerät gespeichert. Nichts wird irgendwohin gesendet.\nWenn Sie auf ein neues Smartphone wechseln, speichern Sie unter „Optionen“ mit „Exportieren“ eine Datei und tippen auf dem neuen Smartphone auf „Importieren“.\nWenn Sie die Person als Fachkraft begleiten, nutzen Sie bitte ein Gerät Ihrer Einrichtung.",
+      "Unter „Optionen“ können Sie die „Schriftgröße“ (Normal, Groß, Sehr groß) und die „Farbe“ (Grün, Hellblau, Weiß, Schwarz) ändern.\n„Musik“ und „Tippton“ lassen sich dort ebenfalls ändern. Die Sprache wählen Sie oben bei „Language“.\nDiese Anleitung sehen Sie unter „Optionen“ bei „Anleitung“ mit „Noch einmal ansehen“ erneut."
+    ]
   }
 });
 /* ---- /de ---- */
@@ -726,6 +800,32 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showMeaning": "Sens",
       "showWorked": "Réponse qui a fonctionné"
     }
+  },
+  "guide": {
+    "title": "Mode d'emploi",
+    "step": "{n} / {m}",
+    "start": "Commencer",
+    "again": "Revoir",
+    "heads": [
+      "Bienvenue dans Pochette fidèle - SOYOGI",
+      "Ce qu'il faut faire d'abord",
+      "Calme",
+      "En cas de séparation, Chercher",
+      "Aliments",
+      "Signes",
+      "Ce que vous saisissez reste sur cet appareil",
+      "Rendre l'affichage plus lisible"
+    ],
+    "bodies": [
+      "Cette application est une pochette à garder sur le téléphone de la famille, pour sortir avec un proche qui parle peu.\nMême sans temps pour réfléchir, les quatre grands boutons de l'accueil (Calme, Chercher, Aliments, Signes) ouvrent ce qu'il faut d'une seule touche.\nElle ne remplace ni les soins médicaux ni une recherche par la police. En cas de danger, appelez le 110 (police, Japon) ou le 119 (secours, Japon).",
+      "Quand tout est calme, remplissez dans \"Chercher\" les champs \"Description habituelle\", \"Comment aborder la personne une fois retrouvée\" et \"Contact d'urgence (numéro de téléphone)\". Ils sont enregistrés au fur et à mesure.\nAvant de sortir, appuyez sur \"Prendre la photo du jour\" dans l'accueil et prenez une photo en pied.\nIl n'est pas nécessaire de tout remplir. L'application garde les informations d'une seule personne.",
+      "Dans \"Calme\", gardez des photos et des sons qui apaisent.\nAppuyez sur \"＋ Ajouter\", ajoutez une photo avec \"Prendre une photo\" ou \"Choisir dans les photos\" et un son de cet appareil avec \"Choisir un son\", puis appuyez sur \"Enregistrer\".\nAppuyez sur un élément de la liste pour l'afficher en grand. Le son se répète, et \"Fermer\" l'arrête.\nPour le modifier ou le supprimer, appuyez sur ✎.",
+      "En cas de séparation, appuyez sur \"Montrer (plein écran)\" dans \"Chercher\". La photo du jour, la description, la façon d'aborder la personne et le contact tiennent sur un seul écran, à montrer tel quel.\n\"Étapes : jour, magasin ou établissement\" et \"Étapes : nuit, sortie de la maison\" affichent quoi faire, une étape par écran. Un bouton \"Appeler le 110 (police, Japon)\" se trouve aussi en chemin.\nDe retour à la maison, appuyez sur \"De retour (supprimer la photo du jour)\".",
+      "Dans \"Aliments\", gardez avec une photo les produits du commerce que la personne peut manger à coup sûr (nom du produit, fabricant, où l'acheter, conditions).\nAjoutez-les avec \"＋ Ajouter\". Appuyez sur un élément de la liste pour le modifier ou le supprimer.\nDans un lieu d'accueil ou un abri d'urgence, appuyez sur \"Montrer (plein écran)\" pour présenter l'écran tel quel.",
+      "Dans \"Signes\", notez le sens d'un geste, d'un objet apporté ou d'un son, et la réponse qui a fonctionné.\nAjoutez-les avec \"＋ Ajouter\". Appuyez sur un élément de la liste pour le modifier ou le supprimer.\nÀ quelqu'un qui rencontre la personne pour la première fois, montrez l'écran tel quel avec \"Montrer (plein écran)\".",
+      "Tout ce que vous saisissez, photos et sons compris, reste uniquement sur cet appareil. Rien n'est envoyé nulle part.\nPour passer à un nouveau téléphone, appuyez sur \"Exporter\" dans \"Réglages\" pour enregistrer un fichier, puis sur \"Importer\" sur le nouveau téléphone.\nSi vous accompagnez la personne en tant que professionnel, utilisez un appareil de votre structure.",
+      "Dans \"Réglages\", vous pouvez changer la \"Taille du texte\" (Normale, Grande, Très grande) et la \"Couleur\" (Vert, Bleu clair, Blanc, Noir).\nVous pouvez aussi y changer la \"Musique\" et le \"Son au toucher\". Choisissez la langue avec \"Language\", tout en haut.\nPour revoir ce guide, appuyez sur \"Revoir\" à la ligne \"Mode d'emploi\" dans \"Réglages\"."
+    ]
   }
 });
 /* ---- /fr ---- */
@@ -953,6 +1053,32 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showMeaning": "Significado",
       "showWorked": "Respuesta que funcionó"
     }
+  },
+  "guide": {
+    "title": "Cómo se usa",
+    "step": "{n} / {m}",
+    "start": "Empezar",
+    "again": "Ver de nuevo",
+    "heads": [
+      "Qué es Bolsa de confianza - SOYOGI",
+      "Qué hacer primero",
+      "Calma",
+      "Si se separan: Buscar",
+      "Comida",
+      "Señales",
+      "Lo que se escribe se queda en este dispositivo",
+      "Para ver mejor"
+    ],
+    "bodies": [
+      "Esta app es una bolsa que se lleva en el teléfono de la familia, para salir con un familiar que habla poco.\nAunque no haya tiempo para pensar, los cuatro botones grandes de Inicio (Calma, Buscar, Comida, Señales) abren lo necesario con un toque.\nNo sustituye la atención médica ni una búsqueda policial. En caso de peligro, llamar al 110 (policía) o al 119 (ambulancia) en Japón.",
+      "Con calma, completar en \"Buscar\" los campos \"Características habituales\", \"Cómo acercarse al encontrar a la persona\" y \"Contacto de emergencia (número de teléfono)\". Se guardan mientras se escribe.\nAntes de salir, tocar \"Tomar la foto de hoy\" en Inicio y tomar una foto de cuerpo entero.\nNo hace falta completar todo. La app guarda los datos de una sola persona.",
+      "En \"Calma\" se guardan fotos y sonidos que calman.\nTocar \"＋ Añadir\", poner una foto con \"Tomar una foto\" o \"Elegir de las fotos\" y un sonido de este dispositivo con \"Elegir un sonido\", y luego tocar \"Guardar\".\nAl tocar un elemento de la lista, se muestra en grande y el sonido se repite. \"Cerrar\" lo detiene.\nPara corregirlo o borrarlo, tocar ✎.",
+      "Si se separan, tocar \"Mostrar (pantalla completa)\" en \"Buscar\". La foto de hoy, las características, cómo acercarse y el contacto quedan en una sola pantalla, para enseñarla tal cual.\n\"Pasos: de día, en una tienda o un centro\" y \"Pasos: de noche, salió de casa\" muestran qué hacer, un paso por pantalla. En el camino también está el botón \"Llamar al 110 (policía, Japón)\".\nAl volver a casa, tocar \"Ya está en casa (borrar la foto de hoy)\".",
+      "En \"Comida\" se guardan, con foto, los productos comerciales que sí puede comer (nombre del producto, fabricante, dónde comprarlo, condiciones).\nSe añaden con \"＋ Añadir\". Al tocar un elemento de la lista, se puede corregir o borrar.\nEn el lugar donde se le cuide o en un refugio, tocar \"Mostrar (pantalla completa)\" y enseñar la pantalla tal cual.",
+      "En \"Señales\" se anota qué significa un gesto, un objeto que trae o un sonido que hace, y qué respuesta ha funcionado.\nSe añaden con \"＋ Añadir\". Al tocar un elemento de la lista, se puede corregir o borrar.\nA quien acompaña a la persona por primera vez, se le enseña tal cual con \"Mostrar (pantalla completa)\".",
+      "Todo lo que se escribe, también las fotos y los sonidos, se guarda solo en este dispositivo. No se envía a ningún lugar.\nAl cambiar a un teléfono nuevo, tocar \"Exportar\" en \"Ajustes\" para guardar un archivo y luego tocar \"Importar\" en el teléfono nuevo.\nSi acompaña a la persona como profesional de apoyo, usar un dispositivo de la organización.",
+      "En \"Ajustes\" se pueden cambiar el \"Tamaño del texto\" (Normal, Grande, Muy grande) y el \"Color\" (Verde, Azul claro, Blanco, Negro).\nAhí también se pueden cambiar la \"Música\" y el \"Sonido al tocar\". El idioma se elige arriba, en \"Language\".\nPara ver esta guía otra vez, tocar \"Ver de nuevo\" en la fila \"Cómo se usa\" de \"Ajustes\"."
+    ]
   }
 });
 /* ---- /es ---- */
@@ -1180,6 +1306,32 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showMeaning": "Significato",
       "showWorked": "Risposta che ha funzionato"
     }
+  },
+  "guide": {
+    "title": "Come si usa",
+    "step": "{n} / {m}",
+    "start": "Inizia",
+    "again": "Rivedi",
+    "heads": [
+      "Che cos'è Astuccio fidato - SOYOGI",
+      "Che cosa fare per prima cosa",
+      "Calma",
+      "In caso di smarrimento: Cerca",
+      "Cibo",
+      "Segnali",
+      "Ciò che inserisce resta in questo dispositivo",
+      "Per vedere meglio"
+    ],
+    "bodies": [
+      "Questa app è un astuccio da tenere sul telefono di famiglia, per uscire con un familiare che parla poco.\nAnche quando non c'è tempo per pensare, i quattro grandi pulsanti della Home (Calma, Cerca, Cibo, Segnali) aprono ciò che serve con un tocco.\nNon sostituisce l'assistenza medica né una ricerca ufficiale. In caso di pericolo, chiami il 110 (polizia) o il 119 (ambulanza), numeri di emergenza in Giappone.",
+      "Con calma, compili in \"Cerca\" i campi \"Caratteristiche abituali\", \"Come comportarsi al ritrovamento\" e \"Contatto di emergenza (numero di telefono)\". Si salvano mentre scrive.\nPrima di uscire, tocchi \"Scatta la foto di oggi\" nella Home e scatti una foto a figura intera.\nNon è necessario compilare tutto. L'app contiene i dati di una sola persona.",
+      "In \"Calma\" tenga le foto e i suoni che aiutano a calmarsi.\nTocchi \"＋ Aggiungi\", inserisca una foto con \"Scatta una foto\" o \"Scegli dalle foto\" e un suono di questo dispositivo con \"Scegli un suono\", poi tocchi \"Salva\".\nToccando un elemento dell'elenco, compare a schermo intero e il suono si ripete. \"Chiudi\" lo ferma.\nPer modificarlo o eliminarlo, tocchi ✎.",
+      "In caso di smarrimento, tocchi \"Mostra (schermo intero)\" in \"Cerca\". La foto di oggi, le caratteristiche, come comportarsi e il contatto compaiono in un'unica schermata da mostrare così com'è.\n\"Passi di giorno: negozio o struttura\" e \"Passi di notte: fuori casa\" mostrano cosa fare, un passo per schermata. Lungo i passi c'è anche il pulsante \"Chiama il 110 (polizia)\".\nQuando è di nuovo a casa, tocchi \"È a casa (elimina la foto di oggi)\".",
+      "In \"Cibo\" tenga, con le foto, i prodotti in commercio che può mangiare con sicurezza (nome del prodotto, produttore, dove si compra, condizioni).\nLi aggiunga con \"＋ Aggiungi\". Toccando un elemento dell'elenco può modificarlo o eliminarlo.\nPresso chi se ne prende cura o in un rifugio di emergenza, tocchi \"Mostra (schermo intero)\" per far vedere direttamente la schermata.",
+      "In \"Segnali\" annoti il significato di gesti, oggetti che porta e suoni che fa, e le risposte che hanno funzionato.\nLi aggiunga con \"＋ Aggiungi\". Toccando un elemento dell'elenco può modificarlo o eliminarlo.\nA chi se ne occupa per la prima volta, lo mostri così com'è con \"Mostra (schermo intero)\".",
+      "Tutto ciò che inserisce, anche foto e suoni, resta solo in questo dispositivo. Non viene inviato da nessuna parte.\nQuando passa a un nuovo telefono, tocchi \"Esporta\" in \"Opzioni\" per salvare un file, poi tocchi \"Importa\" sul nuovo telefono.\nSe accompagna la persona come operatore di supporto, usi un dispositivo della sua struttura.",
+      "In \"Opzioni\" può cambiare la \"Dimensione del testo\" (Normale, Grande, Molto grande) e il \"Colore\" (Verde, Azzurro, Bianco, Nero).\nLì può cambiare anche \"Musica\" e \"Suono al tocco\". La lingua si sceglie in alto, in \"Language\".\nPer rivedere questa guida, tocchi \"Rivedi\" alla riga \"Come si usa\" in \"Opzioni\"."
+    ]
   }
 });
 /* ---- /it ---- */
@@ -1407,6 +1559,32 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showMeaning": "Significado",
       "showWorked": "Resposta que funcionou"
     }
+  },
+  "guide": {
+    "title": "Como usar",
+    "step": "{n} / {m}",
+    "start": "Começar",
+    "again": "Ver de novo",
+    "heads": [
+      "O que é Bolsa de confiança - SOYOGI",
+      "O que fazer primeiro",
+      "Calma",
+      "Em caso de separação: Procurar",
+      "Comida",
+      "Sinais",
+      "O que se escreve fica neste aparelho",
+      "Para ver melhor"
+    ],
+    "bodies": [
+      "Esta aplicação é uma bolsa guardada no telefone da família, para sair com um familiar que fala pouco.\nMesmo sem tempo para pensar, os quatro botões grandes do Início (Calma, Procurar, Comida, Sinais) abrem o que é preciso com um toque.\nNão substitui os cuidados médicos nem uma busca oficial. Em caso de perigo, ligar para o 110 (polícia) ou o 119 (ambulância), no Japão.",
+      "Com calma, preencher em \"Procurar\" os campos \"Características habituais\", \"Como abordar ao encontrar\" e \"Telefone de emergência\". Ficam guardados enquanto se escreve.\nAntes de sair, tocar em \"Tirar a foto de hoje\" no Início e tirar uma foto de corpo inteiro.\nNão é preciso preencher tudo. A aplicação guarda os dados de uma só pessoa.",
+      "Em \"Calma\" guardam-se fotos e sons que acalmam.\nTocar em \"＋ Adicionar\", pôr uma foto com \"Tirar uma foto\" ou \"Escolher das fotos\" e um som deste aparelho com \"Escolher um som\", e depois tocar em \"Guardar\".\nAo tocar num item da lista, ele aparece em grande e o som repete-se. \"Fechar\" para o som.\nPara corrigir ou apagar, tocar em ✎.",
+      "Em caso de separação, tocar em \"Mostrar (tela cheia)\" em \"Procurar\". A foto de hoje, as características, como abordar e o telefone de emergência aparecem juntos numa só tela, para mostrar diretamente.\n\"Passos: de dia, numa loja ou instituição\" e \"Passos: de noite, saiu de casa\" mostram o que fazer, um passo por tela. Pelo caminho há também o botão \"Ligar para o 110 (polícia)\".\nAo voltar para casa, tocar em \"Voltou para casa (apagar a foto de hoje)\".",
+      "Em \"Comida\" guardam-se, com foto, os produtos comprados em loja que come sem problema (nome do produto, fabricante, onde comprar, condições).\nAdicionam-se com \"＋ Adicionar\". Ao tocar num item da lista, é possível corrigir ou apagar.\nNo local onde fica aos cuidados de outros, ou num abrigo, tocar em \"Mostrar (tela cheia)\" e mostrar diretamente à outra pessoa.",
+      "Em \"Sinais\" anota-se o significado dos gestos, dos objetos que traz e dos sons, e a resposta que funcionou.\nAdicionam-se com \"＋ Adicionar\". Ao tocar num item da lista, é possível corrigir ou apagar.\nA quem lida com a pessoa pela primeira vez, mostra-se diretamente com \"Mostrar (tela cheia)\".",
+      "Tudo o que for escrito, incluindo fotos e sons, fica guardado só neste aparelho. Nada é enviado a ninguém.\nAo mudar para um telefone novo, tocar em \"Exportar\" em \"Ajustes\" para guardar uma cópia e, no telefone novo, tocar em \"Importar\".\nSe acompanhar a pessoa como profissional de apoio, usar um dispositivo da organização.",
+      "Em \"Ajustes\" é possível mudar o \"Tamanho das letras\" (Normal, Grande, Muito grande) e a \"Cor\" (Verde, Azul-claro, Branco, Preto).\nTambém se pode mudar aí a \"Música de fundo\" e o \"Som ao tocar\". O idioma escolhe-se no topo, em \"Language\".\nPara ver este guia outra vez, tocar em \"Ver de novo\" na linha \"Como usar\" de \"Ajustes\"."
+    ]
   }
 });
 /* ---- /pt ---- */
@@ -1634,6 +1812,32 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showMeaning": "Betekenis",
       "showWorked": "Aanpak die werkte"
     }
+  },
+  "guide": {
+    "title": "Uitleg",
+    "step": "{n} / {m}",
+    "start": "Beginnen",
+    "again": "Opnieuw bekijken",
+    "heads": [
+      "Welkom bij Betrouwbaar tasje - SOYOGI",
+      "Wat u eerst doet",
+      "Rust",
+      "Elkaar kwijtgeraakt: Zoeken",
+      "Eten",
+      "Gebaren",
+      "Wat u invoert, blijft op dit apparaat",
+      "Beter leesbaar maken"
+    ],
+    "bodies": [
+      "Deze app is een tasje op de telefoon van het gezin, voor als u op pad gaat met een naaste die weinig praat.\nOok als er geen tijd is om na te denken, openen de vier grote knoppen op Home (Rust, Zoeken, Eten, Gebaren) met één tik wat u nodig hebt.\nDe app vervangt geen medische zorg en geen zoekactie. Bel bij gevaar 110 (politie) of 119 (ambulance); dit zijn de nummers in Japan.",
+      "Vul op een rustig moment bij \"Zoeken\" de velden \"Vaste kenmerken\", \"Zo benadert u de persoon als u hem of haar vindt\" en \"Noodcontact (telefoonnummer)\" in. Alles wordt meteen bewaard.\nTik voor het weggaan op Home op \"Foto van vandaag maken\" en maak één foto van het hele lichaam.\nU hoeft niet alles in te vullen. De app bewaart de gegevens van één persoon.",
+      "Bij \"Rust\" zet u foto's en geluiden die rust geven.\nTik op \"＋ Toevoegen\", voeg een foto toe met \"Foto maken\" of \"Kiezen uit foto's\" en een geluid van dit apparaat met \"Geluid kiezen\", en tik dan op \"Opslaan\".\nAls u in de lijst op een item tikt, verschijnt het groot en wordt het geluid herhaald. \"Sluiten\" stopt het.\nWilt u iets wijzigen of wissen? Tik dan op ✎.",
+      "Raakt u elkaar kwijt, tik dan bij \"Zoeken\" op \"Tonen (volledig scherm)\". De foto van vandaag, de kenmerken, de benadering en het contact komen op één scherm dat u zo kunt laten zien.\n\"Stappen: overdag, in een winkel of instelling\" en \"Stappen: 's nachts, uit huis gegaan\" tonen wat u kunt doen, één stap per scherm. Onderweg is er ook de knop \"110 bellen (politie)\".\nWeer thuis? Tik dan op \"Weer thuis (foto van vandaag wissen)\".",
+      "Bij \"Eten\" bewaart u, met foto, kant-en-klare producten uit de winkel die uw naaste zeker kan eten (productnaam, fabrikant, te koop bij, voorwaarden).\nVoeg ze toe met \"＋ Toevoegen\". Tik in de lijst op een item om het te wijzigen of te wissen.\nWaar u uw naaste onderbrengt of in een evacuatiecentrum tikt u op \"Tonen (volledig scherm)\" en laat u het scherm zo zien.",
+      "Bij \"Gebaren\" legt u vast wat een gebaar, een meegebracht voorwerp of een stemgeluid betekent, en welke aanpak heeft gewerkt.\nVoeg ze toe met \"＋ Toevoegen\". Tik in de lijst op een item om het te wijzigen of te wissen.\nAan iemand die voor het eerst met uw naaste omgaat, laat u het zo zien met \"Tonen (volledig scherm)\".",
+      "Alles wat u invoert, ook foto's en geluiden, wordt alleen op dit apparaat bewaard. Er wordt niets verzonden.\nGaat u over op een nieuwe telefoon? Tik dan in \"Opties\" op \"Exporteren\" om een bestand op te slaan en tik op de nieuwe telefoon op \"Importeren\".\nBegeleidt u de persoon als hulpverlener? Gebruik dan een apparaat van uw organisatie.",
+      "In \"Opties\" kunt u de \"Tekstgrootte\" (Normaal, Groot, Heel groot) en de \"Kleur\" (Groen, Lichtblauw, Wit, Zwart) veranderen.\nOok \"Muziek\" en \"Tikgeluid\" kunt u daar veranderen. De taal kiest u bovenaan bij \"Language\".\nWilt u deze uitleg nog eens zien? Tik dan in \"Opties\" bij \"Uitleg\" op \"Opnieuw bekijken\"."
+    ]
   }
 });
 /* ---- /nl ---- */
@@ -1861,6 +2065,32 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showMeaning": "Betydelse",
       "showWorked": "Bemötande som fungerat"
     }
+  },
+  "guide": {
+    "title": "Så använder du appen",
+    "step": "{n} / {m}",
+    "start": "Börja",
+    "again": "Visa igen",
+    "heads": [
+      "Välkommen till Stadiga påsen - SOYOGI",
+      "Det här gör du först",
+      "Lugn",
+      "Om ni kommer ifrån varandra: Leta",
+      "Mat",
+      "Tecken",
+      "Det du skriver stannar på den här enheten",
+      "Gör det lättare att se"
+    ],
+    "bodies": [
+      "Den här appen är en påse i familjens telefon, för när du går ut med en familjemedlem som pratar lite.\nÄven när det inte finns tid att tänka öppnar de fyra stora knapparna på Hem (Lugn, Leta, Mat, Tecken) det du behöver med ett tryck.\nDen ersätter inte vård eller polisens sökande. Vid fara: ring 110 (polis, Japan) eller 119 (ambulans, Japan).",
+      "Fyll i lugn och ro i \"Vanliga kännetecken\", \"Bemötande när hen hittas\" och \"Kontakt vid nödläge (telefonnummer)\" under \"Leta\". Det sparas medan du skriver.\nInnan ni går ut trycker du på \"Ta dagens foto\" på Hem och tar ett helkroppsfoto.\nDu behöver inte fylla i allt. Appen rymmer en person.",
+      "Under \"Lugn\" lägger du in foton och ljud som lugnar.\nTryck på \"＋ Lägg till\", lägg till ett foto med \"Ta ett foto\" eller \"Välj bland foton\" och ett ljud från enheten med \"Välj ljud\", och tryck sedan på \"Spara\".\nNär du trycker på något i listan visas det i helskärm och ljudet spelas om och om igen. \"Stäng\" stoppar det.\nTryck på ✎ för att ändra eller ta bort.",
+      "Om ni kommer ifrån varandra trycker du på \"Visa (helskärm)\" under \"Leta\". Dagens foto, kännetecknen, bemötandet och kontakten blir en enda skärm som du kan visa som den är.\n\"Steg: dagtid, i en butik eller anläggning\" och \"Steg: natt, lämnat hemmet\" visar vad du kan göra, ett steg per skärm. På vägen finns också knappen \"Ring 110 (polis, Japan)\".\nNär ni är hemma igen trycker du på \"Hemma igen (ta bort dagens foto)\".",
+      "Under \"Mat\" lägger du in färdigköpt mat som hen säkert kan äta, med foton (produktnamn, tillverkare, var det finns att köpa, villkor).\nLägg till med \"＋ Lägg till\". Tryck på något i listan för att ändra eller ta bort det.\nHos den som tar hand om hen, eller på en evakueringsplats, trycker du på \"Visa (helskärm)\" och visar skärmen som den är.",
+      "Under \"Tecken\" skriver du ner vad en gest, ett föremål hen tar med sig eller ett ljud betyder, och vilket bemötande som har fungerat.\nLägg till med \"＋ Lägg till\". Tryck på något i listan för att ändra eller ta bort det.\nFör den som möter hen för första gången trycker du på \"Visa (helskärm)\" och visar skärmen som den är.",
+      "Allt du skriver, även foton och ljud, sparas bara på den här enheten. Inget skickas någonstans.\nNär du byter till en ny telefon trycker du på \"Exportera\" under \"Anpassa\" för att spara en fil, och sedan på \"Importera\" på den nya telefonen.\nOm du följer med personen som stödpersonal, använd en enhet från din arbetsplats.",
+      "Under \"Anpassa\" kan du ändra \"Textstorlek\" (Normal, Stor, Mycket stor) och \"Färg\" (Grön, Ljusblå, Vit, Svart).\nDär kan du också ändra \"Musik\" och \"Knappljud\". Språket väljer du högst upp under \"Language\".\nVill du se guiden igen trycker du på \"Visa igen\" vid \"Så använder du appen\" under \"Anpassa\"."
+    ]
   }
 });
 /* ---- /sv ---- */
@@ -2088,6 +2318,32 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showMeaning": "의미",
       "showWorked": "잘 통했던 대응"
     }
+  },
+  "guide": {
+    "title": "사용법",
+    "step": "{n} / {m}",
+    "start": "시작하기",
+    "again": "다시 보기",
+    "heads": [
+      "든든한 파우치 - SOYOGI에 오신 것을 환영해요",
+      "먼저 할 일",
+      "차분해지기",
+      "서로 놓쳤을 때는 ‘찾기’",
+      "음식",
+      "몸짓",
+      "적은 내용은 이 기기 안에만",
+      "보기 편하게"
+    ],
+    "bodies": [
+      "이 앱은 말이 적은 가족과 외출할 때, 가족의 스마트폰에 넣어 두는 파우치예요.\n생각할 여유가 없을 때도 홈의 큰 버튼 4개(차분해지기·찾기·음식·몸짓)에서 한 번 탭으로 열 수 있어요.\n의료나 수색을 대신하지 않아요. 위험할 때는 110번(경찰·일본)이나 119번(구급·일본)으로 전화해 주세요.",
+      "평소에 ‘찾기’의 ‘평소의 특징’, ‘발견했을 때 대하는 법’, ‘긴급 연락처(전화번호)’를 적어 두세요. 적는 동안 바로 저장돼요.\n외출 전에는 홈의 ‘오늘의 한 장 찍기’로 전신 사진을 한 장 찍어요.\n전부 쓰지 않아도 괜찮아요. 넣어 둘 수 있는 것은 한 사람분이에요.",
+      "‘차분해지기’에는 마음이 차분해지는 사진과 소리를 넣어 둬요.\n‘＋ 추가하기’를 누르고, ‘카메라로 찍기’나 ‘사진에서 고르기’로 사진을, ‘소리 고르기’로 기기의 소리를 넣은 뒤 ‘저장’을 눌러요.\n목록을 탭하면 크게 나오고 소리는 반복해서 울려요. ‘닫기’를 누르면 멈춰요.\n고치거나 지울 때는 ✎를 눌러요.",
+      "서로 놓쳤을 때는 ‘찾기’의 ‘보여 주기(전체 화면)’를 눌러요. 오늘의 사진과 특징·대하는 법·연락처가 한 화면에 담겨서 그대로 보여 줄 수 있어요.\n‘순서: 낮·가게나 시설에서’와 ‘순서: 밤·집에서 나갔을 때’는 할 일을 한 화면에 하나씩 보여 줘요. 중간에 ‘110번(경찰·일본)에 전화하기’ 버튼도 있어요.\n집에 돌아오면 ‘돌아왔어요(오늘의 사진 삭제)’를 눌러요.",
+      "‘음식’에는 확실히 먹을 수 있는 시판 제품을 사진과 함께 넣어 둬요(상품명·제조사·살 수 있는 가게·조건).\n‘＋ 추가하기’로 넣고, 목록을 탭하면 고치거나 지울 수 있어요.\n맡기는 곳이나 대피소에서는 ‘보여 주기(전체 화면)’를 눌러 그대로 상대방에게 보여 줘요.",
+      "‘몸짓’에는 몸짓·가져오는 물건·목소리의 의미와, 잘 통했던 대응을 넣어 둬요.\n‘＋ 추가하기’로 넣고, 목록을 탭하면 고치거나 지울 수 있어요.\n처음 만나는 사람에게는 ‘보여 주기(전체 화면)’를 눌러 그대로 보여 줘요.",
+      "적은 내용과 사진·소리는 모두 이 기기 안에만 저장돼요. 어디에도 보내지 않아요.\n새 스마트폰으로 옮길 때는 ‘설정’의 ‘내보내기’로 파일을 저장하고, 새 스마트폰에서 ‘가져오기’를 눌러 주세요.\n동행하는 지원 담당자가 쓸 때는 소속 기관의 기기를 써 주세요.",
+      "‘설정’에서 ‘글자 크기’(보통·크게·아주 크게)와 ‘색’(초록·하늘색·흰색·검정)을 바꿀 수 있어요.\n‘BGM’과 ‘탭 소리’도 여기서 바꿀 수 있어요. 언어는 맨 위의 ‘Language’에서 고를 수 있어요.\n이 안내는 ‘설정’의 ‘사용법’에서 ‘다시 보기’를 누르면 또 볼 수 있어요."
+    ]
   }
 });
 /* ---- /ko ---- */
@@ -2315,6 +2571,32 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showMeaning": "含义",
       "showWorked": "管用的应对方式"
     }
+  },
+  "guide": {
+    "title": "使用方法",
+    "step": "{n} / {m}",
+    "start": "开始",
+    "again": "再看一次",
+    "heads": [
+      "欢迎使用 稳稳随身包 - SOYOGI",
+      "先做的事",
+      "安心",
+      "走散时用“寻找”",
+      "食物",
+      "动作",
+      "写下的内容只在这台设备里",
+      "让画面更好看清"
+    ],
+    "bodies": [
+      "这个应用是放在家人手机里的随身包，适合和话不多的家人一起出门时使用。\n即使没有时间思考，也能从首页的 4 个大按钮（安心、寻找、食物、动作）一点就打开需要的画面。\n它不能代替医疗或搜救。危险时请拨打日本的110（警察）或119（急救）。",
+      "平时就在“寻找”里先写好“平时的特征”“找到时的接触方式”“紧急联系方式（电话号码）”。写的同时就会保存。\n出门前，在首页点“拍今天的一张”，拍一张全身照。\n不必全部填写也没关系。只能存一个人的信息。",
+      "“安心”里存放能让人平静下来的照片和声音。\n点“＋ 添加”，用“用相机拍摄”或“从相册选择”放入照片，用“选择声音”放入设备里的声音，再点“保存”。\n点列表里的项目就会放大显示，声音会反复播放。点“关闭”就会停止。\n要修改或删除时，点 ✎。",
+      "走散时，在“寻找”里点“展示（全屏）”。今天的照片和特征、接触方式、联系方式会合成一个画面，可以直接给对方看。\n“步骤：白天·在店里或设施里”和“步骤：夜里·从家里出去了”会一屏一个地显示要做的事。途中也有“拨打110（日本警察）”的按钮。\n回到家后，点“回来了（删除今天的照片）”。",
+      "“食物”里连同照片存放确定能吃的市售食品（商品名、厂家、能买到的店、条件）。\n用“＋ 添加”加入，点列表里的项目就能修改或删除。\n在托付照看的地方或避难所，点“展示（全屏）”直接给对方看。",
+      "“动作”里记录动作、拿来的东西、声音的含义，以及曾经管用的应对方式。\n用“＋ 添加”加入，点列表里的项目就能修改或删除。\n对第一次接触的人，点“展示（全屏）”直接给对方看。",
+      "写下的内容和照片、声音，全部只保存在这台设备里，不会发送到任何地方。\n换新手机时，请在“设置”里点“导出”保存文件，再在新手机上点“导入”。\n陪同的支援人员使用时，请使用所在机构的设备。",
+      "在“设置”里可以更改“文字大小”（普通、大、特大）和“颜色”（绿色、浅蓝色、白色、黑色）。\n“背景音乐”和“点击音”也可以在这里更改。语言可以在最上方的“Language”里选择。\n想再看这份说明时，请在“设置”的“使用方法”一行点“再看一次”。"
+    ]
   }
 });
 /* ---- /zh ---- */
@@ -2542,6 +2824,32 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "showMeaning": "المعنى",
       "showWorked": "التعامل الذي نجح"
     }
+  },
+  "guide": {
+    "title": "طريقة الاستخدام",
+    "step": "⁦{n} / {m}⁩",
+    "start": "ابدأ",
+    "again": "عرض مرة أخرى",
+    "heads": [
+      "مرحبًا بك في حقيبة موثوقة - SOYOGI",
+      "ما تفعله أولًا",
+      "الهدوء",
+      "عند الافتراق: البحث",
+      "الطعام",
+      "الإشارات",
+      "ما تكتبه يبقى في هذا الجهاز",
+      "لرؤية أوضح"
+    ],
+    "bodies": [
+      "هذا التطبيق حقيبة تحفظها في هاتف العائلة، للخروج مع فرد من العائلة قليل الكلام.\nحتى عندما لا يوجد وقت للتفكير، تفتح الأزرار الأربعة الكبيرة في الرئيسية (الهدوء، البحث، الطعام، الإشارات) ما تحتاجه بلمسة واحدة.\nهذا التطبيق ليس بديلًا عن الرعاية الطبية أو البحث الرسمي. عند الخطر، اتصل بالرقم 110 (الشرطة) أو 119 (الإسعاف) في اليابان.",
+      "في الأوقات الهادئة، اكتب في «البحث» خانات «الصفات المعتادة» و«طريقة التعامل عند العثور عليه» و«جهة اتصال للطوارئ (رقم الهاتف)». يُحفظ ما تكتبه فورًا.\nقبل الخروج، اضغط «التقاط صورة اليوم» في الرئيسية والتقط صورة واحدة للجسم كاملًا.\nلا داعي لملء كل الخانات. يتسع التطبيق لبيانات شخص واحد.",
+      "في «الهدوء» تحفظ الصور والأصوات التي تبعث على الهدوء.\nاضغط «＋ إضافة»، وأضف صورة عبر «التقاط صورة» أو «اختيار من الصور»، وصوتًا من الجهاز عبر «اختيار صوت»، ثم اضغط «حفظ».\nعند الضغط على عنصر في القائمة يظهر بحجم كبير ويتكرر الصوت. ويوقفه زر «إغلاق».\nللتعديل أو الحذف، اضغط ✎.",
+      "عند الافتراق، اضغط «عرض (ملء الشاشة)» في «البحث». تظهر صورة اليوم والصفات وطريقة التعامل وجهة الاتصال في شاشة واحدة، فتعرضها كما هي.\nتعرض «الخطوات: نهارًا، في متجر أو منشأة» و«الخطوات: ليلًا، إذا خرج من البيت» ما يمكن فعله، خطوة واحدة في كل شاشة. وفي أثنائها يوجد أيضًا زر «الاتصال بالرقم 110 (الشرطة)».\nبعد العودة إلى البيت، اضغط «تمت العودة إلى البيت (حذف صورة اليوم)».",
+      "في «الطعام» تحفظ، مع الصور، المنتجات التجارية التي يمكنه أكلها بالتأكيد (اسم المنتج، الشركة المصنّعة، أين يُشترى، الشروط).\nأضفها بزر «＋ إضافة». وعند الضغط على عنصر في القائمة يمكنك تعديله أو حذفه.\nفي مكان الرعاية أو مركز الإيواء، اضغط «عرض (ملء الشاشة)» لتعرضها على الشخص الآخر كما هي.",
+      "في «الإشارات» تسجّل معنى الإشارة أو الشيء الذي يحضره أو الصوت، والتعامل الذي نجح معه.\nأضفها بزر «＋ إضافة». وعند الضغط على عنصر في القائمة يمكنك تعديله أو حذفه.\nلمن يتعامل معه للمرة الأولى، اضغط «عرض (ملء الشاشة)» واعرضها كما هي.",
+      "كل ما تكتبه، ومعه الصور والأصوات، يُحفظ داخل هذا الجهاز فقط. لا يُرسل إلى أي مكان.\nعند الانتقال إلى هاتف جديد، اضغط «تصدير» في «الإعدادات» لحفظ ملف، ثم اضغط «استيراد» على الهاتف الجديد.\nإذا كنت من العاملين في الدعم وترافق الشخص، فاستخدم جهازًا تابعًا لجهة عملك.",
+      "في «الإعدادات» يمكنك تغيير «حجم الخط» (عادي، كبير، كبير جدًا) و«اللون» (أخضر، أزرق فاتح، أبيض، أسود).\nويمكنك هناك أيضًا تغيير «موسيقى الخلفية» و«صوت اللمس». اختر اللغة من «Language» في الأعلى.\nلرؤية هذا الدليل مرة أخرى، اضغط «عرض مرة أخرى» في سطر «طريقة الاستخدام» في «الإعدادات»."
+    ]
   }
 });
 /* ---- /ar ---- */

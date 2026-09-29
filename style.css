@@ -332,3 +332,24 @@ header#hd{ background:var(--brand-ink); color:var(--on-brand); }
 .credit a, .edit-mark{ color:var(--brand-ink); }
 .call-btn{ background:#237a52; color:#fff; }
 .field input::placeholder, .field textarea::placeholder{ color:var(--sub); opacity:1; }
+
+/* はじめての つかいかた(app.js openGuide・2026-09-30)。🔴この節はファイルの最後に置く(patch_guide.js がここから最後までを写す)。
+   ほかの重ねた画面より上・確かめの窓より下。ボタンは下に固定した帯(地の色つき=長いページでも本文が透けない) */
+.ov.guide-ov{ z-index:350; padding-bottom:calc(128px + env(safe-area-inset-bottom)); }
+.guide-box{ width:min(100%, 560px); margin:0 auto; }
+.guide-top{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+.guide-title{ margin:0; font-weight:800; color:var(--brand-ink, var(--brand)); }
+.guide-step{ margin:0; color:var(--sub); font-weight:700; white-space:nowrap; unicode-bidi:isolate; }   /* 向きは app.js が dir で決める(ar で「8 / 1」にしない) */
+.guide-lang{ display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:12px 0 0; }
+.guide-lang select{ min-height:44px; font-size:1em; font-family:inherit; border:2px solid var(--line); border-radius:10px; background:var(--card); color:var(--ink); padding:2px 8px; }
+.guide-h{ font-size:1.35em; line-height:1.45; margin:16px 0 12px; word-break:keep-all; overflow-wrap:anywhere; }
+.guide-p{ font-size:1.1em; line-height:1.85; margin:0; white-space:pre-line; word-break:keep-all; overflow-wrap:anywhere; }
+.guide-dots{ display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin:24px 0 0; }
+.guide-dot{ width:10px; height:10px; border-radius:50%; background:var(--line); }
+.guide-dot.on{ background:var(--brand); }
+.guide-row{
+  position:fixed; z-index:351; display:flex; gap:10px; left:0; right:0; bottom:0;
+  padding:10px max(16px, env(safe-area-inset-right)) calc(16px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  background:var(--bg); border-top:1px solid var(--line);
+}
+.guide-row .btn{ flex:1 1 0; min-width:0; min-height:64px; font-size:1.15em; }

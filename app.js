@@ -9,7 +9,7 @@
      変えたら README の「シェルの変更点」に書く */
 (function(){
 
-var VER = '0.4.6';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
+var VER = '0.4.7';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
 var APP_KEY = 'ochitsuki_pouch';        // バックアップの識別(別アプリのファイルを読まない)
 var LS = 'pouch.';
 var LS_PREF = LS + 'pref.v1';
@@ -18,6 +18,7 @@ var RTL_LANGS = ['ar'];
 var THEMES = ['green','aqua','white','dark'];
 var BGMS = ['off','green','blue'];
 var DEFAULT_THEME = 'aqua';
+var GUIDE_AGAIN = true;             // せっていから「つかいかた」をもう一度ひらけるか(隠れた入口の開き方を書いたアプリは false)
 var DEFAULT_BGM = 'green';
 var TTS_LANG = { ja:'ja-JP', en:'en-US', de:'de-DE', fr:'fr-FR', es:'es-ES', it:'it-IT', pt:'pt-PT', nl:'nl-NL', sv:'sv-SE', ko:'ko-KR', zh:'zh-CN', ar:'ar-SA' };
 
@@ -60,6 +61,7 @@ function T(key){
 }
 /* 静的要素id → i18nキー(疑似DOMスモークで機械検証できるよう明示マップ方式) */
 var I18N_MAP = {
+  'lbl-guide':'guide.title', 'btn-guide':'guide.again',   // はじめての つかいかた(せっていの行)
   'hd-title':'app.name',
   'set-h-normal':'set.hNormal', 'set-h-backup':'set.hBackup',
   'lbl-fs':'set.fs', 'lbl-theme':'set.theme', 'lbl-bgm':'set.bgm', 'lbl-sound':'set.sound',
@@ -83,6 +85,8 @@ function applyI18n(){
   document.title = T('app.name');
   fitTitle();
   if(current !== 'set') renderScreen(current);   // 表示中の画面も訳し直す
+  var gov = document.querySelector && document.querySelector('.guide-ov');
+  if(gov && gov._draw) gov._draw();               // はじめての つかいかた も訳し直す
   applyBarSpace();
 }
 
@@ -398,6 +402,99 @@ function watchBack(){
   }, true);
 }
 
+/* ---- はじめての つかいかた(初回の案内・2026-09-30) ----
+   ヒロさん「ひとつずつ・そよぎ みたいなタイプのアプリは、必ず最初に使い方の丁寧な説明を出してほしい。10代の情報室のように」。
+   ・初回起動で必ず出す(最後まで読むまで、開くたびに出る)。文言は i18n の guide.*(title / step / start / again / heads[] / bodies[])
+   ・1ページずつ「つぎ」「まえ」で進む。閉じるのは最後のページの「はじめる」だけ(× は置かない)
+   ・戻るボタン(Play版): 2ページ目から=まえのページ / 1ページ目=初回なら後ろに下げる(閉じない・10代の情報室と同じ)、せっていから開いたときは閉じる
+   ・読み終えたら LS + 'guide.v1' = true。GUIDE_AGAIN が true なら、せっていの「つかいかた」で もう一度ひらける
+     (隠れた入口の開き方を書いたアプリは、10代の情報室と同じく二度と出さない=false にして、せっていの行も消す)
+   ・閉じたら document に 'guide-done' を出す(画面側が続きをするとき用) */
+var LS_GUIDE = LS + 'guide.v1';
+function guideDone(){ return loadJSON(LS_GUIDE) === true; }
+function openGuide(first){
+  var bodies = T('guide.bodies');
+  if(!Array.isArray(bodies) || !bodies.length) return;
+  if(document.querySelector('.guide-ov')) return;
+  var i = 0;
+  var ov = el('div', 'ov guide-ov');
+  ov.setAttribute('role', 'dialog');
+  ov.setAttribute('aria-modal', 'true');
+  var box = el('div', 'guide-box');
+  var top = el('div', 'guide-top');
+  var ttl = el('p', 'guide-title');
+  var step = el('p', 'guide-step');
+  top.appendChild(ttl); top.appendChild(step);
+  /* ことば(1ページ目だけ): 案内はヘッダーの Language も覆うので、端末のことばが無いアプリ(日本語で始まる)でも ここで選べるように */
+  var langRow = null, langLbl = null, langSel = null, src = $('set-lang');
+  if(src && src.options && src.options.length){
+    langRow = el('div', 'guide-lang');
+    langLbl = el('span', 'guide-lang-lbl');
+    langSel = document.createElement('select');
+    langSel.setAttribute('aria-label', 'Language 言語');
+    for(var o = 0; o < src.options.length; o++){
+      var op = document.createElement('option');
+      op.value = src.options[o].value; op.textContent = src.options[o].textContent;
+      langSel.appendChild(op);
+    }
+    langSel.addEventListener('change', function(){
+      pref.lang = langSel.value; savePref();
+      if($('set-lang')) $('set-lang').value = pref.lang;
+      applyI18n();                                   // 案内も draw() で訳し直す
+    });
+    langRow.appendChild(langLbl); langRow.appendChild(langSel);
+  }
+  var h = el('h2', 'guide-h');
+  var p = el('p', 'guide-p');
+  var dots = el('div', 'guide-dots');
+  dots.setAttribute('aria-hidden', 'true');
+  var row = el('div', 'guide-row');
+  var prevB = el('button', 'btn guide-prev');
+  var nextB = el('button', 'btn primary guide-next');
+  prevB.type = 'button'; nextB.type = 'button';
+  row.appendChild(prevB); row.appendChild(nextB);
+  box.appendChild(top); if(langRow) box.appendChild(langRow); box.appendChild(h); box.appendChild(p); box.appendChild(dots);
+  ov.appendChild(box); ov.appendChild(row);
+  function draw(){
+    var heads = T('guide.heads');
+    bodies = T('guide.bodies');                    // ことばを変えたときも、いまのページのまま訳し直す
+    var n = bodies.length;
+    if(i > n - 1) i = n - 1;
+    ov.setAttribute('aria-label', T('guide.title'));
+    ttl.textContent = T('guide.title');
+    step.textContent = String(T('guide.step')).replace('{n}', i + 1).replace('{m}', n);
+    step.setAttribute('dir', /[֐-ࣿ]/.test(step.textContent) ? 'rtl' : 'ltr');   // 「1 / 8」は右から左の言葉でも左から(ar の「8 / 1」を防ぐ)
+    if(langRow){
+      langRow.style.display = (i === 0) ? '' : 'none';
+      langLbl.textContent = T('set.lang');
+      langSel.value = pref.lang;
+    }
+    h.textContent = (Array.isArray(heads) && heads[i]) ? heads[i] : '';
+    p.textContent = bodies[i];
+    dots.textContent = '';
+    for(var k = 0; k < n; k++) dots.appendChild(el('span', 'guide-dot' + (k === i ? ' on' : '')));
+    prevB.textContent = T('common.prev');
+    prevB.style.visibility = (i === 0) ? 'hidden' : 'visible';   // 「つぎ」の位置を変えない
+    nextB.textContent = (i === n - 1) ? T('guide.start') : T('common.next');
+    ov.scrollTop = 0;
+  }
+  function close(){
+    if(ov.parentNode) ov.parentNode.removeChild(ov);
+    saveJSON(LS_GUIDE, true);
+    try{ document.dispatchEvent(new Event('guide-done')); }catch(_){}
+  }
+  ov._draw = draw;
+  ov._back = function(){
+    if(i > 0){ i--; draw(); return; }
+    if(first) minimizeApp(); else close();
+  };
+  Tap.bind(prevB, function(){ if(i > 0){ i--; draw(); } });
+  Tap.bind(nextB, function(){ if(i < bodies.length - 1){ i++; draw(); } else close(); });
+  draw();
+  document.body.appendChild(ov);
+  try{ nextB.focus(); }catch(_){}
+}
+
 /* ---- 機種変更(バックアップ): このアプリの保存キー全部を1ファイルに ---- */
 function exportBackup(){
   var data = { app: APP_KEY, ver: 1, exported: Date.now(), pref: pref, data: {} };
@@ -506,9 +603,12 @@ function init(){
   Tap.bind($('bk-export'), exportBackup);
   Tap.bind($('bk-import'), function(){ $('bk-file').click(); });
   if($('bk-file')) $('bk-file').addEventListener('change', importBackup);
+  if($('btn-guide')) Tap.bind($('btn-guide'), function(){ openGuide(false); });
+  if(!GUIDE_AGAIN && $('set-guide-row')) $('set-guide-row').classList.add('hidden');
 
   applyAll(false);
   showScreen('home');
+  if(!guideDone()) openGuide(true);   // はじめての つかいかた(読み終えるまで毎回・2026-09-30)
 
   watchBack();                        // Android の戻るボタン(Play版だけ)
   applyBarSpace();
@@ -533,7 +633,7 @@ function init(){
 }
 
 /* デバッグ・スクショ用の最小の窓口 */
-window.App = { VER: VER, T: T, go: showScreen, toast: toast, pref: function(){ return Object.assign({}, pref); }, api: screenApi };
+window.App = { VER: VER, T: T, go: showScreen, toast: toast, pref: function(){ return Object.assign({}, pref); }, api: screenApi, guide: openGuide };
 
 init();
 
