@@ -59,8 +59,16 @@ const Tap = (() => {
       pid = null;
       el.classList.remove('pressing');
       if(Math.hypot(e.clientX - sx, e.clientY - sy) <= MOVE_LIMIT){
-        ghost = { x:e.clientX, y:e.clientY, until:Date.now() + 700 };   // このあとの同じ指の click を捨てる(上の 👻)
-        fire(e);
+        const g = ghost = { x:e.clientX, y:e.clientY, until:Date.now() + 700 };   // このあとの同じ指の click を捨てる(上の 👻)
+        try{ fire(e); }
+        finally{
+          /* ⏱ 同じ指の click は、押した処理(fn)が終わってから届く。処理が重くて 700ms を越えると(遅い端末など)、
+             付けた時刻が切れて click が通り、2回押しになる・切り替わった先の同じ位置のボタンまで押される(2026-10-01 に確かめた)。
+             処理のあとで時刻を付け直す */
+          const now = Date.now();
+          lastFire = now;
+          if(ghost === g) g.until = now + 700;
+        }
       }
     });
     el.addEventListener('pointercancel', () => { pid = null; el.classList.remove('pressing'); });
