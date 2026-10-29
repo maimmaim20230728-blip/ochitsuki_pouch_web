@@ -4,12 +4,12 @@
    ・click禁止: 操作は全て Tap.bind(tap.js)。select / file input だけはネイティブイベント
    ・画面は screens/<id>.js が window.SCREENS.register('<id>', { render(container, api) }) で登録する
      (会話補助ノートと同じ取り決め。画面同士・シェルの内部状態は共有しない)
-   ・api = { T, el, pref, toast, go, Tap, Photo, load, save, remove, getExtra, setExtra, speak, stopSpeak, vibrate, lang, rtl, ver, appKey }
+   ・api = { T, el, pref, toast, go, Tap, Photo, load, save, remove, getExtra, setExtra, speak, stopSpeak, vibrate, lang, rtl, keyable, ver, appKey }
    ・🔴 BUILDER: アプリ固有の処理は screens/*.js に書く。このファイルは共通部分なので最小限の変更にとどめ、
      変えたら README の「シェルの変更点」に書く */
 (function(){
 
-var VER = '0.4.9';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
+var VER = '0.4.10';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
 var APP_KEY = 'ochitsuki_pouch';        // バックアップの識別(別アプリのファイルを読まない)
 var LS = 'pouch.';
 var LS_PREF = LS + 'pref.v1';
@@ -130,6 +130,27 @@ function watchBarSpace(){
   try{ new ResizeObserver(applyBarSpace).observe(bar); return true; }catch(_){ return false; }
 }
 
+/* ---- button でない押す場所を、キーボード・スイッチ操作でも押せるように(2026-10-30) ----
+   role="button" と tabindex="0" を付け、Enter / Space で click() を出す(Tap は click も拾うので、押した処理はそのまま Tap.bind の1つ)。
+   label があれば aria-label(見えている字が名前にならないとき)。画面側には api.keyable で渡す */
+function keyable(e, label){
+  if(!e || !e.setAttribute) return e;
+  e.setAttribute('role', 'button');
+  e.setAttribute('tabindex', '0');
+  if(label) e.setAttribute('aria-label', label);
+  if(!e._keyable && e.addEventListener){
+    e._keyable = true;
+    e.addEventListener('keydown', function(ev){
+      if(ev.target !== e || ev.isComposing) return;
+      if(ev.key === 'Enter' || ev.key === ' ' || ev.key === 'Spacebar'){
+        if(ev.preventDefault) ev.preventDefault();
+        e.click();
+      }
+    });
+  }
+  return e;
+}
+
 /* ---- 小さなDOMヘルパー(画面側にも渡す) ---- */
 function el(tag, cls, txt){
   var e = document.createElement(tag);
@@ -215,6 +236,7 @@ function screenApi(){
     markSaved: markSaved,               // 保存したら呼ぶ(戻るボタンの書きかけの確かめを出さない・2026-09-29)
     ask: askBox,                        // 確かめの窓(Play版はアプリの中・Web版は confirm)。ask(文, function(はい){...}, confirmが無いときの答え)
     backDefault: backDefault,           // 画面の back() が確かめのあとで「来た画面へ」を続けるとき
+    keyable: keyable,                   // li などに Tap.bind したとき、キーボード・スイッチでも押せるように(2026-10-30)
     ver: VER,
     appKey: APP_KEY
   };
@@ -594,6 +616,7 @@ function init(){
     (function(b){ Tap.bind(b, function(){ showScreen(b.getAttribute('data-scr'), 'tab'); }); })(navs[i]);
   }
   Tap.bind($('hd-title'), function(){ showScreen('home'); });   // 名前タップ=いつでもホームへ
+  keyable($('hd-title'));                                         // キーボード・スイッチでも(名前は見えている字のまま・2026-10-30)
 
   Tap.bind($('btn-fs'), function(){ pref.fs = (pref.fs + 1) % 3; applyBodyClass(); savePref(); applyI18n(); });
   Tap.bind($('btn-theme'), function(){ pref.theme = next(THEMES, pref.theme); applyTheme(); savePref(); applyI18n(); });

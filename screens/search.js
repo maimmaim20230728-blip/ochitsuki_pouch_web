@@ -155,7 +155,14 @@
       var fe, ap, ct;
       function collect(){ return { feat: String(fe.value || '').trim(), appr: String(ap.value || '').trim(), contact: String(ct.value || '').trim() }; }
       /* 戻るボタン(Play版): 保存できたら書きかけなし(確かめを出さない)。いっぱいで保存できなかったときだけ、戻るで確かめが出る */
-      function autoSave(){ if(fe && ap && ct && api.save(KEY, collect()) && api.markSaved) api.markSaved(); }
+      /* 自動保存が失敗したら(容量いっぱい)、その場で「いっぱいで ほぞんできません」を1回だけ出す(1文字ごとに出さない)。
+         保存できたら次の失敗でまた1回出す(2026-10-30・見せる画面に出ないまま気づかないのを防ぐ) */
+      var fullWarned = false;
+      function autoSave(){
+        if(!(fe && ap && ct)) return;
+        if(api.save(KEY, collect())){ fullWarned = false; if(api.markSaved) api.markSaved(); return; }
+        if(!fullWarned){ fullWarned = true; api.toast(T('common.storageFull')); }
+      }
       function field(key, label, ph, hint, textarea){
         var fl = api.el('div', 'field');
         fl.appendChild(api.el('label', null, label));

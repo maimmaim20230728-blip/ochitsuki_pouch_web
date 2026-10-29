@@ -68,12 +68,15 @@
         var li = api.el('li', 'tappable item-li');
         li.appendChild(P().thumb(api, it.img, '🍙'));
         var g = api.el('div', 'grow');
-        g.appendChild(api.el('div', 'item-title', it.name || it.maker || it.shop || '(' + T('screen.food.name') + ')'));
+        var title = it.name || it.maker || it.shop || '(' + T('screen.food.name') + ')';
+        g.appendChild(api.el('div', 'item-title', title));
         var sub = [it.maker, it.shop].filter(Boolean).join(' / ');
         if(sub) g.appendChild(api.el('div', 'hint', sub));
         li.appendChild(g);
         li.appendChild(api.el('span', 'edit-mark', '✎'));
         api.Tap.bind(li, function(){ openEditor(api, items, it); });
+        /* キーボード・スイッチ・読み上げでも開けるように(role=button・tabindex・Enter/Space・名前=なおす: 名前・2026-10-30) */
+        if(api.keyable) api.keyable(li, T('common.edit') + ': ' + [title, sub].filter(Boolean).join(' / '));
         ul.appendChild(li);
       });
       c.appendChild(ul);

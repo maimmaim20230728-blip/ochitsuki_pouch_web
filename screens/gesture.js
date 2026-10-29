@@ -65,11 +65,14 @@
         var li = api.el('li', 'tappable item-li');
         li.appendChild(P().thumb(api, it.img, '🤲'));
         var g = api.el('div', 'grow');
-        g.appendChild(api.el('div', 'item-title', it.sign || '(' + T('screen.gesture.sign') + ')'));
+        var title = it.sign || '(' + T('screen.gesture.sign') + ')';
+        g.appendChild(api.el('div', 'item-title', title));
         if(it.meaning) g.appendChild(api.el('div', 'hint', '→ ' + it.meaning));
         li.appendChild(g);
         li.appendChild(api.el('span', 'edit-mark', '✎'));
         api.Tap.bind(li, function(){ openEditor(api, items, it); });
+        /* キーボード・スイッチ・読み上げでも開けるように(role=button・tabindex・Enter/Space・名前=なおす: しぐさ → いみ・2026-10-30) */
+        if(api.keyable) api.keyable(li, T('common.edit') + ': ' + title + (it.meaning ? ' → ' + it.meaning : ''));
         ul.appendChild(li);
       });
       c.appendChild(ul);
