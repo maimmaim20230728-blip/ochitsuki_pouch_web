@@ -142,6 +142,10 @@
       /* 長い文(特徴・接し方など)は少し小さくして1画面に収まりやすくする(短い値は大きいまま) */
       if(b.value) blk.appendChild(api.el('div', 'show-value' + (String(b.value).length > 40 ? ' long' : ''), b.value));
       if(b.tel){ var a = api.el('a', 'call-btn', b.telLabel || b.tel); a.href = 'tel:' + b.tel; blk.appendChild(a); }
+      /* tels = 見つかった番号ごとのボタン([{ tel, label }]・どの番号か分かるよう番号を添える) */
+      (b.tels || []).forEach(function(p){
+        var a2 = api.el('a', 'call-btn', (b.telLabel || '') + ' ' + p.label); a2.href = 'tel:' + p.tel; blk.appendChild(a2);
+      });
       ov.appendChild(blk);
     });
     if(o.note) ov.appendChild(api.el('p', 'hint show-note', o.note));

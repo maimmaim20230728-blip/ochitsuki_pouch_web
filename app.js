@@ -9,7 +9,7 @@
      変えたら README の「シェルの変更点」に書く */
 (function(){
 
-var VER = '0.4.8';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
+var VER = '0.4.9';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
 var APP_KEY = 'ochitsuki_pouch';        // バックアップの識別(別アプリのファイルを読まない)
 var LS = 'pouch.';
 var LS_PREF = LS + 'pref.v1';
@@ -557,11 +557,11 @@ function importBackup(e){
     try{
       d = JSON.parse(r.result);
       if(!d || d.app !== APP_KEY) throw new Error('different app');
-      if(d.data && typeof d.data === 'object'){
-        data = d.data;
-        /* アプリ固有の形チェック(screens 側が window.APP_IMPORT_FILTER を置けば、知らないキー・壊れた形・外部URLをここで落とす) */
-        if(typeof window.APP_IMPORT_FILTER === 'function') data = window.APP_IMPORT_FILTER(data) || {};
-      }
+      if(!d.data || typeof d.data !== 'object' || Array.isArray(d.data)) throw new Error('no data');   // 丸ごと入れ替えるので、data の無い・壊れたファイルでは何も消さない
+      data = d.data;
+      /* アプリ固有の形チェック(screens 側が window.APP_IMPORT_FILTER を置けば、知らないキー・壊れた形・外部URLをここで落とす) */
+      if(typeof window.APP_IMPORT_FILTER === 'function') data = window.APP_IMPORT_FILTER(data) || {};
+      if(Object.keys(d.data).length && !Object.keys(data).some(function(k){ return Object.prototype.hasOwnProperty.call(d.data, k); })) throw new Error('nothing usable');   // 中身があるのにファイルのキーが1つも残らない=壊れたファイル(空の書き出しだけは通す)
     }catch(err){ toast(T('set.importFail')); return; }
     askBox(T('set.importConfirm'), function(ok){   // Play版はアプリの中の窓(はい/いいえ)・Web版は window.confirm
       if(!ok) return;

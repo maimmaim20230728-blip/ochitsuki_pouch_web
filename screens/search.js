@@ -9,13 +9,48 @@
   var P = function(){ return window.POUCH_PARTS; };
 
   function loadPerson(api){ return P().cleanData(KEY, api.load(KEY, null)); }
-  /* 連絡先の文から電話番号を取り出す。日本語入力の全角数字・長音符などのハイフンも読めるよう、先に半角へそろえる */
-  function extractPhone(text){
-    var s = String(text || '');
+  /* 連絡先の文から電話番号を最大3つ取り出す([{ tel:'09012345678', label:'090-1234-5678' }])。もしもカードと同じ作り。
+     🔴間違った番号に発信しないことが最優先。あやしいものは番号にしない(出さないほうが安全)。
+     ・全角の数字・ハイフン・長音符・プラス・括弧を先に半角へそろえる・改行をまたがない
+     ・1つの番号は 国内 10〜11桁 / + 始まり 8〜15桁。それを超えてつながりそうなら分ける(2つの番号が空白1つで並んでも別)
+     ・〒のあとの郵便番号・「内線」「ext」のあとの番号・10桁未満は番号にしない */
+  function extractPhones(text){
+    var s = String(text == null ? '' : text);
     try{ s = s.normalize('NFKC'); }catch(_){}
-    s = s.replace(/[ー‐‑‒–―−]/g, '-');
-    var m = s.match(/\+?\d[\d\-().\s]{5,}\d/);
-    return m ? m[0].replace(/[^\d+]/g, '') : null;
+    s = s.replace(/[\u30fc\u2010-\u2015\u2212]/g, '-');
+    var out = [];
+    s.split(/[\r\n\u2028\u2029]+/).forEach(function(line){
+      var re = /\+?\(?\d[\d\-().\s]*/g, m;
+      while((m = re.exec(line))){
+        var ctx = line.slice(Math.max(0, m.index - 12), m.index);
+        var groups = m[0].match(/\d+/g) || [];
+        var plus = m[0].charAt(0) === '+';
+        if(/(内線|\bext\.?|\bextension|\bx)\s*[:：]?\s*$/i.test(ctx)) groups = groups.slice(1);                  // 内線の番号
+        else if(/(〒|郵便番号)\s*[:：]?\s*$/.test(ctx)){                                                          // 郵便番号
+          if(groups.length > 1 && groups[0].length === 3 && groups[1].length === 4) groups = groups.slice(2);
+          else if(groups.length && groups[0].length === 7) groups = groups.slice(1);
+        }
+        var acc = null, nums = [];
+        groups.forEach(function(g, i){
+          if(acc){
+            var cap = acc.plus ? (acc.d.indexOf('81') === 0 ? 13 : 15) : 11;
+            // 0以外で始まる並びのあとに 0 で始まる塊が来たら別の番号(日付や郵便番号のあとの電話番号を巻き込まない)
+            var fresh = !acc.plus && acc.d.charAt(0) !== '0' && g.length >= 2 && g.charAt(0) === '0';
+            if(acc.d.length + g.length <= cap && !fresh){ acc.d += g; acc.g.push(g); return; }
+            nums.push(acc);
+          }
+          acc = { d: g, g: [g], plus: plus && i === 0 };
+        });
+        if(acc) nums.push(acc);
+        nums.forEach(function(n){
+          var len = n.d.length;
+          if(n.plus ? (len < 8 || len > 15 || (n.d.indexOf('81') === 0 && len > 13)) : (len < 10 || len > 11)) return;
+          var tel = (n.plus ? '+' : '') + n.d;
+          if(!out.some(function(o){ return o.tel === tel; })) out.push({ tel: tel, label: (n.plus ? '+' : '') + n.g.join('-') });
+        });
+      }
+    });
+    return out.slice(0, 3);
   }
 
   /* 見せる(全画面・白地・漢字) */
@@ -29,8 +64,7 @@
     if(p.feat) blocks.push({ label: T('screen.search.showFeat'), value: p.feat });
     if(p.appr) blocks.push({ label: T('screen.search.showAppr'), value: p.appr });
     if(p.contact){
-      var tel = extractPhone(p.contact);
-      blocks.push({ label: T('screen.search.showContact'), value: p.contact, tel: tel, telLabel: '📞 ' + T('screen.search.call') });
+      blocks.push({ label: T('screen.search.showContact'), value: p.contact, tels: extractPhones(p.contact), telLabel: '📞 ' + T('screen.search.call') });   // 見つかった番号ごとにボタン(最大3つ)
     }
     P().openShow(api, { title: T('screen.search.showTitle'), blocks: blocks, note: T('common.parts.showHint') });
   }
