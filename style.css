@@ -37,11 +37,11 @@ body.fs2{ font-size:25px; }
 /* ======== ヘッダー(chromeは固定19px=fs2でも肥大させない) ======== */
 header#hd{
   background:var(--brand); color:#fff;
-  padding:calc(12px + env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
+  padding:calc(20px + env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
   font-weight:700; font-size:19px;
   display:flex; align-items:center; justify-content:space-between; gap:14px;
   flex-shrink:0; overflow:hidden;
-  min-height:calc(72px + env(safe-area-inset-top));
+  min-height:calc(80px + env(safe-area-inset-top));
 }
 #hd-title{ flex:1; min-width:2.5em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 #hd-right{ display:flex; align-items:flex-end; gap:14px; flex-shrink:0; }
