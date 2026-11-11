@@ -1579,7 +1579,7 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "Alto"
       ],
       "usage": "Espaço usado: cerca de {u} MB de {t} MB. Ainda pode adicionar cerca de {n} som(ns) de até 2 MB.",
-      "usageFull": "Espaço usado: cerca de {u} MB de {t} MB. Quase não há espaço para sons. Apagar o que não precisa libera espaço."
+      "usageFull": "Espaço usado: cerca de {u} MB de {t} MB. Quase não há espaço para sons. Apagar o que não é necessário liberta espaço."
     },
     "search": {
       "title": "Procurar",
@@ -2124,8 +2124,8 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
         "Medel",
         "Hög"
       ],
-      "usage": "Använt utrymme: cirka {u} MB av {t} MB. Ni kan lägga till ungefär {n} ljud på upp till 2 MB.",
-      "usageFull": "Använt utrymme: cirka {u} MB av {t} MB. Det finns nästan inget utrymme kvar för ljud. Om ni tar bort sådant ni inte behöver blir det plats."
+      "usage": "Använt utrymme: cirka {u} MB av {t} MB. Du kan lägga till ungefär {n} ljud på upp till 2 MB.",
+      "usageFull": "Använt utrymme: cirka {u} MB av {t} MB. Det finns nästan inget utrymme kvar för ljud. Om du tar bort sådant du inte behöver blir det plats."
     },
     "search": {
       "title": "Leta",
