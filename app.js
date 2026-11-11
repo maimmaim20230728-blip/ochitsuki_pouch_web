@@ -9,7 +9,7 @@
      変えたら README の「シェルの変更点」に書く */
 (function(){
 
-var VER = '0.4.11';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
+var VER = '0.4.12';                // 🔴 更新のたびに上げる(build.gradle の versionName / sw.js の CACHE と一緒に)
 var APP_KEY = 'ochitsuki_pouch';        // バックアップの識別(別アプリのファイルを読まない)
 var LS = 'pouch.';
 var LS_PREF = LS + 'pref.v1';
@@ -83,6 +83,7 @@ function applyI18n(){
   if($('btn-sound')) $('btn-sound').textContent = pref.sound ? T('set.on') : T('set.off');
   if($('about-ver')) $('about-ver').textContent = 'v' + VER;
   document.title = T('app.name');
+  updateBkInfo();
   fitTitle();
   if(current !== 'set') renderScreen(current);   // 表示中の画面も訳し直す
   var gov = document.querySelector && document.querySelector('.guide-ov');
@@ -266,7 +267,7 @@ function showScreen(id, how){
   for(var j = 0; j < navs.length; j++){
     navs[j].classList.toggle('active', navs[j].getAttribute('data-scr') === id);
   }
-  if(id !== 'set') renderScreen(id);
+  if(id !== 'set') renderScreen(id); else updateBkInfo();   // せっていを開くたびに、いまの大きさを数え直す
   try{ if($('main')) $('main').scrollTop = 0; }catch(_){}
 }
 
@@ -519,7 +520,11 @@ function openGuide(first){
 
 /* ---- 機種変更(バックアップ): このアプリの保存キー全部を1ファイルに ---- */
 function exportBackup(){
-  var data = { app: APP_KEY, ver: 1, exported: Date.now(), pref: pref, data: {} };
+  /* 「さいごに かきだした日」: ファイルの中の pref にも入れておく(あたらしい スマホで よみこんだとき、その日付が出る)。
+     この端末の記録は、書き出せたと分かってから(下の recorded) */
+  var now = Date.now();
+  var data = { app: APP_KEY, ver: 1, exported: now, pref: Object.assign({}, pref, { extra: Object.assign({}, pref.extra, { bkLast: now }) }), data: {} };
+  function recorded(){ pref.extra.bkLast = now; savePref(); updateBkInfo(); }
   try{
     for(var i = 0; i < localStorage.length; i++){
       var k = localStorage.key(i);
@@ -531,7 +536,7 @@ function exportBackup(){
   /* Play版(2026-09-29): 一時フォルダに書いて共有の画面へ。選べたら「かきだしました」・閉じたら何も出さない・書けなければ「ほぞんできませんでした」 */
   if(isNativeApp()){
     nativeSaveFile(fname, JSON.stringify(data), true, T('set.bkExport'), function(r){
-      if(r === 'ok') toast(T('set.exported'));
+      if(r === 'ok'){ recorded(); toast(T('set.exported')); }
       else if(r === 'fail') toast(T('common.saveFail'));
     });
     return;
@@ -542,7 +547,23 @@ function exportBackup(){
   a.download = fname;
   a.click();
   setTimeout(function(){ URL.revokeObjectURL(a.href); }, 3000);
+  recorded();
   toast(T('set.exported'));
+}
+/* ---- せっていの かきだす の下: さいごに かきだした日と、いまのデータの大きさ(2026-11-11) ----
+   機種変更の前に取ったか確かめられるように。大きさは「pouch.」の保存の文字数から出す おおよその MB(写真・音が多いとき かきだすファイルも この くらい) */
+function dateStrOf(ts){ var d = new Date(ts); return d.getFullYear() + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + String(d.getDate()).padStart(2, '0'); }
+function dataChars(){
+  var n = 0;
+  ownDataKeys().forEach(function(k){ try{ n += k.length + String(localStorage.getItem(k) || '').length; }catch(_){} });
+  return n;
+}
+function updateBkInfo(){
+  var a = $('bk-last'), b = $('bk-size');
+  var ts = pref.extra && pref.extra.bkLast;
+  var ok = (typeof ts === 'number') && isFinite(ts) && ts > 0 && ts < 4102444800000;   // 2100年まで(ファイルから来た値を信用しすぎない)
+  if(a) a.textContent = ok ? T('set.bkLast').replace('{d}', dateStrOf(ts)) : T('set.bkNever');
+  if(b) b.textContent = T('set.bkSize').replace('{s}', Math.max(0.1, dataChars() / 1000000).toFixed(1));
 }
 /* よみこむ(点検 pouch-21・8本共通 D 2026-09-29)
    ・このアプリのファイルか・形を確かめてから、置き換える前に askBox で確かめる(やめる=何も変えない)。

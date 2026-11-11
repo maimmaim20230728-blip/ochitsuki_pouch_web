@@ -50,6 +50,29 @@
         api.Tap.bind(b, function(){ P().takeToday(api, function(){ api.go('home'); }); });
         card.appendChild(b);
       }
+      /* きょうの服装メモ(任意・2026-11-11): 写真だけでは靴や帽子が読み取りにくいので、一言を今日の1枚に添えて残す。
+         書いたそばから静かに自動保存(さがすの特徴欄と同じ)。「さがす」の特徴欄へは、そちらのボタンで足せる。
+         入れたらすぐ保存される欄なので、戻るボタンの「書きかけ」には数えない(data-nodirty) */
+      if(today){
+        var mf = api.el('div', 'field memo-field');
+        mf.setAttribute('data-nodirty', '1');
+        var ml = api.el('label', null, T('screen.home.memoH'));
+        ml.setAttribute('for', 'home-memo');
+        var mi = api.el('input'); mi.type = 'text'; mi.className = 'fld'; mi.setAttribute('id', 'home-memo');
+        mi.setAttribute('dir', 'auto'); mi.setAttribute('maxlength', String(P().MEMO_MAX));
+        mi.placeholder = T('screen.home.memoPh'); mi.value = today.memo || '';
+        var memoWarned = false;
+        mi.addEventListener('input', function(){   // 文字入力の通知(タップ操作ではない)
+          var cur = P().loadToday(api);
+          if(!cur) return;
+          var m = String(mi.value || '').trim().slice(0, P().MEMO_MAX);
+          if(m) cur.memo = m; else delete cur.memo;
+          if(api.save(P().TODAY_KEY, cur)){ memoWarned = false; return; }
+          if(!memoWarned){ memoWarned = true; api.toast(T('common.storageFull')); }
+        });
+        mf.appendChild(ml); mf.appendChild(mi);
+        card.appendChild(mf);
+      }
       card.appendChild(api.el('p', 'hint', T('screen.home.todayHint')));
       c.appendChild(card);
 

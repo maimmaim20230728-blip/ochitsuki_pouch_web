@@ -13,8 +13,14 @@ var Photo = (function(){
   function pick(o){
     o = o || {};
     var T = o.T || function(k){ return k; };
+    /* 選ばずにやめた(change が来ない)隠し input が body に積み上がらないよう、次の選びの前に古い物を消す(2026-11-11) */
+    try{
+      var old = document.querySelectorAll('.photo-file');
+      for(var i = 0; i < old.length; i++) if(old[i].parentNode) old[i].parentNode.removeChild(old[i]);
+    }catch(_){}
     var inp = elc('input', 'photo-file'); inp.type = 'file'; inp.accept = 'image/*';
     if(o.camera) inp.setAttribute('capture', 'environment');
+    inp.addEventListener('cancel', function(){ if(inp.parentNode) inp.parentNode.removeChild(inp); });   // cancel に対応した端末では、やめた時点で消す
     inp.addEventListener('change', function(e){
       var f = e.target.files && e.target.files[0];
       try{ e.target.value = ''; }catch(_){}

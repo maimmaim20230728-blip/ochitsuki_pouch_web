@@ -131,6 +131,37 @@
 
   /* 見せる画面(白地・漢字・大きな文字)。o = { title, blocks:[{ head, label, value, img, tel }], note }
      head=項目の見出し(商品名・しぐさ等を大きく) / label=小さな見出し */
+  /* 見せる画面を開いている間だけ、画面を明るく保つ(Wake Lock API・2026-11-11)。使えない端末・断られたときは何もしない。
+     返す関数で手放す(閉じたとき)。ほかのアプリに移って戻ったときは、まだ開いていれば取り直す */
+  function keepAwake(ov){
+    var lock = null, stopped = false;
+    function acquire(){
+      try{
+        var wl = (typeof navigator !== 'undefined') ? navigator.wakeLock : null;
+        if(stopped || !wl || typeof wl.request !== 'function') return;
+        var p = wl.request('screen');
+        if(p && typeof p.then === 'function') p.then(function(l){
+          if(stopped){ try{ l.release(); }catch(_){} } else lock = l;
+        }, function(){});
+      }catch(_){}
+    }
+    function onVis(){
+      if(stopped) return;
+      if(document.body && typeof document.body.contains === 'function' && ov && !document.body.contains(ov)){ release(); return; }
+      if(document.visibilityState === 'visible' && (!lock || lock.released)) acquire();
+    }
+    function release(){
+      if(stopped) return;
+      stopped = true;
+      try{ document.removeEventListener('visibilitychange', onVis); }catch(_){}
+      if(lock){ try{ var r = lock.release(); if(r && r.catch) r.catch(function(){}); }catch(_){} }
+      lock = null;
+    }
+    try{ document.addEventListener('visibilitychange', onVis); }catch(_){}
+    acquire();
+    return release;
+  }
+
   function openShow(api, o){
     var ov = overlay(api, 'show-white show-ov');
     ov.appendChild(api.el('div', 'show-head', o.title));
@@ -149,11 +180,12 @@
       ov.appendChild(blk);
     });
     if(o.note) ov.appendChild(api.el('p', 'hint show-note', o.note));
-    closeBtn(api, ov);
+    var release = keepAwake(ov);
+    closeBtn(api, ov, undefined, release);
     return ov;
   }
 
-  /* 1画面1ステップの手順。o = { title, steps:[text], tel:{ index→番号 }, telLabel, show:{ index→true }, showLabel, onShow(), note, after()→要素(注記の下に足す) }
+  /* 1画面1ステップの手順。o = { title, steps:[text], tel:{ index→番号 }, telLabel, show:{ index→true }, showLabel, onShow(), say:{ index→true }, sayLabel, onSay(), note, after()→要素(注記の下に足す) }
      ・発信と「見せる」は段数のすぐ下(本文より上)に出す。まえ/つぎ は とじるの上に固定(style.css)
        =文字が大きい・訳が長いときも、押すボタンがスクロールの下に隠れない */
   function openSteps(api, o){
@@ -179,7 +211,10 @@
       /* 「この画面の写真を見せます」の段: 見せる画面を手順の上に重ねて開く(とじると手順に戻る) */
       var canShow = !!(o.show && o.show[idx] && o.onShow);
       if(canShow) callWrap.appendChild(btn(api, 'btn wide step-show', o.showLabel || '', function(){ o.onShow(); }));
-      callWrap.classList.toggle('hidden', !tel && !canShow);
+      /* 「電話で伝える用」: 110番の段で、特徴を上から順に大きく出す・読み上げる画面を重ねて開く */
+      var canSay = !!(o.say && o.say[idx] && o.onSay);
+      if(canSay) callWrap.appendChild(btn(api, 'btn wide step-show step-say', o.sayLabel || '', function(){ o.onSay(); }));
+      callWrap.classList.toggle('hidden', !tel && !canShow && !canSay);
       prev.disabled = idx === 0;
       next.disabled = idx >= steps.length - 1;
       prev.classList.toggle('dim', idx === 0);
@@ -196,9 +231,19 @@
   }
 
   /* 今日の全身写真: 切り取らず、長辺 maxSide px に縮めて JPEG(dataURL)。縦長のまま残す */
+  /* 選ばずにやめた(change が来ない)ファイル選びの隠し input が body に残らないよう、次の選びの前に古い物を消す(2026-11-11)。
+     cancel イベントに対応した端末では、やめた時点でも消す */
+  function dropStaleFiles(){
+    try{
+      var old = document.querySelectorAll('.photo-file');
+      for(var i = 0; i < old.length; i++) remove(old[i]);
+    }catch(_){}
+  }
   function pickPlainPhoto(api, o){
+    dropStaleFiles();
     var inp = api.el('input', 'photo-file'); inp.type = 'file'; inp.accept = 'image/*';
     if(o.camera) inp.setAttribute('capture', 'environment');
+    inp.addEventListener('cancel', function(){ remove(inp); });
     inp.addEventListener('change', function(e){
       var f = e.target.files && e.target.files[0];
       try{ e.target.value = ''; }catch(_){}
@@ -228,6 +273,7 @@
 
   /* 今日の1枚(ホームと さがす で共用)。保存キー today.v1 = { img, date:'YYYY/MM/DD', ts } */
   var TODAY_KEY = 'today.v1';
+  var MEMO_MAX = 80;   // 服装メモの長さの上限(文字)
   function dateStr(d){ return d.getFullYear() + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + String(d.getDate()).padStart(2, '0'); }
   function loadToday(api){ return cleanData(TODAY_KEY, api.load(TODAY_KEY, null)) || null; }
   /* 撮った日が今日か(前の日の写真を「今日の服装」として見せないため) */
@@ -235,7 +281,10 @@
   function takeToday(api, onDone){
     pickPlainPhoto(api, { camera:true, maxSide:640, onDone:function(data){
       var now = new Date();
-      if(saveOrWarn(api, TODAY_KEY, { img:data, date:dateStr(now), ts:now.getTime() })){ api.toast(api.T('common.saved')); if(onDone) onDone(); }
+      var rec = { img:data, date:dateStr(now), ts:now.getTime() };
+      var old = loadToday(api);
+      if(old && old.memo && isTodayFresh(old)) rec.memo = old.memo;   // 同じ日に撮りなおしても、服装メモは残す
+      if(saveOrWarn(api, TODAY_KEY, rec)){ api.toast(api.T('common.saved')); if(onDone) onDone(); }
     } });
   }
   function clearToday(api){ api.remove(TODAY_KEY); }
@@ -259,7 +308,13 @@
       }) };
     }
     if(key === 'person.v1'){ var p = isObj(d) ? d : {}; return { feat: str(p.feat), appr: str(p.appr), contact: str(p.contact) }; }
-    if(key === TODAY_KEY){ return (isObj(d) && imgUrl(d.img)) ? { img: d.img, date: str(d.date), ts: (typeof d.ts === 'number') ? d.ts : 0 } : null; }
+    if(key === TODAY_KEY){
+      if(!(isObj(d) && imgUrl(d.img))) return null;
+      var t = { img: d.img, date: str(d.date), ts: (typeof d.ts === 'number') ? d.ts : 0 };
+      var memo = str(d.memo).slice(0, MEMO_MAX);   // 今日の服装メモ(あるときだけ)
+      if(memo) t.memo = memo;
+      return t;
+    }
     return null;   // このアプリが使わないキー
   }
   /* はじめての つかいかた(app.js・guide.v1)を読み終えたかどうかは、この端末のこと(2026-09-30)。
@@ -277,11 +332,33 @@
   }
   window.APP_IMPORT_FILTER = importFilter;
 
+  /* 端末内の保存の使用量の目安(2026-11-11)。localStorage は 5MB 前後(文字数)で一杯になるので、
+     ブラウザの上限を 5,000,000 文字として、全キーの「名前+中身」の文字数を数える。音は 2MB の ファイルが dataURL で 約1.37倍 */
+  var LS_LIMIT = 5000000;
+  var AUDIO_CHARS = Math.ceil(2 * 1024 * 1024 / 3) * 4 + 64;
+  function storageUsed(){
+    var n = 0;
+    try{
+      for(var i = 0; i < localStorage.length; i++){
+        var k = localStorage.key(i);
+        if(k) n += k.length + String(localStorage.getItem(k) || '').length;
+      }
+    }catch(_){}
+    return n;
+  }
+  function mb(chars){ return Math.max(0.1, chars / 1000000).toFixed(1); }
+  /* → { used(文字), limit, left, sounds(2MBの音があと何件入るか), u, t(表示用のMB) } */
+  function storageInfo(){
+    var used = storageUsed(), left = Math.max(0, LS_LIMIT - used);
+    return { used: used, limit: LS_LIMIT, left: left, sounds: Math.floor(left / AUDIO_CHARS), u: mb(used), t: mb(LS_LIMIT) };
+  }
+
   window.POUCH_PARTS = {
     newId: newId, fmt: fmt, btn: btn, remove: remove, saveOrWarn: saveOrWarn, thumb: thumb,
     overlay: overlay, closeBtn: closeBtn, confirmDel: confirmDel, photoField: photoField, touchForm: touchForm,
     openForm: openForm, openShow: openShow, openSteps: openSteps,
     pickPlainPhoto: pickPlainPhoto, loadToday: loadToday, isTodayFresh: isTodayFresh, takeToday: takeToday, clearToday: clearToday, TODAY_KEY: TODAY_KEY,
-    cleanData: cleanData, importFilter: importFilter
+    cleanData: cleanData, importFilter: importFilter,
+    dropStaleFiles: dropStaleFiles, keepAwake: keepAwake, storageInfo: storageInfo, MEMO_MAX: MEMO_MAX
   };
 })();

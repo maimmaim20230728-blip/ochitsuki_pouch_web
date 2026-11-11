@@ -9,6 +9,9 @@
   var MIN_LOOP = 0.2;   // これより短い音はくりかえさない(0秒の音をループすると画面が固まる)
   var P = function(){ return window.POUCH_PARTS; };
   var cur = null;   // 再生中の Audio(全画面を閉じたら止める)
+  /* 音の大きさ 小・中・大(端末の音量とは別・Audio.volume・選んだ段は pref.extra の calmVol に覚える。決まっていなければ 大=今まで通り) */
+  var VOLS = [0.3, 0.6, 1];
+  function volIdx(api){ var v = api.getExtra('calmVol', 2); return (v === 0 || v === 1 || v === 2) ? v : 2; }
 
   function loadItems(api){ return P().cleanData(KEY, api.load(KEY, null)).items; }
   function stopAudio(){ if(cur){ try{ cur.pause(); cur.src = ''; }catch(_){} cur = null; } }
@@ -18,6 +21,11 @@
     var T = api.T;
     var wrap = api.el('div', 'field sound-field');
     wrap.appendChild(api.el('label', null, T('screen.calm.soundH')));
+    /* 保存の使用量の目安と、2MBの音があと何件入るか(音を入れる前に・容量が切れて書きかけを失う前に気づけるように) */
+    var si = P().storageInfo();
+    var usage = api.el('p', 'hint usage-hint', P().fmt(T(si.sounds >= 1 ? 'screen.calm.usage' : 'screen.calm.usageFull'), { u: si.u, t: si.t, n: si.sounds }));
+    usage.setAttribute('id', 'calm-usage');
+    wrap.appendChild(usage);
     var name = api.el('p', 'sound-name');
     function draw(){
       name.textContent = state.audio ? ('🎵 ' + (state.audioName || '')) : T('screen.calm.soundNone');
@@ -25,7 +33,9 @@
     }
     var row = api.el('div', 'btn-row');
     var pickBtn = P().btn(api, 'btn', '🎵 ' + T('screen.calm.soundPick'), function(){
+      P().dropStaleFiles();   // 選ばずにやめた隠し input を消す(同じ作りの photo.js と同じ・2026-11-11)
       var inp = api.el('input', 'photo-file'); inp.type = 'file'; inp.accept = 'audio/*';
+      inp.addEventListener('cancel', function(){ P().remove(inp); });
       inp.addEventListener('change', function(e){
         var f = e.target.files && e.target.files[0];
         try{ e.target.value = ''; }catch(_){}
@@ -90,6 +100,7 @@
         try{
           if(!cur){
             var a = cur = new Audio();
+            try{ a.volume = VOLS[volIdx(api)]; }catch(_){}
             /* 長さが分かってから くりかえしにする(Chrome は 0秒の音でも最初は長さ Infinity と言い、あとで 0 に直す)
                ・長さ0は鳴らせない音として止める。ごく短い音は1回だけ。長さ不明(Infinity)のままの音は ended で頭から鳴らし直す */
             var judge = function(){
@@ -117,6 +128,23 @@
       row.appendChild(P().btn(api, 'btn primary', T('screen.calm.play'), play));
       row.appendChild(P().btn(api, 'btn', T('screen.calm.stop'), stop));
       ov.appendChild(st); ov.appendChild(row);
+      /* 音の大きさ(小・中・大): 選んだ段は光らせ(primary)、鳴っている音にもすぐ効かせる */
+      var vlbl = api.el('p', 'hint calm-vol-label', T('screen.calm.vol'));
+      var vrow = api.el('div', 'btn-row vol-row');
+      var vbtns = [];
+      function drawVol(){
+        var i = volIdx(api);
+        vbtns.forEach(function(b, k){ b.classList.toggle('primary', k === i); b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+        if(cur){ try{ cur.volume = VOLS[i]; }catch(_){} }
+      }
+      T('screen.calm.vols').forEach(function(lbl, k){
+        var b = P().btn(api, 'btn vol-btn', lbl, function(){ api.setExtra('calmVol', k); drawVol(); });
+        b.setAttribute('data-vol', String(k));
+        vbtns.push(b); vrow.appendChild(b);
+      });
+      vlbl.setAttribute('id', 'calm-vol-label');
+      ov.appendChild(vlbl); ov.appendChild(vrow);
+      drawVol();
       if(window.Sound) window.Sound.pauseBgm();
       play();
     }

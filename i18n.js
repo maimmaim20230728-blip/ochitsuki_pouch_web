@@ -45,6 +45,7 @@ var ja = {
     sound:'タップ音', on:'ON', off:'OFF',
     bkHint:'あたらしい スマホに うつるときは、「かきだす」で ファイルを ほぞんして、あたらしい スマホで「よみこむ」を おしてください。',
     bkExport:'かきだす', bkImport:'よみこむ',
+    bkLast:'さいごに かきだした日: {d}', bkNever:'まだ かきだして いません', bkSize:'いまの データの 大きさ: 約{s}MB',
     exported:'かきだしました ✓', imported:'よみこみました ✓', importFail:'よみこめませんでした',
     importConfirm:'いまの ないようは、ファイルの ないように おきかわります。よみこみますか?',
     note:'書いたことは すべて この端末の中だけに ほぞんされます。どこにも 送られません。',
@@ -59,6 +60,7 @@ var ja = {
       todayH:'きょうの1枚', todayTake:'きょうの1枚を とる', todayRetake:'とりなおす',
       todayHint:'出かける前に 全身を 1枚。はぐれたとき「さがす」で そのまま 見せられます。',
       todayHas:'{d} の1枚',
+      memoH:'きょうの 服装メモ(ふく・くつ・もちもの)', memoPh:'たとえば: あおい 上着、しろい くつ、ぼうし',
       note:'このアプリは 医療や 捜索の 代わりでは ありません。危ないときは 110番・119番へ。',
       staffNote:'付き添いの支援者が使うときは、事業所の端末で使ってください(私物のスマホに写真を残さないため)。'
     },
@@ -74,7 +76,10 @@ var ja = {
       soundTooBig:'2MBより 大きい ファイルは 入れられません', soundFail:'おとを よみこめませんでした',
       play:'▶ ならす', stop:'■ とめる', looping:'くりかえし ならしています',
       noContent:'しゃしんか おとを ひとつは 入れてください',
-      openHint:'タップで 大きく 出す'
+      openHint:'タップで 大きく 出す',
+      vol:'おとの 大きさ', vols:['小','中','大'],
+      usage:'つかっている 量の めやす: 約{u}MB / 約{t}MB。2MBまでの おとは、あと 約{n}件 入れられます。',
+      usageFull:'つかっている 量の めやす: 約{u}MB / 約{t}MB。おとを 入れる あきは ほとんど ありません。いらない ものを けすと ふえます。'
     },
     search: {
       title:'さがす',
@@ -92,6 +97,9 @@ var ja = {
       showTodayOld:'服装(写真) {d} 撮影',
       showFeat:'特徴', showAppr:'見つけたときの接し方', showContact:'連絡先',
       call:'電話をかける', call110:'110番に電話する',
+      sayBtn:'電話で 伝える用', sayTitle:'電話で 伝えます', sayRead:'読み上げる', sayStop:'とめる',
+      sayEmpty:'「ふだんの 特徴」が まだ 空です。「さがす」の 画面に 書いておくと、ここに 出ます。',
+      memoAdd:'きょうの 服装メモを 特徴に 足す', memoLine:'きょうの服装メモ: {m}',
       stepsDayTitle:'昼・店や施設ではぐれたとき',
       stepsDay: [
         '近くの店員に声をかけ、店内放送を頼みます。\n「家族とはぐれました。特徴はこの画面です」と、写真を見せます。',
@@ -201,6 +209,7 @@ var en = {
     sound:'Tap sound', on:'ON', off:'OFF',
     bkHint:'When you move to a new phone, tap "Export" to save a file, then tap "Import" on the new phone.',
     bkExport:'Export', bkImport:'Import',
+    bkLast:'Last exported: {d}', bkNever:'Not exported yet', bkSize:'Current data size: about {s} MB',
     exported:'Exported ✓', imported:'Imported ✓', importFail:'Could not import',
     importConfirm:'Your current entries will be replaced with the file\'s contents. Import it?',
     note:'Everything you write is stored only on this device. Nothing is sent anywhere.',
@@ -215,6 +224,7 @@ var en = {
       todayH:'Photo of today', todayTake:'Take the photo of today', todayRetake:'Retake',
       todayHint:'Before going out, take one full-body photo. If you get separated, "Search" shows it right away.',
       todayHas:'Taken on {d}',
+      memoH:'Clothes note for today (clothes, shoes, belongings)', memoPh:'For example: blue jacket, white shoes, a cap',
       note:'This app does not replace medical care or a police search. In danger, call 110 (police) or 119 (ambulance) in Japan.',
       staffNote:'If you are a support worker accompanying the person, please use a device from your organization, so that photos are not left on a personal phone.'
     },
@@ -230,7 +240,10 @@ var en = {
       soundTooBig:'Files larger than 2 MB cannot be added', soundFail:'Could not load the sound',
       play:'▶ Play', stop:'■ Stop', looping:'Playing on repeat',
       noContent:'Please add a photo or a sound',
-      openHint:'Tap to show full-screen'
+      openHint:'Tap to show full-screen',
+      vol:'Sound volume', vols:['Low','Medium','High'],
+      usage:'Space used: about {u} MB of {t} MB. You can add about {n} more sound(s) of up to 2 MB.',
+      usageFull:'Space used: about {u} MB of {t} MB. There is almost no room left for sounds. Deleting items you do not need frees space.'
     },
     search: {
       title:'Search',
@@ -248,6 +261,9 @@ var en = {
       showTodayOld:'Clothes (photo taken on {d})',
       showFeat:'Description', showAppr:'How to approach when found', showContact:'Contact',
       call:'Call', call110:'Call 110 (police)',
+      sayBtn:'To say on the phone', sayTitle:'Say this on the phone', sayRead:'Read aloud', sayStop:'Stop',
+      sayEmpty:'"Usual description" is still empty. Write it on the Search screen and it will appear here.',
+      memoAdd:'Add today\'s clothes note to the description', memoLine:'Clothes today: {m}',
       stepsDayTitle:'Daytime: separated in a store or facility',
       stepsDay: [
         'Ask a staff member nearby to make an in-store announcement.\nSay "I got separated from my family member. Here is the description" and show the photo.',
@@ -418,7 +434,10 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "importConfirm": "Ihre aktuellen Einträge werden durch den Inhalt der Datei ersetzt. Importieren?",
     "note": "Alles, was Sie schreiben, wird nur auf diesem Gerät gespeichert. Nichts wird irgendwohin gesendet.",
     "privacy": "Datenschutzerklärung",
-    "credit": "App-Entwicklung: SOYOGI, Beratungsstelle für Pflege und Unterstützung"
+    "credit": "App-Entwicklung: SOYOGI, Beratungsstelle für Pflege und Unterstützung",
+    "bkLast": "Zuletzt exportiert: {d}",
+    "bkNever": "Noch nicht exportiert",
+    "bkSize": "Aktuelle Datenmenge: etwa {s} MB"
   },
   "screen": {
     "home": {
@@ -437,7 +456,9 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayHint": "Vor dem Hinausgehen ein Ganzkörperfoto aufnehmen. Wenn Sie getrennt werden, können Sie es unter „Suchen“ direkt zeigen.",
       "todayHas": "Foto vom {d}",
       "note": "Diese App ersetzt keine medizinische Hilfe und keine Suche durch die Polizei. In Gefahr rufen Sie 110 (Polizei) oder 119 (Rettungsdienst) an. Das sind die Notrufnummern in Japan.",
-      "staffNote": "Wenn Sie die Person als Fachkraft begleiten, nutzen Sie bitte ein Gerät Ihrer Einrichtung, damit keine Fotos auf einem privaten Smartphone bleiben."
+      "staffNote": "Wenn Sie die Person als Fachkraft begleiten, nutzen Sie bitte ein Gerät Ihrer Einrichtung, damit keine Fotos auf einem privaten Smartphone bleiben.",
+      "memoH": "Kleidungsnotiz für heute (Kleidung, Schuhe, Gegenstände)",
+      "memoPh": "Zum Beispiel: blaue Jacke, weiße Schuhe, Mütze"
     },
     "calm": {
       "title": "Ruhe",
@@ -458,7 +479,15 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "stop": "■ Stopp",
       "looping": "Wird wiederholt abgespielt",
       "noContent": "Bitte fügen Sie ein Foto oder einen Klang ein",
-      "openHint": "Tippen, um groß anzuzeigen"
+      "openHint": "Tippen, um groß anzuzeigen",
+      "vol": "Lautstärke",
+      "vols": [
+        "Leise",
+        "Mittel",
+        "Laut"
+      ],
+      "usage": "Belegter Speicher: etwa {u} MB von {t} MB. Sie können noch etwa {n} Klangdatei(en) bis 2 MB hinzufügen.",
+      "usageFull": "Belegter Speicher: etwa {u} MB von {t} MB. Für Klänge ist fast kein Platz mehr. Wenn Sie Unnötiges löschen, wird wieder Platz frei."
     },
     "search": {
       "title": "Suchen",
@@ -506,7 +535,14 @@ TBL.de = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "missingText": "In Japan wird eine Vermisstenanzeige bei der Polizei erstattet. Welche Polizeiwache sie annimmt und wie das Verfahren ist, entnehmen Sie bitte den Hinweisen der Polizei der jeweiligen Präfektur.",
       "missingLaw": "Landesweite Regeln: Vorschriften über die Suche nach vermissten Personen (e-Gov Gesetzessuche, auf Japanisch)",
       "missingPref": "Websites der Polizei der einzelnen Präfekturen (Liste der Nationalen Polizeibehörde, auf Japanisch)",
-      "missingSrc": "Quelle: externe Websites (geprüft am 2026-09-29). SOYOGI vertritt keine Behörde und nicht die Polizei."
+      "missingSrc": "Quelle: externe Websites (geprüft am 2026-09-29). SOYOGI vertritt keine Behörde und nicht die Polizei.",
+      "sayBtn": "Zum Sagen am Telefon",
+      "sayTitle": "Das am Telefon sagen",
+      "sayEmpty": "„Merkmale im Alltag“ ist noch leer. Schreiben Sie sie unter „Suchen“ auf, dann erscheinen sie hier.",
+      "sayRead": "Vorlesen",
+      "sayStop": "Stopp",
+      "memoAdd": "Kleidungsnotiz von heute zu den Merkmalen hinzufügen",
+      "memoLine": "Kleidung heute: {m}"
     },
     "food": {
       "title": "Essen",
@@ -671,7 +707,10 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "importConfirm": "Vos données actuelles seront remplacées par le contenu du fichier. Importer ?",
     "note": "Tout ce que vous écrivez reste uniquement sur cet appareil. Rien n'est envoyé nulle part.",
     "privacy": "Politique de confidentialité",
-    "credit": "Application développée par SOYOGI, service de conseil en soins et accompagnement"
+    "credit": "Application développée par SOYOGI, service de conseil en soins et accompagnement",
+    "bkLast": "Dernière exportation : {d}",
+    "bkNever": "Pas encore exporté",
+    "bkSize": "Taille actuelle des données : environ {s} Mo"
   },
   "screen": {
     "home": {
@@ -690,7 +729,9 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayHint": "Avant de sortir, prenez une photo en pied. En cas de séparation, \"Chercher\" la montre tout de suite.",
       "todayHas": "Prise le {d}",
       "note": "Cette application ne remplace ni les soins médicaux ni une recherche par la police. En cas de danger, appelez le 110 (police, Japon) ou le 119 (secours, Japon).",
-      "staffNote": "Si vous accompagnez la personne en tant que professionnel, utilisez un appareil de votre structure, pour ne pas laisser de photos sur un téléphone personnel."
+      "staffNote": "Si vous accompagnez la personne en tant que professionnel, utilisez un appareil de votre structure, pour ne pas laisser de photos sur un téléphone personnel.",
+      "memoH": "Note sur la tenue du jour (vêtements, chaussures, affaires)",
+      "memoPh": "Par exemple : veste bleue, chaussures blanches, casquette"
     },
     "calm": {
       "title": "Calme",
@@ -711,7 +752,15 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "stop": "■ Arrêter",
       "looping": "Lecture en boucle",
       "noContent": "Veuillez ajouter au moins une photo ou un son",
-      "openHint": "Touchez pour afficher en grand"
+      "openHint": "Touchez pour afficher en grand",
+      "vol": "Volume du son",
+      "vols": [
+        "Bas",
+        "Moyen",
+        "Fort"
+      ],
+      "usage": "Espace utilisé : environ {u} Mo sur {t} Mo. Vous pouvez encore ajouter environ {n} son(s) de 2 Mo maximum.",
+      "usageFull": "Espace utilisé : environ {u} Mo sur {t} Mo. Il ne reste presque plus de place pour les sons. Supprimer ce qui ne sert pas libère de la place."
     },
     "search": {
       "title": "Chercher",
@@ -759,7 +808,14 @@ TBL.fr = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "missingText": "Au Japon, la déclaration de disparition se fait auprès de la police. Pour savoir quel commissariat la reçoit et comment procéder, consultez les informations de la police de chaque préfecture.",
       "missingLaw": "Règles nationales : règlement sur les activités de recherche des personnes disparues (e-Gov, recherche de lois, en japonais)",
       "missingPref": "Sites de la police de chaque préfecture (liste de l'Agence nationale de la police, en japonais)",
-      "missingSrc": "Source : sites externes (vérifiés le 2026-09-29). SOYOGI ne représente aucun organisme public ni la police."
+      "missingSrc": "Source : sites externes (vérifiés le 2026-09-29). SOYOGI ne représente aucun organisme public ni la police.",
+      "sayBtn": "À dire au téléphone",
+      "sayTitle": "À dire au téléphone",
+      "sayEmpty": "« Description habituelle » est encore vide. Écrivez-la dans « Chercher » et elle apparaîtra ici.",
+      "sayRead": "Lire à voix haute",
+      "sayStop": "Arrêter",
+      "memoAdd": "Ajouter la note de tenue du jour à la description",
+      "memoLine": "Tenue du jour : {m}"
     },
     "food": {
       "title": "Aliments",
@@ -924,7 +980,10 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "importConfirm": "El contenido actual se reemplazará por el contenido del archivo. ¿Importar?",
     "note": "Todo lo que se escribe se guarda solo en este dispositivo. No se envía a ningún lugar.",
     "privacy": "Política de privacidad",
-    "credit": "Desarrollado por SOYOGI, servicio de consulta sobre cuidados y apoyo"
+    "credit": "Desarrollado por SOYOGI, servicio de consulta sobre cuidados y apoyo",
+    "bkLast": "Última exportación: {d}",
+    "bkNever": "Aún no se ha exportado",
+    "bkSize": "Tamaño actual de los datos: unos {s} MB"
   },
   "screen": {
     "home": {
@@ -943,7 +1002,9 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayHint": "Antes de salir, tomar una foto de cuerpo entero. Si se separan, \"Buscar\" la muestra tal cual.",
       "todayHas": "Foto del {d}",
       "note": "Esta app no sustituye la atención médica ni una búsqueda policial. En caso de peligro, llamar al 110 (policía) o al 119 (ambulancia) en Japón.",
-      "staffNote": "Si acompaña a la persona como profesional de apoyo, usar un dispositivo de la organización, para no dejar fotos en un teléfono personal."
+      "staffNote": "Si acompaña a la persona como profesional de apoyo, usar un dispositivo de la organización, para no dejar fotos en un teléfono personal.",
+      "memoH": "Nota de la ropa de hoy (ropa, calzado, objetos)",
+      "memoPh": "Por ejemplo: chaqueta azul, zapatos blancos, gorra"
     },
     "calm": {
       "title": "Calma",
@@ -964,7 +1025,15 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "stop": "■ Detener",
       "looping": "Sonando en repetición",
       "noContent": "Hace falta al menos una foto o un sonido",
-      "openHint": "Tocar para ver en grande"
+      "openHint": "Tocar para ver en grande",
+      "vol": "Volumen del sonido",
+      "vols": [
+        "Bajo",
+        "Medio",
+        "Alto"
+      ],
+      "usage": "Espacio usado: unos {u} MB de {t} MB. Aún puede añadir unos {n} sonido(s) de hasta 2 MB.",
+      "usageFull": "Espacio usado: unos {u} MB de {t} MB. Casi no queda espacio para sonidos. Si borra lo que no necesita, se libera espacio."
     },
     "search": {
       "title": "Buscar",
@@ -1012,7 +1081,14 @@ TBL.es = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "missingText": "En Japón, la denuncia de persona desaparecida se presenta ante la policía. Para saber qué comisaría la recibe y cómo hacerla, consultar la información de la policía de cada prefectura.",
       "missingLaw": "Normas nacionales: Reglamento sobre las actividades de búsqueda de personas desaparecidas (e-Gov, búsqueda de leyes, en japonés)",
       "missingPref": "Sitios web de la policía de cada prefectura (lista de la Agencia Nacional de Policía, en japonés)",
-      "missingSrc": "Fuente: sitios externos (consultados el 2026-09-29). SOYOGI no representa a ningún organismo público ni a la policía."
+      "missingSrc": "Fuente: sitios externos (consultados el 2026-09-29). SOYOGI no representa a ningún organismo público ni a la policía.",
+      "sayBtn": "Para decir por teléfono",
+      "sayTitle": "Decir esto por teléfono",
+      "sayEmpty": "«Características habituales» sigue vacío. Escríbalo en «Buscar» y aparecerá aquí.",
+      "sayRead": "Leer en voz alta",
+      "sayStop": "Detener",
+      "memoAdd": "Añadir la nota de ropa de hoy a las características",
+      "memoLine": "Ropa de hoy: {m}"
     },
     "food": {
       "title": "Comida",
@@ -1177,7 +1253,10 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "importConfirm": "I contenuti attuali verranno sostituiti con quelli del file. Importare?",
     "note": "Tutto ciò che scrive resta solo in questo dispositivo. Non viene inviato da nessuna parte.",
     "privacy": "Informativa sulla privacy",
-    "credit": "App sviluppata da SOYOGI, sportello di consulenza per l'assistenza e il sostegno"
+    "credit": "App sviluppata da SOYOGI, sportello di consulenza per l'assistenza e il sostegno",
+    "bkLast": "Ultima esportazione: {d}",
+    "bkNever": "Non ancora esportato",
+    "bkSize": "Dimensione attuale dei dati: circa {s} MB"
   },
   "screen": {
     "home": {
@@ -1196,7 +1275,9 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayHint": "Prima di uscire, scatti una foto a figura intera. In caso di smarrimento, potrà mostrarla subito da \"Cerca\".",
       "todayHas": "Foto del {d}",
       "note": "Questa app non sostituisce l'assistenza medica né una ricerca ufficiale. In caso di pericolo, chiami il 110 (polizia) o il 119 (ambulanza), numeri di emergenza in Giappone.",
-      "staffNote": "Se accompagna la persona come operatore di supporto, usi un dispositivo della sua struttura, per non lasciare foto su un telefono personale."
+      "staffNote": "Se accompagna la persona come operatore di supporto, usi un dispositivo della sua struttura, per non lasciare foto su un telefono personale.",
+      "memoH": "Nota sull'abbigliamento di oggi (vestiti, scarpe, oggetti)",
+      "memoPh": "Per esempio: giacca blu, scarpe bianche, cappello"
     },
     "calm": {
       "title": "Calma",
@@ -1217,7 +1298,15 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "stop": "■ Ferma",
       "looping": "In riproduzione continua",
       "noContent": "Inserisca almeno una foto o un suono",
-      "openHint": "Un tocco per ingrandire"
+      "openHint": "Un tocco per ingrandire",
+      "vol": "Volume del suono",
+      "vols": [
+        "Basso",
+        "Medio",
+        "Alto"
+      ],
+      "usage": "Spazio usato: circa {u} MB su {t} MB. Può aggiungere ancora circa {n} suono/i fino a 2 MB.",
+      "usageFull": "Spazio usato: circa {u} MB su {t} MB. Quasi non c'è più spazio per i suoni. Eliminando ciò che non serve si libera spazio."
     },
     "search": {
       "title": "Cerca",
@@ -1265,7 +1354,14 @@ TBL.it = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "missingText": "In Giappone la denuncia di scomparsa si presenta alla polizia. Per sapere quale stazione di polizia la riceve e come procedere, consulti le indicazioni della polizia di ciascuna prefettura.",
       "missingLaw": "Regole nazionali: Regolamento sulle attività di ricerca delle persone scomparse (e-Gov, ricerca di leggi, in giapponese)",
       "missingPref": "Siti della polizia di ciascuna prefettura (elenco dell'Agenzia nazionale di polizia, in giapponese)",
-      "missingSrc": "Fonte: siti esterni (verificati il 2026-09-29). SOYOGI non rappresenta alcun ente pubblico né la polizia."
+      "missingSrc": "Fonte: siti esterni (verificati il 2026-09-29). SOYOGI non rappresenta alcun ente pubblico né la polizia.",
+      "sayBtn": "Da dire al telefono",
+      "sayTitle": "Da dire al telefono",
+      "sayEmpty": "«Caratteristiche abituali» è ancora vuoto. Lo scriva in «Cerca» e comparirà qui.",
+      "sayRead": "Leggi ad alta voce",
+      "sayStop": "Ferma",
+      "memoAdd": "Aggiungi la nota sull'abbigliamento alle caratteristiche",
+      "memoLine": "Abbigliamento di oggi: {m}"
     },
     "food": {
       "title": "Cibo",
@@ -1430,7 +1526,10 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "importConfirm": "O conteúdo atual será substituído pelo conteúdo da cópia. Importar?",
     "note": "Tudo o que for escrito fica guardado só neste aparelho. Nada é enviado a ninguém.",
     "privacy": "Política de privacidade",
-    "credit": "Desenvolvido por SOYOGI, serviço de aconselhamento sobre cuidados e apoio"
+    "credit": "Desenvolvido por SOYOGI, serviço de aconselhamento sobre cuidados e apoio",
+    "bkLast": "Última exportação: {d}",
+    "bkNever": "Ainda não exportado",
+    "bkSize": "Tamanho atual dos dados: cerca de {s} MB"
   },
   "screen": {
     "home": {
@@ -1449,7 +1548,9 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayHint": "Antes de sair, tirar uma foto de corpo inteiro. Em caso de separação, a foto aparece logo em \"Procurar\".",
       "todayHas": "Foto de {d}",
       "note": "Esta aplicação não substitui os cuidados médicos nem uma busca oficial. Em caso de perigo, ligar para o 110 (polícia) ou o 119 (ambulância), no Japão.",
-      "staffNote": "Se acompanhar a pessoa como profissional de apoio, usar um dispositivo da organização, para não deixar fotos num telefone pessoal."
+      "staffNote": "Se acompanhar a pessoa como profissional de apoio, usar um dispositivo da organização, para não deixar fotos num telefone pessoal.",
+      "memoH": "Nota da roupa de hoje (roupa, calçado, objetos)",
+      "memoPh": "Por exemplo: casaco azul, sapatos brancos, boné"
     },
     "calm": {
       "title": "Calma",
@@ -1470,7 +1571,15 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "stop": "■ Parar",
       "looping": "Som em repetição",
       "noContent": "É preciso incluir uma foto ou um som",
-      "openHint": "Tocar para mostrar em grande"
+      "openHint": "Tocar para mostrar em grande",
+      "vol": "Volume do som",
+      "vols": [
+        "Baixo",
+        "Médio",
+        "Alto"
+      ],
+      "usage": "Espaço usado: cerca de {u} MB de {t} MB. Ainda pode adicionar cerca de {n} som(ns) de até 2 MB.",
+      "usageFull": "Espaço usado: cerca de {u} MB de {t} MB. Quase não há espaço para sons. Apagar o que não precisa libera espaço."
     },
     "search": {
       "title": "Procurar",
@@ -1518,7 +1627,14 @@ TBL.pt = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "missingText": "No Japão, a participação de pessoa desaparecida é feita à polícia. Para saber que esquadra a recebe e como proceder, consultar as informações da polícia de cada prefeitura.",
       "missingLaw": "Regras nacionais: Regulamento sobre as atividades de procura de pessoas desaparecidas (e-Gov, pesquisa de leis, em japonês)",
       "missingPref": "Sites da polícia de cada prefeitura (lista da Agência Nacional de Polícia, em japonês)",
-      "missingSrc": "Fonte: sites externos (verificados em 2026-09-29). A SOYOGI não representa nenhum organismo público nem a polícia."
+      "missingSrc": "Fonte: sites externos (verificados em 2026-09-29). A SOYOGI não representa nenhum organismo público nem a polícia.",
+      "sayBtn": "Para dizer ao telefone",
+      "sayTitle": "Dizer isto ao telefone",
+      "sayEmpty": "«Características habituais» ainda está vazio. Escreva em «Procurar» e aparecerá aqui.",
+      "sayRead": "Ler em voz alta",
+      "sayStop": "Parar",
+      "memoAdd": "Juntar a nota da roupa de hoje às características",
+      "memoLine": "Roupa de hoje: {m}"
     },
     "food": {
       "title": "Comida",
@@ -1683,7 +1799,10 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "importConfirm": "Uw huidige gegevens worden vervangen door de inhoud van het bestand. Importeren?",
     "note": "Alles wat u schrijft, wordt alleen op dit apparaat bewaard. Er wordt niets verzonden.",
     "privacy": "Privacybeleid",
-    "credit": "App ontwikkeld door SOYOGI, een adviespunt voor zorg en ondersteuning"
+    "credit": "App ontwikkeld door SOYOGI, een adviespunt voor zorg en ondersteuning",
+    "bkLast": "Laatst geëxporteerd: {d}",
+    "bkNever": "Nog niet geëxporteerd",
+    "bkSize": "Huidige gegevensgrootte: ongeveer {s} MB"
   },
   "screen": {
     "home": {
@@ -1702,7 +1821,9 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayHint": "Maak voor het weggaan één foto van het hele lichaam. Raakt u elkaar kwijt, dan kunt u die meteen laten zien via \"Zoeken\".",
       "todayHas": "Gemaakt op {d}",
       "note": "Deze app vervangt geen medische zorg en geen zoekactie. Bel bij gevaar 110 (politie) of 119 (ambulance); dit zijn de nummers in Japan.",
-      "staffNote": "Begeleidt u de persoon als hulpverlener? Gebruik dan een apparaat van uw organisatie, zodat er geen foto's op een privételefoon achterblijven."
+      "staffNote": "Begeleidt u de persoon als hulpverlener? Gebruik dan een apparaat van uw organisatie, zodat er geen foto's op een privételefoon achterblijven.",
+      "memoH": "Notitie over kleding van vandaag (kleding, schoenen, spullen)",
+      "memoPh": "Bijvoorbeeld: blauw jasje, witte schoenen, pet"
     },
     "calm": {
       "title": "Rust",
@@ -1723,7 +1844,15 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "stop": "■ Stoppen",
       "looping": "Wordt herhaald afgespeeld",
       "noContent": "Voeg minstens een foto of een geluid toe",
-      "openHint": "Tik om groot te tonen"
+      "openHint": "Tik om groot te tonen",
+      "vol": "Geluidsvolume",
+      "vols": [
+        "Zacht",
+        "Middel",
+        "Luid"
+      ],
+      "usage": "Gebruikte ruimte: ongeveer {u} MB van {t} MB. U kunt nog ongeveer {n} geluid(en) van maximaal 2 MB toevoegen.",
+      "usageFull": "Gebruikte ruimte: ongeveer {u} MB van {t} MB. Er is bijna geen ruimte meer voor geluiden. Als u weggooit wat u niet nodig heeft, komt er ruimte vrij."
     },
     "search": {
       "title": "Zoeken",
@@ -1771,7 +1900,14 @@ TBL.nl = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "missingText": "In Japan doet u aangifte van vermissing bij de politie. Welk politiebureau de aangifte aanneemt en hoe het werkt, leest u in de informatie van de politie van de prefectuur.",
       "missingLaw": "Landelijke regels: Regeling over het zoeken naar vermiste personen (e-Gov wetten zoeken, in het Japans)",
       "missingPref": "Websites van de politie per prefectuur (lijst van het Nationaal Politieagentschap, in het Japans)",
-      "missingSrc": "Bron: externe websites (gecontroleerd op 2026-09-29). SOYOGI vertegenwoordigt geen overheidsinstantie en niet de politie."
+      "missingSrc": "Bron: externe websites (gecontroleerd op 2026-09-29). SOYOGI vertegenwoordigt geen overheidsinstantie en niet de politie.",
+      "sayBtn": "Om aan de telefoon te zeggen",
+      "sayTitle": "Dit aan de telefoon zeggen",
+      "sayEmpty": "„Vaste kenmerken” is nog leeg. Schrijf ze bij „Zoeken” op, dan verschijnen ze hier.",
+      "sayRead": "Voorlezen",
+      "sayStop": "Stoppen",
+      "memoAdd": "Kledingnotitie van vandaag bij de kenmerken zetten",
+      "memoLine": "Kleding vandaag: {m}"
     },
     "food": {
       "title": "Eten",
@@ -1936,7 +2072,10 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "importConfirm": "Det du har nu ersätts med innehållet i filen. Vill du importera?",
     "note": "Allt du skriver sparas bara på den här enheten. Inget skickas någonstans.",
     "privacy": "Integritetspolicy",
-    "credit": "Appen är utvecklad av SOYOGI, rådgivning om omsorg och stöd"
+    "credit": "Appen är utvecklad av SOYOGI, rådgivning om omsorg och stöd",
+    "bkLast": "Senast exporterad: {d}",
+    "bkNever": "Inte exporterat än",
+    "bkSize": "Nuvarande datamängd: cirka {s} MB"
   },
   "screen": {
     "home": {
@@ -1955,7 +2094,9 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayHint": "Ta ett helkroppsfoto innan ni går ut. Om ni kommer ifrån varandra kan du visa det direkt under \"Leta\".",
       "todayHas": "Foto från {d}",
       "note": "Den här appen ersätter inte vård eller polisens sökande. Vid fara: ring 110 (polis, Japan) eller 119 (ambulans, Japan).",
-      "staffNote": "Om du följer med personen som stödpersonal, använd en enhet från din arbetsplats, så att inga foton blir kvar på en privat telefon."
+      "staffNote": "Om du följer med personen som stödpersonal, använd en enhet från din arbetsplats, så att inga foton blir kvar på en privat telefon.",
+      "memoH": "Anteckning om dagens kläder (kläder, skor, saker)",
+      "memoPh": "Till exempel: blå jacka, vita skor, keps"
     },
     "calm": {
       "title": "Lugn",
@@ -1976,7 +2117,15 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "stop": "■ Stoppa",
       "looping": "Spelas om och om igen",
       "noContent": "Lägg in minst ett foto eller ett ljud",
-      "openHint": "Tryck för helskärm"
+      "openHint": "Tryck för helskärm",
+      "vol": "Ljudvolym",
+      "vols": [
+        "Låg",
+        "Medel",
+        "Hög"
+      ],
+      "usage": "Använt utrymme: cirka {u} MB av {t} MB. Ni kan lägga till ungefär {n} ljud på upp till 2 MB.",
+      "usageFull": "Använt utrymme: cirka {u} MB av {t} MB. Det finns nästan inget utrymme kvar för ljud. Om ni tar bort sådant ni inte behöver blir det plats."
     },
     "search": {
       "title": "Leta",
@@ -2024,7 +2173,14 @@ TBL.sv = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "missingText": "I Japan gör man en anmälan om försvunnen person hos polisen. Vilken polisstation som tar emot den och hur det går till står i informationen från polisen i respektive prefektur.",
       "missingLaw": "Nationella regler: Föreskrifter om arbetet med att hitta försvunna personer (e-Gov lagsökning, på japanska)",
       "missingPref": "Webbplatser för polisen i varje prefektur (lista från Nationella polisbyrån, på japanska)",
-      "missingSrc": "Källa: externa webbplatser (kontrollerade 2026-09-29). SOYOGI företräder inte någon myndighet eller polisen."
+      "missingSrc": "Källa: externa webbplatser (kontrollerade 2026-09-29). SOYOGI företräder inte någon myndighet eller polisen.",
+      "sayBtn": "Att säga i telefon",
+      "sayTitle": "Säg detta i telefon",
+      "sayEmpty": "”Vanliga kännetecken” är fortfarande tomt. Skriv in dem under ”Leta” så visas de här.",
+      "sayRead": "Läs upp",
+      "sayStop": "Stoppa",
+      "memoAdd": "Lägg till dagens klädanteckning bland kännetecknen",
+      "memoLine": "Kläder idag: {m}"
     },
     "food": {
       "title": "Mat",
@@ -2189,7 +2345,10 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "importConfirm": "지금 내용이 파일의 내용으로 바뀌어요. 가져올까요?",
     "note": "적은 내용은 모두 이 기기 안에만 저장돼요. 어디에도 보내지 않아요.",
     "privacy": "개인정보 처리방침",
-    "credit": "앱 개발: 돌봄과 지원 상담소 SOYOGI"
+    "credit": "앱 개발: 돌봄과 지원 상담소 SOYOGI",
+    "bkLast": "마지막으로 내보낸 날: {d}",
+    "bkNever": "아직 내보내지 않았어요",
+    "bkSize": "지금 데이터 크기: 약 {s}MB"
   },
   "screen": {
     "home": {
@@ -2208,7 +2367,9 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayHint": "외출 전에 전신을 한 장 찍어요. 서로 놓쳤을 때 ‘찾기’에서 그대로 보여 줄 수 있어요.",
       "todayHas": "{d}에 찍은 한 장",
       "note": "이 앱은 의료나 수색을 대신하지 않아요. 위험할 때는 110번(경찰·일본)이나 119번(구급·일본)으로 전화해 주세요.",
-      "staffNote": "동행하는 지원 담당자가 쓸 때는 소속 기관의 기기를 써 주세요(개인 휴대전화에 사진을 남기지 않기 위해서예요)."
+      "staffNote": "동행하는 지원 담당자가 쓸 때는 소속 기관의 기기를 써 주세요(개인 휴대전화에 사진을 남기지 않기 위해서예요).",
+      "memoH": "오늘의 옷차림 메모(옷·신발·소지품)",
+      "memoPh": "예: 파란 겉옷, 흰 신발, 모자"
     },
     "calm": {
       "title": "차분해지기",
@@ -2229,7 +2390,15 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "stop": "■ 정지",
       "looping": "반복해서 재생하고 있어요",
       "noContent": "사진이나 소리를 하나는 넣어 주세요",
-      "openHint": "탭하면 크게 나와요"
+      "openHint": "탭하면 크게 나와요",
+      "vol": "소리 크기",
+      "vols": [
+        "작게",
+        "보통",
+        "크게"
+      ],
+      "usage": "사용 중인 공간: 약 {u}MB / {t}MB. 2MB까지의 소리를 약 {n}개 더 넣을 수 있어요.",
+      "usageFull": "사용 중인 공간: 약 {u}MB / {t}MB. 소리를 넣을 공간이 거의 없어요. 필요 없는 것을 지우면 늘어나요."
     },
     "search": {
       "title": "찾기",
@@ -2277,7 +2446,14 @@ TBL.ko = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "missingText": "행방불명자 신고는 경찰에 해요. 어느 경찰서에서 받는지, 절차는 어떤지는 각 도도부현 경찰의 안내를 확인해 주세요.",
       "missingLaw": "전국 공통 규칙: 행방불명자 발견 활동에 관한 규칙(e-Gov 법령 검색, 일본어 페이지)",
       "missingPref": "각 도도부현 경찰 홈페이지(경찰청 목록, 일본어 페이지)",
-      "missingSrc": "출처: 외부 사이트(확인일 2026-09-29). SOYOGI는 정부 기관이나 경찰을 대표하지 않아요."
+      "missingSrc": "출처: 외부 사이트(확인일 2026-09-29). SOYOGI는 정부 기관이나 경찰을 대표하지 않아요.",
+      "sayBtn": "전화로 전할 말",
+      "sayTitle": "전화로 이렇게 전해요",
+      "sayEmpty": "'평소의 특징'이 아직 비어 있어요. '찾기' 화면에 적어 두면 여기에 나와요.",
+      "sayRead": "소리 내어 읽기",
+      "sayStop": "멈추기",
+      "memoAdd": "오늘의 옷차림 메모를 특징에 추가",
+      "memoLine": "오늘의 옷차림: {m}"
     },
     "food": {
       "title": "음식",
@@ -2442,7 +2618,10 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "importConfirm": "当前内容将被文件中的内容替换。要导入吗？",
     "note": "写下的内容全部只保存在这台设备里，不会发送到任何地方。",
     "privacy": "隐私政策",
-    "credit": "应用开发：照护与支援咨询处 SOYOGI"
+    "credit": "应用开发：照护与支援咨询处 SOYOGI",
+    "bkLast": "上次导出：{d}",
+    "bkNever": "还没有导出过",
+    "bkSize": "当前数据大小：约{s}MB"
   },
   "screen": {
     "home": {
@@ -2461,7 +2640,9 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayHint": "出门前拍一张全身照。走散时在“寻找”里可以直接给人看。",
       "todayHas": "{d} 的一张",
       "note": "这个应用不能代替医疗或搜救。危险时请拨打日本的110（警察）或119（急救）。",
-      "staffNote": "陪同的支援人员使用时，请使用所在机构的设备（以免在私人手机上留下照片）。"
+      "staffNote": "陪同的支援人员使用时，请使用所在机构的设备（以免在私人手机上留下照片）。",
+      "memoH": "今天的穿着备注（衣服、鞋子、随身物品）",
+      "memoPh": "例如：蓝色外套、白鞋子、帽子"
     },
     "calm": {
       "title": "安心",
@@ -2482,7 +2663,15 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "stop": "■ 停止",
       "looping": "正在循环播放",
       "noContent": "请至少放入一张照片或一个声音",
-      "openHint": "点一下放大显示"
+      "openHint": "点一下放大显示",
+      "vol": "声音大小",
+      "vols": [
+        "小",
+        "中",
+        "大"
+      ],
+      "usage": "已用空间：约{u}MB / {t}MB。还可以再放约{n}个不超过2MB的声音。",
+      "usageFull": "已用空间：约{u}MB / {t}MB。放声音的空间几乎没有了。删除不需要的内容就会空出来。"
     },
     "search": {
       "title": "寻找",
@@ -2530,7 +2719,14 @@ TBL.zh = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "missingText": "失踪人员的报告（行方不明者届）向警察提交。受理的警察署和手续，请查看各都道府县警察的说明。",
       "missingLaw": "全国规定：关于寻找失踪人员活动的规则（e-Gov 法令检索，日文页面）",
       "missingPref": "各都道府县警察的网站（日本警察厅的列表，日文页面）",
-      "missingSrc": "出处：外部网站（确认日期 2026-09-29）。SOYOGI 不代表任何政府机构或警察。"
+      "missingSrc": "出处：外部网站（确认日期 2026-09-29）。SOYOGI 不代表任何政府机构或警察。",
+      "sayBtn": "电话里要说的话",
+      "sayTitle": "在电话里这样说",
+      "sayEmpty": "“平时的特征”还是空的。在“寻找”页面写好，这里就会显示。",
+      "sayRead": "朗读",
+      "sayStop": "停止",
+      "memoAdd": "把今天的穿着备注加到特征里",
+      "memoLine": "今天的穿着：{m}"
     },
     "food": {
       "title": "食物",
@@ -2695,7 +2891,10 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
     "importConfirm": "سيُستبدل المحتوى الحالي بمحتوى الملف. هل تريد الاستيراد؟",
     "note": "كل ما تكتبه يُحفظ داخل هذا الجهاز فقط. لا يُرسل إلى أي مكان.",
     "privacy": "سياسة الخصوصية",
-    "credit": "تطوير التطبيق: SOYOGI، مكان استشارات الرعاية والدعم"
+    "credit": "تطوير التطبيق: SOYOGI، مكان استشارات الرعاية والدعم",
+    "bkLast": "آخر تصدير: {d}",
+    "bkNever": "لم يتم التصدير بعد",
+    "bkSize": "حجم البيانات الحالي: نحو {s} ميغابايت"
   },
   "screen": {
     "home": {
@@ -2714,7 +2913,9 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "todayHint": "قبل الخروج، التقط صورة واحدة للجسم كاملًا. عند الافتراق، يمكنك عرضها مباشرة من «البحث».",
       "todayHas": "صورة يوم {d}",
       "note": "هذا التطبيق ليس بديلًا عن الرعاية الطبية أو البحث الرسمي. عند الخطر، اتصل بالرقم 110 (الشرطة) أو 119 (الإسعاف) في اليابان.",
-      "staffNote": "إذا كنت من العاملين في الدعم وترافق الشخص، فاستخدم جهازًا تابعًا لجهة عملك، حتى لا تبقى الصور على هاتف شخصي."
+      "staffNote": "إذا كنت من العاملين في الدعم وترافق الشخص، فاستخدم جهازًا تابعًا لجهة عملك، حتى لا تبقى الصور على هاتف شخصي.",
+      "memoH": "ملاحظة عن ملابس اليوم (الملابس، الحذاء، الأغراض)",
+      "memoPh": "مثال: سترة زرقاء، حذاء أبيض، قبعة"
     },
     "calm": {
       "title": "الهدوء",
@@ -2735,7 +2936,15 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "stop": "■ إيقاف",
       "looping": "يُشغَّل بشكل متكرر",
       "noContent": "يرجى إدخال صورة أو صوت على الأقل",
-      "openHint": "المس للعرض بحجم كبير"
+      "openHint": "المس للعرض بحجم كبير",
+      "vol": "مستوى الصوت",
+      "vols": [
+        "منخفض",
+        "متوسط",
+        "عالٍ"
+      ],
+      "usage": "المساحة المستخدمة: نحو {u} ميغابايت من {t}. يمكنك إضافة نحو {n} من الأصوات التي لا يزيد حجمها عن 2 ميغابايت.",
+      "usageFull": "المساحة المستخدمة: نحو {u} ميغابايت من {t}. لا تكاد تبقى مساحة للأصوات. حذف ما لا تحتاج إليه يوفر مساحة."
     },
     "search": {
       "title": "البحث",
@@ -2783,7 +2992,14 @@ TBL.ar = mergeDeep(JSON.parse(JSON.stringify(en)), {
       "missingText": "في اليابان يُقدَّم بلاغ الشخص المفقود إلى الشرطة. لمعرفة مركز الشرطة الذي يستقبله والإجراءات، راجع إرشادات شرطة كل محافظة.",
       "missingLaw": "القواعد على مستوى البلاد: لائحة أنشطة العثور على الأشخاص المفقودين (بحث القوانين e-Gov، صفحة باليابانية)",
       "missingPref": "مواقع شرطة كل محافظة (قائمة وكالة الشرطة الوطنية، صفحة باليابانية)",
-      "missingSrc": "المصدر: مواقع خارجية (تاريخ التحقق 2026-09-29). لا تمثّل SOYOGI أي جهة حكومية أو الشرطة."
+      "missingSrc": "المصدر: مواقع خارجية (تاريخ التحقق 2026-09-29). لا تمثّل SOYOGI أي جهة حكومية أو الشرطة.",
+      "sayBtn": "للقول عبر الهاتف",
+      "sayTitle": "قل هذا عبر الهاتف",
+      "sayEmpty": "«الصفات المعتادة» ما زالت فارغة. اكتبها في «البحث» وستظهر هنا.",
+      "sayRead": "قراءة بصوت عالٍ",
+      "sayStop": "إيقاف",
+      "memoAdd": "أضف ملاحظة ملابس اليوم إلى الصفات",
+      "memoLine": "ملابس اليوم: {m}"
     },
     "food": {
       "title": "الطعام",

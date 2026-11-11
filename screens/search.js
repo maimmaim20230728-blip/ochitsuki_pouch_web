@@ -91,12 +91,38 @@
     return box;
   }
 
+  /* 電話で伝える用(2026-11-11): 動転した家族が、110番のときに「ふだんの特徴」を上から順に声に出して伝えられるよう、
+     特徴欄の中身だけを大きな字で1画面に出す。読み上げ(端末の声)もできる。名前・年齢・服装・最後に見た場所と時刻は、特徴欄に書いてあれば そのまま出る */
+  function openSay(api){
+    var T = api.T, p = loadPerson(api);
+    var ov = P().overlay(api, 'show-white show-ov say-ov');
+    ov.appendChild(api.el('div', 'show-head', T('screen.search.sayTitle')));
+    var blk = api.el('div', 'show-block');
+    if(p.feat){
+      blk.appendChild(api.el('div', 'show-label', T('screen.search.showFeat')));
+      blk.appendChild(api.el('div', 'show-value' + (String(p.feat).length > 40 ? ' long' : ''), p.feat));
+    } else {
+      blk.appendChild(api.el('p', 'hint say-empty', T('screen.search.sayEmpty')));
+    }
+    ov.appendChild(blk);
+    if(p.feat && api.canSpeak && api.canSpeak()){
+      var row = api.el('div', 'btn-row say-row');
+      var jp = /[\u3040-\u30ff\u3400-\u9fff]/.test(p.feat);   // 日本語で書いてあれば、画面のことばが英語などでも日本語の声で読む
+      row.appendChild(P().btn(api, 'btn primary say-read', '🔊 ' + T('screen.search.sayRead'), function(){ api.speak(p.feat, jp ? { lang: 'ja' } : undefined); }));
+      row.appendChild(P().btn(api, 'btn say-stop', '■ ' + T('screen.search.sayStop'), function(){ api.stopSpeak(); }));
+      ov.appendChild(row);
+    }
+    P().closeBtn(api, ov, undefined, function(){ api.stopSpeak(); });
+    return ov;
+  }
+
   /* 手順の文が「この画面の写真を見せます」と言う段(昼1枚目・夜4枚目)には、見せる画面を重ねて開くボタンを出す */
   function openStepsDay(api){
     var T = api.T;
     P().openSteps(api, { title: T('screen.search.stepsDayTitle'), steps: T('screen.search.stepsDay'),
       tel: { 3:'110' }, telLabel: '📞 ' + T('screen.search.call110'),
       show: { 0:true }, showLabel: '📣 ' + T('screen.search.show'), onShow: function(){ openShow(api); },
+      say: { 3:true }, sayLabel: '🗣 ' + T('screen.search.sayBtn'), onSay: function(){ openSay(api); },
       note: T('screen.search.stepsNote'), after: function(){ return missingInfo(api); } });
   }
   function openStepsNight(api){
@@ -104,6 +130,7 @@
     P().openSteps(api, { title: T('screen.search.stepsNightTitle'), steps: T('screen.search.stepsNight'),
       tel: { 2:'110', 3:'110' }, telLabel: '📞 ' + T('screen.search.call110'),
       show: { 3:true }, showLabel: '📣 ' + T('screen.search.show'), onShow: function(){ openShow(api); },
+      say: { 2:true }, sayLabel: '🗣 ' + T('screen.search.sayBtn'), onSay: function(){ openSay(api); },
       note: T('screen.search.stepsNote'), after: function(){ return missingInfo(api); } });
   }
 
@@ -159,9 +186,10 @@
          保存できたら次の失敗でまた1回出す(2026-10-30・見せる画面に出ないまま気づかないのを防ぐ) */
       var fullWarned = false;
       function autoSave(){
-        if(!(fe && ap && ct)) return;
-        if(api.save(KEY, collect())){ fullWarned = false; if(api.markSaved) api.markSaved(); return; }
+        if(!(fe && ap && ct)) return false;
+        if(api.save(KEY, collect())){ fullWarned = false; if(api.markSaved) api.markSaved(); return true; }
         if(!fullWarned){ fullWarned = true; api.toast(T('common.storageFull')); }
+        return false;
       }
       function field(key, label, ph, hint, textarea){
         var fl = api.el('div', 'field');
@@ -178,6 +206,20 @@
         return inp;
       }
       fe = field('feat', T('screen.search.featH'), T('screen.search.featPh'), T('screen.search.featHint'), true);
+      /* きょうの服装メモ(ホームで残した一言・今日撮った写真の分だけ)を、押すと特徴欄の最後に1行で足す。同じ行は二度足さない */
+      if(today && today.memo && P().isTodayFresh(today)){
+        var mbtn = P().btn(api, 'btn wide', '📝 ' + T('screen.search.memoAdd'), function(){
+          var line = P().fmt(T('screen.search.memoLine'), { m: today.memo });
+          var cur = String(fe.value || '').replace(/\s+$/, '');
+          if(cur.split(/\r?\n/).indexOf(line) < 0){
+            fe.value = cur ? (cur + '\n' + line) : line;
+            if(!autoSave()) return;
+          }
+          api.toast(T('common.saved'));
+        });
+        mbtn.setAttribute('id', 'search-memo-add');
+        c.appendChild(mbtn);
+      }
       ap = field('appr', T('screen.search.apprH'), T('screen.search.apprPh'), '', true);
       ct = field('contact', T('screen.search.contactH'), T('screen.search.contactPh'), '', false);
       var sv = P().btn(api, 'btn primary wide', '✓ ' + T('screen.search.save'), function(){
